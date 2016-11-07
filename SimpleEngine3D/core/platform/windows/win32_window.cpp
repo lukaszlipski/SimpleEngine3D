@@ -77,6 +77,24 @@ void Win32_Window::PlatformSetFullscreen(bool fullscreen)
 	}
 }
 
+void Win32_Window::PlatformSetWindowSize(int width, int height)
+{
+	DWORD isOverLapped = GetWindowLong(m_WindowHandle, GWL_STYLE) & WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME;
+	bool wasFS = false;
+	if (isOverLapped)
+	{
+		PlatformSetFullscreen(false);
+		wasFS = true;
+	}
+
+	SetWindowPos(m_WindowHandle, NULL, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+	GetWindowPlacement(m_WindowHandle, &m_WindowPreviousPosition);
+	m_Win32opengl.PlatformResize(width, height);
+
+	if (wasFS)
+		PlatformSetFullscreen(true);
+}
+
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {

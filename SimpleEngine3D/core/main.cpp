@@ -9,7 +9,8 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	win.PlatformSetCursor(true);
 	win.PlatformSetFullscreen(false);
-
+	//win.PlatformSetWindowSize(800, 600);
+	
 	while (!win.PlatformShouldWindowClose())
 	{
 		win.PlatformClear();

@@ -16,11 +16,11 @@ public:
 	void PlatformClear();
 	void PlatformTerminate();
 	void PlatformSetFullscreen(bool fullscreen);
+	void PlatformSetWindowSize(int width, int height);
 
 
 	inline void PlatformSetCursor(bool cursor)
 	{
-		//(cursor) ? SetCursor(LoadCursor(0,IDC_ARROW)) : SetCursor(NULL);
 		(cursor) ? ShowCursor(true) : ShowCursor(false);
 	}
 
