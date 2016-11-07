@@ -5,9 +5,20 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 {
 	
 	Win32_Window win;
-	win.PlatformInit("test",800,600,hInstance);
-	while (true)
+	win.PlatformInit("Lukasz Lipski : SimpleEngine3D",1024,720,hInstance);
+
+	win.PlatformSetCursor(true);
+	win.PlatformSetFullscreen(false);
+
+	while (!win.PlatformShouldWindowClose())
+	{
+		win.PlatformClear();
+
+
 		win.PlatformUpdate();
+	}
+
+	win.PlatformTerminate();
 
 	return EXIT_SUCCESS;
 }

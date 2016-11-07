@@ -47,14 +47,11 @@ bool Win32_Opengl::PlatformInit(HWND hwnd)
 
 void Win32_Opengl::PlatformUpdate()
 {
-	glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-
 	HDC WindowDC = GetDC(m_Hwnd);
 	SwapBuffers(WindowDC);
 	ReleaseDC(m_Hwnd, WindowDC);
 }
+
 
 Win32_Opengl::~Win32_Opengl()
 {
