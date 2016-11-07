@@ -7,6 +7,7 @@ bool Win32_Window::m_IsRunning = true;
 
 bool Win32_Window::PlatformInit(const char * title, int width, int height, HINSTANCE hInstance)
 {
+	m_isFullScreen = false;
 
 	WNDCLASSEX WindowClass = {};
 	WindowClass.cbSize = sizeof(WNDCLASSEX);
@@ -59,7 +60,7 @@ void Win32_Window::PlatformTerminate()
 void Win32_Window::PlatformSetFullscreen(bool fullscreen)
 {
 	DWORD dwStyle = GetWindowLong(m_WindowHandle, GWL_STYLE);
-
+	m_isFullScreen = fullscreen;
 	if(fullscreen)
 	{
 		MONITORINFO mi = { sizeof(mi) };
@@ -79,9 +80,8 @@ void Win32_Window::PlatformSetFullscreen(bool fullscreen)
 
 void Win32_Window::PlatformSetWindowSize(int width, int height)
 {
-	DWORD isOverLapped = GetWindowLong(m_WindowHandle, GWL_STYLE) & WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME;
 	bool wasFS = false;
-	if (isOverLapped)
+	if (m_isFullScreen)
 	{
 		PlatformSetFullscreen(false);
 		wasFS = true;
@@ -102,18 +102,18 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 	switch (uMsg)
 	{
-	case WM_SIZE:
-	{
-		RECT ClientRect;
-		GetClientRect(hwnd, &ClientRect);
-		int Height = ClientRect.bottom - ClientRect.top;
-		int Width = ClientRect.right - ClientRect.left;
+	//case WM_SIZE:
+	//{
+	//	RECT ClientRect;
+	//	GetClientRect(hwnd, &ClientRect);
+	//	int Height = ClientRect.bottom - ClientRect.top;
+	//	int Width = ClientRect.right - ClientRect.left;
 
-		// TODO: Add DirectX
-		Win32_Opengl::PlatformResize(Width, Height);
-		
-		break;
-	}
+	//	// TODO: Add DirectX
+	//	Win32_Opengl::PlatformResize(Width, Height);
+	//	
+	//	break;
+	//}
 	case WM_DESTROY:
 	{
 		//PostQuitMessage(0);

@@ -12,7 +12,7 @@ public:
 	bool PlatformInit(HWND hwnd);
 	void PlatformUpdate();
 
-	static inline void PlatformResize(int width, int height)
+	inline void PlatformResize(int width, int height)
 	{
 		glViewport(0, 0, width, height);
 	}

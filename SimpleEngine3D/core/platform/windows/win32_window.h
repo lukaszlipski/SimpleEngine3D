@@ -8,6 +8,7 @@ private:
 	HWND m_WindowHandle;
 	Win32_Opengl m_Win32opengl;
 	static bool m_IsRunning;
+	bool m_isFullScreen;
 	WINDOWPLACEMENT m_WindowPreviousPosition = { sizeof(m_WindowPreviousPosition) };
 
 public:
