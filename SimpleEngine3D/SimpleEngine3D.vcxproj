@@ -123,6 +123,7 @@
     <ClCompile Include="core\graphic\window.cpp" />
     <ClCompile Include="core\main.cpp" />
     <ClCompile Include="core\platform\opengl\win32_opengl.cpp" />
+    <ClCompile Include="core\platform\windows\win32_input.cpp" />
     <ClCompile Include="core\platform\windows\win32_window.cpp" />
   </ItemGroup>
   <ItemGroup>

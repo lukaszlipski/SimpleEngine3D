@@ -14,9 +14,12 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	while (!win.PlatformShouldWindowClose())
 	{
 		win.PlatformClear();
+		win.PlatformProcessInput();
 
+		if (win.PlatformGetKey('W'))
+			OutputDebugString("W");
 
-		win.PlatformUpdate();
+		win.PlatformSwapBuffers();
 	}
 
 	win.PlatformTerminate();

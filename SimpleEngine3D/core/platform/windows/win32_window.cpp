@@ -30,20 +30,21 @@ bool Win32_Window::PlatformInit(const char * title, int width, int height, HINST
 	return true;
 }
 
-void Win32_Window::PlatformUpdate()
+void Win32_Window::PlatformProcessInput()
 {
 	MSG Message;
 	while (PeekMessage(&Message, 0, 0, 0, PM_REMOVE))
 	{
 		if (Message.message == WM_QUIT)
 			m_IsRunning = false;
+		
+		m_Win32input.ProcessInput(Message);
+
 
 		TranslateMessage(&Message);
 		DispatchMessageA(&Message);
 
 	}
-
-	m_Win32opengl.PlatformUpdate();
 }
 
 void Win32_Window::PlatformClear()
@@ -93,6 +94,11 @@ void Win32_Window::PlatformSetWindowSize(int width, int height)
 
 	if (wasFS)
 		PlatformSetFullscreen(true);
+}
+
+void Win32_Window::PlatformSwapBuffers()
+{
+	m_Win32opengl.PlatformUpdate();
 }
 
 

@@ -27,6 +27,9 @@
     <ClCompile Include="core\platform\opengl\win32_opengl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\platform\windows\win32_input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\graphic\window.h">
