@@ -16,8 +16,11 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		win.PlatformClear();
 		win.PlatformProcessInput();
 
-		if (win.PlatformGetKey('W'))
-			OutputDebugString("W");
+		if (win.PlatformGetMouseButton(0))
+			OutputDebugString("!");
+
+		short x = win.PlatformGetMousePositionX();
+		short y = win.PlatformGetMousePositionY();
 
 		win.PlatformSwapBuffers();
 	}

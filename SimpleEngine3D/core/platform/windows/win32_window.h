@@ -28,6 +28,26 @@ public:
 		return m_Win32input.getKey(key);
 	}
 
+	/**
+	Left mouse button - 0
+	Right mouse button - 1
+	Middle mouse button - 2
+	*/
+	inline bool PlatformGetMouseButton(const byte mouse)
+	{
+		return m_Win32input.getMouseButton(mouse);
+	}
+
+	inline short PlatformGetMousePositionX()
+	{
+		return m_Win32input.getMousePositionX();
+	}
+
+	inline short PlatformGetMousePositionY()
+	{
+		return m_Win32input.getMousePositionY();
+	}
+
 	inline void PlatformSetCursor(bool cursor)
 	{
 		(cursor) ? ShowCursor(true) : ShowCursor(false);
