@@ -1,6 +1,8 @@
 #pragma once
 #include <Windows.h>
 #include <Gl/glew.h>
+#include <GL/wglew.h>
+
 
 
 class Win32_Opengl {
@@ -8,9 +10,16 @@ class Win32_Opengl {
 private:
 	HGLRC m_OpenGLRC;
 	HWND m_Hwnd;
+
 public:
 	bool PlatformInit(HWND hwnd);
 	void PlatformUpdate();
+
+
+	inline void PlatformSetVSync(short vsync)
+	{
+		wglSwapIntervalEXT(vsync);
+	}
 
 	inline void PlatformResize(int width, int height)
 	{

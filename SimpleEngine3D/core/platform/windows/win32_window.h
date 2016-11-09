@@ -58,6 +58,11 @@ public:
 		return !m_IsRunning;
 	}
 
+	inline void PlatformSetVSync(short vsync)
+	{
+		m_Win32opengl.PlatformSetVSync(vsync);
+	}
+
 	friend LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 

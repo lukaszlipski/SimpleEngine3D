@@ -1,7 +1,5 @@
 #include "win32_opengl.h"
 //#include <gl/GL.h>
-#include <Gl/glew.h>
-#include <GL/wglew.h>
 
 bool Win32_Opengl::PlatformInit(HWND hwnd)
 {
@@ -30,15 +28,13 @@ bool Win32_Opengl::PlatformInit(HWND hwnd)
 	if (!wglMakeCurrent(WindowDC, m_OpenGLRC))
 		return false;
 
+	
 	if (glewInit() != GLEW_OK)
 		return false;
 
-
+	PlatformSetVSync(1);
 
 	glViewport(0, 0, 800, 600);
-
-
-
 
 	ReleaseDC(hwnd, WindowDC);
 
