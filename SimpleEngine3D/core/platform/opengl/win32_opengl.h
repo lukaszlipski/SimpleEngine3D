@@ -10,11 +10,12 @@ class Win32_Opengl {
 private:
 	HGLRC m_OpenGLRC;
 	HWND m_Hwnd;
-
+	GLubyte m_MajorVersion;
+	GLubyte m_MinorVersion;
 public:
 	bool PlatformInit(HWND hwnd);
 	void PlatformUpdate();
-
+	void PlatformSetOpenGlVersion(GLubyte major, GLubyte minor);
 
 	inline void PlatformSetVSync(short vsync)
 	{

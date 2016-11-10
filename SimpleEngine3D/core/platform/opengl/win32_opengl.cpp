@@ -28,12 +28,32 @@ bool Win32_Opengl::PlatformInit(HWND hwnd)
 	if (!wglMakeCurrent(WindowDC, m_OpenGLRC))
 		return false;
 
-	
 	if (glewInit() != GLEW_OK)
 		return false;
 
-	PlatformSetVSync(1);
 
+	int attrib[] = {
+		WGL_CONTEXT_MAJOR_VERSION_ARB, m_MajorVersion,
+		WGL_CONTEXT_MINOR_VERSION_ARB, m_MinorVersion,
+		WGL_CONTEXT_FLAGS_ARB, WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB
+#ifdef _DEBUG
+		| WGL_CONTEXT_DEBUG_BIT_ARB
+#endif // _DEBUG
+		,WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
+		0
+	};
+
+	HGLRC newOpenGLC = wglCreateContextAttribsARB(WindowDC, 0, attrib);
+	if (newOpenGLC)
+	{
+		wglDeleteContext(m_OpenGLRC);
+		m_OpenGLRC = newOpenGLC;
+		wglMakeCurrent(WindowDC, newOpenGLC);
+	}
+	else
+		return false;
+
+	PlatformSetVSync(1);
 	glViewport(0, 0, 800, 600);
 
 	ReleaseDC(hwnd, WindowDC);
@@ -48,10 +68,16 @@ void Win32_Opengl::PlatformUpdate()
 	ReleaseDC(m_Hwnd, WindowDC);
 }
 
+void Win32_Opengl::PlatformSetOpenGlVersion(GLubyte major, GLubyte minor)
+{
+	m_MajorVersion = major;
+	m_MinorVersion = minor;
+}
 
 Win32_Opengl::~Win32_Opengl()
 {
 	HDC WindowDC = GetDC(m_Hwnd);
 	wglMakeCurrent(WindowDC, NULL);
+	wglDeleteContext(m_OpenGLRC);
 	ReleaseDC(m_Hwnd, WindowDC);
 }

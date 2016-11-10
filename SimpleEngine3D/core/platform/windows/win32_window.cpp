@@ -25,6 +25,9 @@ bool Win32_Window::PlatformInit(const char * title, int width, int height, HINST
 		return false;
 
 	GetWindowPlacement(m_WindowHandle, &m_WindowPreviousPosition);
+
+	// TODO: function for choosing version number & choosing opengl
+	m_Win32opengl.PlatformSetOpenGlVersion(3, 3);
 	m_Win32opengl.PlatformInit(m_WindowHandle);
 
 	return true;
