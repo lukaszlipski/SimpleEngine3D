@@ -124,12 +124,14 @@
     <ClCompile Include="core\main.cpp" />
     <ClCompile Include="core\platform\opengl\win32_opengl.cpp" />
     <ClCompile Include="core\platform\windows\win32_input.cpp" />
+    <ClCompile Include="core\platform\windows\win32_time.cpp" />
     <ClCompile Include="core\platform\windows\win32_window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\graphic\window.h" />
     <ClInclude Include="core\platform\opengl\win32_opengl.h" />
     <ClInclude Include="core\platform\windows\win32_input.h" />
+    <ClInclude Include="core\platform\windows\win32_time.h" />
     <ClInclude Include="core\platform\windows\win32_window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
