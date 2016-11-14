@@ -30,7 +30,10 @@
     <ClCompile Include="core\platform\windows\win32_input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="core\platform\windows\win32_time.cpp">
+    <ClCompile Include="core\platform\windows\win32_file.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="core\platform\windows\win32_timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +50,10 @@
     <ClInclude Include="core\platform\windows\win32_input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="core\platform\windows\win32_time.h">
+    <ClInclude Include="core\platform\windows\win32_file.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\platform\windows\win32_timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

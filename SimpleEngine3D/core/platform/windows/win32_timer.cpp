@@ -1,17 +1,17 @@
-#include "win32_time.h"
+#include "win32_timer.h"
 
 Win32_Time::Win32_Time()
 {
 	QueryPerformanceFrequency(&m_Frequency);
 }
 
-void Win32_Time::Init()
+void Win32_Time::PlatformInit()
 {
 	QueryPerformanceFrequency(&m_Frequency);
-	Reset();
+	PlatformReset();
 }
 
-void Win32_Time::Update()
+void Win32_Time::PlatformUpdate()
 {
 	LARGE_INTEGER CurrentCounter;
 	QueryPerformanceCounter(&CurrentCounter);

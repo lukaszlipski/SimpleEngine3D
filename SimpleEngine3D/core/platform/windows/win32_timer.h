@@ -13,20 +13,20 @@ public:
 
 	Win32_Time();
 
-	void Init();
-	void Update();
+	void PlatformInit();
+	void PlatformUpdate();
 
-	inline void Reset()
+	inline void PlatformReset()
 	{
 		QueryPerformanceCounter(&m_StartCounter);
 	}
 
-	inline unsigned int TimeMS()
+	inline unsigned int PlatformTimeMS()
 	{
 		return (unsigned int)(m_Timer * 1000);
 	}
 
-	inline double TimeSEC()
+	inline double PlatformTimeSEC()
 	{
 		return (double)(m_Timer);
 	}
