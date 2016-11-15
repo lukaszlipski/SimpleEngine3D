@@ -3,43 +3,45 @@
 #include "platform/windows/win32_timer.h"
 #include "platform/windows/win32_file.h"
 
+#include "system/window.h"
+
 #include <stdio.h>
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	
-	Win32_Window win;
+	Window win;
 
-	win.PlatformInit("Lukasz Lipski : SimpleEngine3D",1024,720,hInstance);
-	Win32_Time timer;
+	win.Init("Lukasz Lipski : SimpleEngine3D",1024,720,hInstance);
+	Win32_Timer timer;
 	//void* buffer = Win32_File::PlatformGetFileAPI().PlatformReadFileSync(__FILE__);
 	//delete buffer;
 
-	win.PlatformSetCursor(true);
-	win.PlatformSetFullscreen(false);
-	//win.PlatformSetWindowSize(800, 600);
+	win.SetCursor(true);
+	win.SetFullScreen(false);
+	//win.SetWindowSize(800, 600);
 	
 	timer.PlatformInit();
-	while (!win.PlatformShouldWindowClose())
+	while (!win.ShouldWindowClose())
 	{
-		win.PlatformClear();
-		win.PlatformProcessInput();
+		win.Clear();
+		win.ProcessInput();
 
-		if (win.PlatformGetMouseButton(0))
+		if (win.GetMouseButton(0))
 			OutputDebugString("!");
 
 		char Buffer[256];
 		sprintf_s(Buffer,"TimeElapsed: %f\n",timer.PlatformTimeSEC());
 		OutputDebugString(Buffer);
 
-		short x = win.PlatformGetMousePositionX();
-		short y = win.PlatformGetMousePositionY();
+		short x = win.GetMousePositionX();
+		short y = win.GetMousePositionY();
 
-		win.PlatformSwapBuffers();
+		win.SwapBuffers();
 		timer.PlatformUpdate();
 	}
 
-	win.PlatformTerminate();
+	win.Terminate();
 
 	return EXIT_SUCCESS;
 }

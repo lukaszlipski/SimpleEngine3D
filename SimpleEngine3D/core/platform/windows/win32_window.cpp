@@ -33,7 +33,7 @@ bool Win32_Window::PlatformInit(const char * title, int width, int height, HINST
 	return true;
 }
 
-void Win32_Window::PlatformProcessInput()
+void Win32_Window::PlatformProcessInput(Win32_Input& input)
 {
 	MSG Message;
 	while (PeekMessage(&Message, 0, 0, 0, PM_REMOVE))
@@ -41,7 +41,7 @@ void Win32_Window::PlatformProcessInput()
 		if (Message.message == WM_QUIT)
 			m_IsRunning = false;
 		
-		m_Win32input.ProcessInput(Message);
+		input.ProcessInput(Message);
 
 
 		TranslateMessage(&Message);

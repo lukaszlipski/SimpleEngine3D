@@ -1,7 +1,7 @@
 #pragma once
 #include <Windows.h>
 
-class Win32_Time {
+class Win32_Timer {
 
 private:
 
@@ -11,7 +11,7 @@ private:
 
 public:
 
-	Win32_Time();
+	Win32_Timer();
 
 	void PlatformInit();
 	void PlatformUpdate();

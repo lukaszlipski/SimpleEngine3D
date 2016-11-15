@@ -12,9 +12,7 @@ private:
 
 public:
 	void ProcessInput(MSG Message);
-
 	bool getKey(const char key);
-
 	bool getMouseButton(byte mouse);
 
 	short getMousePositionX();

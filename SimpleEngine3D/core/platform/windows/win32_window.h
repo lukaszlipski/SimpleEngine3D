@@ -8,60 +8,21 @@ class Win32_Window {
 private:
 	HWND m_WindowHandle;
 	Win32_Opengl m_Win32opengl;
-	Win32_Input m_Win32input;
 	static bool m_IsRunning;
 	bool m_isFullScreen;
 	WINDOWPLACEMENT m_WindowPreviousPosition = { sizeof(m_WindowPreviousPosition) };
 
 public:
 	bool PlatformInit(const char* title, int width, int height, HINSTANCE hInstance);
-	void PlatformProcessInput();
+	void PlatformProcessInput(Win32_Input& input);
 	void PlatformClear();
 	void PlatformTerminate();
 	void PlatformSetFullscreen(bool fullscreen);
 	void PlatformSetWindowSize(int width, int height);
 	void PlatformSwapBuffers();
-
-
-	inline bool PlatformGetKey(const char key)
-	{
-		return m_Win32input.getKey(key);
-	}
-
-	/**
-	Left mouse button - 0
-	Right mouse button - 1
-	Middle mouse button - 2
-	*/
-	inline bool PlatformGetMouseButton(const byte mouse)
-	{
-		return m_Win32input.getMouseButton(mouse);
-	}
-
-	inline short PlatformGetMousePositionX()
-	{
-		return m_Win32input.getMousePositionX();
-	}
-
-	inline short PlatformGetMousePositionY()
-	{
-		return m_Win32input.getMousePositionY();
-	}
-
-	inline void PlatformSetCursor(bool cursor)
-	{
-		(cursor) ? ShowCursor(true) : ShowCursor(false);
-	}
-
-	inline bool PlatformShouldWindowClose() const
-	{
-		return !m_IsRunning;
-	}
-
-	inline void PlatformSetVSync(short vsync)
-	{
-		m_Win32opengl.PlatformSetVSync(vsync);
-	}
+	inline void PlatformSetCursor(bool cursor) { (cursor) ? ShowCursor(true) : ShowCursor(false); }
+	inline bool PlatformShouldWindowClose() const {	return !m_IsRunning; }
+	inline void PlatformSetVSync(short vsync) {	m_Win32opengl.PlatformSetVSync(vsync); }
 
 	friend LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 

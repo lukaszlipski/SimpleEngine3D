@@ -18,9 +18,6 @@
     <ClCompile Include="core\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="core\graphic\window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="core\platform\windows\win32_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -36,11 +33,11 @@
     <ClCompile Include="core\platform\windows\win32_timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\system\window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core\graphic\window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="core\platform\windows\win32_window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -54,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\platform\windows\win32_timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\system\window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
