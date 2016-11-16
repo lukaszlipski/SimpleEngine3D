@@ -1,13 +1,14 @@
-#include "win32_window.h"
+#include "../system/window.h"
 #include <Windows.h>
 
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-bool Win32_Window::m_IsRunning = true;
+bool Window::m_IsRunning = true;
 
-bool Win32_Window::PlatformInit(const char * title, int width, int height, HINSTANCE hInstance)
+bool Window::Init(const char * title, int width, int height, HINSTANCE hInstance)
 {
-	m_isFullScreen = false;
+	m_FullScreen = false;
+	m_VSync = 1;
 
 	WNDCLASSEX WindowClass = {};
 	WindowClass.cbSize = sizeof(WNDCLASSEX);
@@ -27,13 +28,13 @@ bool Win32_Window::PlatformInit(const char * title, int width, int height, HINST
 	GetWindowPlacement(m_WindowHandle, &m_WindowPreviousPosition);
 
 	// TODO: function for choosing version number & choosing opengl
-	m_Win32opengl.PlatformSetOpenGlVersion(3, 3);
-	m_Win32opengl.PlatformInit(m_WindowHandle);
+	m_GraphicsAPI.PlatformSetOpenGlVersion(3, 3);
+	m_GraphicsAPI.PlatformInit(m_WindowHandle);
 
 	return true;
 }
 
-void Win32_Window::PlatformProcessInput(Win32_Input& input)
+void Window::ProcessInput()
 {
 	MSG Message;
 	while (PeekMessage(&Message, 0, 0, 0, PM_REMOVE))
@@ -41,7 +42,7 @@ void Win32_Window::PlatformProcessInput(Win32_Input& input)
 		if (Message.message == WM_QUIT)
 			m_IsRunning = false;
 		
-		input.ProcessInput(Message);
+		m_Input.ProcessInput(Message);
 
 
 		TranslateMessage(&Message);
@@ -50,21 +51,16 @@ void Win32_Window::PlatformProcessInput(Win32_Input& input)
 	}
 }
 
-void Win32_Window::PlatformClear()
-{
-	m_Win32opengl.PlatformClear();
-}
-
-void Win32_Window::PlatformTerminate()
+void Window::Terminate()
 {
 	PostQuitMessage(0);
 	DestroyWindow(m_WindowHandle);
 }
 
-void Win32_Window::PlatformSetFullscreen(bool fullscreen)
+void Window::SetFullScreen(bool fullscreen)
 {
 	DWORD dwStyle = GetWindowLong(m_WindowHandle, GWL_STYLE);
-	m_isFullScreen = fullscreen;
+	m_FullScreen = fullscreen;
 	if(fullscreen)
 	{
 		MONITORINFO mi = { sizeof(mi) };
@@ -82,28 +78,28 @@ void Win32_Window::PlatformSetFullscreen(bool fullscreen)
 	}
 }
 
-void Win32_Window::PlatformSetWindowSize(int width, int height)
+void Window::SetWindowSize(int width, int height)
 {
 	bool wasFS = false;
-	if (m_isFullScreen)
+	if (m_FullScreen)
 	{
-		PlatformSetFullscreen(false);
+		SetFullScreen(false);
 		wasFS = true;
 	}
 
 	SetWindowPos(m_WindowHandle, NULL, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
 	GetWindowPlacement(m_WindowHandle, &m_WindowPreviousPosition);
-	m_Win32opengl.PlatformResize(width, height);
+	m_GraphicsAPI.PlatformResize(width, height);
 
 	if (wasFS)
-		PlatformSetFullscreen(true);
+		SetFullScreen(true);
 }
 
-void Win32_Window::PlatformSwapBuffers()
-{
-	m_Win32opengl.PlatformUpdate();
+void Window::SetCursor(bool cursor) 
+{ 
+	m_Cursor = cursor;
+	(cursor) ? ShowCursor(true) : ShowCursor(false); 
 }
-
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -126,13 +122,13 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 	{
 		//PostQuitMessage(0);
-		Win32_Window::m_IsRunning = false;
+		Window::m_IsRunning = false;
 		break;
 	}
 	case WM_CLOSE:
 	{
 		//DestroyWindow(hwnd);
-		Win32_Window::m_IsRunning = false;
+		Window::m_IsRunning = false;
 		break;
 	}
 	case WM_ACTIVATEAPP:

@@ -1,14 +1,18 @@
+#include "../system/file.h"
 #include <Windows.h>
-#include "win32_file.h"
 
 
-void* Win32_File::PlatformReadFileSync(const char * filePath)
+void* File::ReadSync(const char * filePath)
 {
-	HANDLE fileHandle = PlatformGetFileHandleForRead(filePath);
+	HANDLE fileHandle = CreateFile(filePath, GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0);
 	if (fileHandle == INVALID_HANDLE_VALUE)
 		return nullptr;
 	
-	UINT64 fileSize = PlatformGetFileSize(fileHandle);
+	LARGE_INTEGER fileSizeStruct;
+	if (!GetFileSizeEx(fileHandle, &fileSizeStruct))
+		return nullptr;
+
+	UINT64 fileSize = fileSizeStruct.QuadPart;
 	if (fileSize == -1)
 	{
 		CloseHandle(fileHandle);
@@ -30,7 +34,7 @@ void* Win32_File::PlatformReadFileSync(const char * filePath)
 	}	
 }
 
-bool Win32_File::PlatformWriteFileSync(const char* filePath, void* buffer, UINT32 bufferSize)
+bool File::WriteSync(const char* filePath, void* buffer, unsigned int bufferSize)
 {
 	HANDLE fileHandle = CreateFile(filePath, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, 0, 0);
 	if (fileHandle == INVALID_HANDLE_VALUE)
@@ -49,24 +53,17 @@ bool Win32_File::PlatformWriteFileSync(const char* filePath, void* buffer, UINT3
 	}
 }
 
-UINT64 Win32_File::PlatformGetFileSize(const char * filePath)
+long long File::GetSize(const char * filePath)
 {
-	HANDLE fileHandle = PlatformGetFileHandleForRead(filePath);
+	HANDLE fileHandle = CreateFile(filePath, GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0);
 	if (fileHandle == INVALID_HANDLE_VALUE)
 		return -1;
 
-	UINT64 fileSize = PlatformGetFileSize(fileHandle);
+	LARGE_INTEGER fileSizeStruct;
+	if (!GetFileSizeEx(fileHandle, &fileSizeStruct))
+		return -1;
 
 	CloseHandle(fileHandle);
 
-	return fileSize;
-}
-
-UINT64 Win32_File::PlatformGetFileSize(HANDLE handle)
-{
-	LARGE_INTEGER fileSize;
-	if (!GetFileSizeEx(handle, &fileSize))
-		return -1;
-
-	return fileSize.QuadPart;
+	return fileSizeStruct.QuadPart;
 }

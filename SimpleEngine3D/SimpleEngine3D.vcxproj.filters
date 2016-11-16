@@ -38,9 +38,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core\platform\windows\win32_window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="core\platform\opengl\win32_opengl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -50,10 +47,13 @@
     <ClInclude Include="core\platform\windows\win32_file.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="core\platform\windows\win32_timer.h">
+    <ClInclude Include="core\system\window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="core\system\window.h">
+    <ClInclude Include="core\system\timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\system\file.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

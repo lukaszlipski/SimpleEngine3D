@@ -1,20 +1,41 @@
-#include "win32_timer.h"
+//#include "win32_timer.h"
+#include "../system/timer.h"
+#include <Windows.h>
 
-Win32_Timer::Win32_Timer()
+Timer::Timer()
 {
-	QueryPerformanceFrequency(&m_Frequency);
+	Init();
 }
 
-void Win32_Timer::PlatformInit()
+void Timer::Init()
 {
-	QueryPerformanceFrequency(&m_Frequency);
-	PlatformReset();
+	LARGE_INTEGER freq;
+	QueryPerformanceFrequency(&freq);
+	m_Frequency = freq.QuadPart;
+	Reset();
 }
 
-void Win32_Timer::PlatformUpdate()
+void Timer::Update()
 {
 	LARGE_INTEGER CurrentCounter;
 	QueryPerformanceCounter(&CurrentCounter);
 	
-	m_Timer = (DOUBLE)(CurrentCounter.QuadPart - m_StartCounter.QuadPart) / (DOUBLE)m_Frequency.QuadPart;
+	m_Timer = (DOUBLE)(CurrentCounter.QuadPart - m_StartCounter) / (DOUBLE)m_Frequency;
+}
+
+void Timer::Reset()
+{
+	LARGE_INTEGER start;
+	QueryPerformanceCounter(&start);
+	m_StartCounter = start.QuadPart;
+}
+
+double Timer::TimeMS()
+{
+	return m_Timer * 1024;
+}
+
+double Timer::TimeSEC()
+{
+	return m_Timer;
 }

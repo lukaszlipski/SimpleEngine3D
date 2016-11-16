@@ -9,7 +9,6 @@ private:
 	short m_MousePositionX;
 	short m_MousePositionY;
 
-
 public:
 	void ProcessInput(MSG Message);
 	bool getKey(const char key);
