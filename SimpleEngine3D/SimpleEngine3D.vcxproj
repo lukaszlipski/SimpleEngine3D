@@ -120,6 +120,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="core\system\file.cpp" />
     <ClCompile Include="core\system\window.cpp" />
     <ClCompile Include="core\main.cpp" />
     <ClCompile Include="core\platform\opengl\win32_opengl.cpp" />
@@ -127,14 +128,15 @@
     <ClCompile Include="core\platform\windows\win32_input.cpp" />
     <ClCompile Include="core\platform\windows\win32_timer.cpp" />
     <ClCompile Include="core\platform\windows\win32_window.cpp" />
+    <ClCompile Include="core\utilities\image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\system\file.h" />
     <ClInclude Include="core\system\timer.h" />
     <ClInclude Include="core\system\window.h" />
     <ClInclude Include="core\platform\opengl\win32_opengl.h" />
-    <ClInclude Include="core\platform\windows\win32_file.h" />
     <ClInclude Include="core\platform\windows\win32_input.h" />
+    <ClInclude Include="core\utilities\image.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

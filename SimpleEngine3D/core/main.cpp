@@ -4,9 +4,11 @@
 #include "system/window.h"
 #include "system/timer.h"
 #include "system/file.h"
+#include "utilities/image.h"
 
 // debug
 #include <stdio.h>
+using namespace SE3D;
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -15,8 +17,8 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	win.Init("Lukasz Lipski : SimpleEngine3D",1024,720,hInstance);
 	Timer timer;
-	//void* buffer = File::GetInstance().ReadSync(__FILE__);
-	//delete buffer;
+	//IMAGE img = Image::LoadBMP("C:/Programowanie/CPP/test.bmp");
+	//Image::Delete(img);
 
 	win.SetCursor(true);
 	win.SetFullScreen(false);

@@ -1,19 +1,31 @@
 #pragma once
+#include <cstdint>
 
-class File {
+namespace SE3D {
 
-private:
-	File() {}
-public:
-
-	static File& GetInstance()
+	struct FILE
 	{
-		static File *instance = new File();
-		return *instance;
-	}
+		uint64_t Size;
+		void* Content;
+	};
 
-	void* ReadSync(const char * filePath);
-	bool WriteSync(const char* filePath, void* buffer, unsigned int bufferSize);
-	long long GetSize(const char * filePath);
+	class File {
 
-};
+	private:
+		File() {}
+	public:
+
+		static File& GetInstance()
+		{
+			static File *instance = new File();
+			return *instance;
+		}
+
+		FILE ReadSync(const char * filePath);
+		bool WriteSync(const char* filePath, void* buffer, unsigned int bufferSize);
+		uint64_t GetSize(const char * filePath);
+		void Delete(FILE file);
+
+	};
+
+}

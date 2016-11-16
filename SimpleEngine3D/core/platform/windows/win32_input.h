@@ -1,20 +1,23 @@
 #pragma once
 #include <Windows.h>
 
-class Win32_Input {
+namespace SE3D {
 
-private:
-	bool m_Keyboard[1024];
-	bool m_Mouse[3];
-	short m_MousePositionX;
-	short m_MousePositionY;
+	class Win32_Input {
 
-public:
-	void ProcessInput(MSG Message);
-	bool getKey(const char key);
-	bool getMouseButton(byte mouse);
+	private:
+		bool m_Keyboard[1024];
+		bool m_Mouse[3];
+		short m_MousePositionX;
+		short m_MousePositionY;
 
-	short getMousePositionX();
-	short getMousePositionY();
+	public:
+		void ProcessInput(MSG Message);
+		bool getKey(const char key);
+		bool getMouseButton(byte mouse);
 
-};
+		short getMousePositionX();
+		short getMousePositionY();
+
+	};
+}
