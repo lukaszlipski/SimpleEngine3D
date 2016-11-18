@@ -13,23 +13,17 @@ namespace SE3D {
 		GLubyte m_MajorVersion;
 		GLubyte m_MinorVersion;
 	public:
-		bool PlatformInit(HWND hwnd);
+		bool PlatformInit(HWND hwnd, int width, int height);
 		void PlatformUpdate();
 		void PlatformSetOpenGlVersion(GLubyte major, GLubyte minor);
 
-		inline void PlatformSetVSync(short vsync)
-		{
-			wglSwapIntervalEXT(vsync);
-		}
+		inline void PlatformSetVSync(short vsync) {	wglSwapIntervalEXT(vsync); }
 
-		inline void PlatformResize(int width, int height)
-		{
-			glViewport(0, 0, width, height);
-		}
+		inline void PlatformResize(int width, int height) {	glViewport(0, 0, width, height); }
 
 		inline void PlatformClear()
 		{
-			glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
+			glClearColor(0.4f, 0.7f, 1.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 		}
 

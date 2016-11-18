@@ -3,7 +3,7 @@
 
 namespace SE3D {
 
-	bool Win32_Opengl::PlatformInit(HWND hwnd)
+	bool Win32_Opengl::PlatformInit(HWND hwnd, int width, int height)
 	{
 		m_Hwnd = hwnd;
 
@@ -56,7 +56,7 @@ namespace SE3D {
 			return false;
 
 		PlatformSetVSync(1);
-		glViewport(0, 0, 800, 600);
+		glViewport(0, 0, width, height);
 
 		ReleaseDC(hwnd, WindowDC);
 

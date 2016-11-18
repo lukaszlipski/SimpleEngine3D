@@ -10,7 +10,8 @@ namespace SE3D {
 	{
 		m_FullScreen = false;
 		m_VSync = 1;
-
+		m_Width = width;
+		m_Height = height;
 		WNDCLASSEX WindowClass = {};
 		WindowClass.cbSize = sizeof(WNDCLASSEX);
 		WindowClass.lpfnWndProc = WindowProc;
@@ -30,7 +31,7 @@ namespace SE3D {
 
 		// TODO: function for choosing version number & choosing opengl
 		m_GraphicsAPI.PlatformSetOpenGlVersion(3, 3);
-		m_GraphicsAPI.PlatformInit(m_WindowHandle);
+		m_GraphicsAPI.PlatformInit(m_WindowHandle,width,height);
 
 		return true;
 	}
@@ -70,12 +71,14 @@ namespace SE3D {
 				SetWindowLong(m_WindowHandle, GWL_STYLE, dwStyle & ~WS_OVERLAPPEDWINDOW);
 				SetWindowPos(m_WindowHandle, HWND_TOP, mi.rcMonitor.left, mi.rcMonitor.top, mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top, SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
 			}
+			m_GraphicsAPI.PlatformResize(mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top);
 		}
 		else
 		{
 			SetWindowLong(m_WindowHandle, GWL_STYLE, dwStyle | WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME);
 			SetWindowPlacement(m_WindowHandle, &m_WindowPreviousPosition);
 			SetWindowPos(m_WindowHandle, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+			m_GraphicsAPI.PlatformResize(m_Width, m_Height);
 		}
 	}
 
