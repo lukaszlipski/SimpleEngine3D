@@ -3,6 +3,7 @@
 
 namespace SE3D {
 
+
 	FILE File::ReadSync(const char * filePath)
 	{
 		HANDLE fileHandle = CreateFile(filePath, GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0);
@@ -20,7 +21,7 @@ namespace SE3D {
 			return FILE{ 0,nullptr };
 		}
 
-		void* buffer = new BYTE[fileSize];
+		void* buffer = new BYTE[fileSize+1];
 		DWORD bRead;
 		if (ReadFile(fileHandle, buffer, fileSize, &bRead, 0) && (bRead == fileSize))
 		{
@@ -33,6 +34,23 @@ namespace SE3D {
 			delete buffer;
 			return FILE{ 0,nullptr };
 		}
+	}
+
+	FILE File::ReadTextSync(const char * filePath)
+	{
+		FILE textFile = ReadSync(filePath);
+
+
+		char *tmp = (char*)(textFile.Content);
+		for (int i = 0; i <= textFile.Size; i++)
+		{
+			if (*tmp == '\r') { *tmp = ' '; }
+			if (i == textFile.Size) {
+				*tmp = '\0';
+			}
+			tmp++;
+		}
+		return textFile;
 	}
 
 	bool File::WriteSync(const char* filePath, void* buffer, unsigned int bufferSize)

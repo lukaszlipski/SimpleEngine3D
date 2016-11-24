@@ -22,6 +22,7 @@ namespace SE3D {
 		}
 
 		FILE ReadSync(const char * filePath);
+		FILE ReadTextSync(const char * filePath);
 		bool WriteSync(const char* filePath, void* buffer, unsigned int bufferSize);
 		uint64_t GetSize(const char * filePath);
 		void Delete(FILE file);

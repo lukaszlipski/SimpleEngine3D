@@ -5,6 +5,7 @@
 #include "system/timer.h"
 #include "system/file.h"
 #include "utilities/image.h"
+#include "graphic/shader.h"
 
 // debug
 #include <stdio.h>
@@ -31,21 +32,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		0.0f,  0.5f, 0.0f
 	};
 
-	const char* testVSSource = "#version 330 core\n layout (location = 0) in vec3 position;\n void main()\n {\n gl_Position = vec4(position.x, position.y, position.z, 1.0);\n }\0";
-	const char* testFSSource = "#version 330 core\n out vec4 color;\n void main()\n {\n color = vec4(0.66f, 0, 1.0f, 1.0f);\n }\n\0";
-
-	GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vShader, 1, &testVSSource, NULL);
-	glCompileShader(vShader);
-	GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fShader, 1, &testFSSource, NULL);
-	glCompileShader(fShader);
-	GLuint sProgram = glCreateProgram();
-	glAttachShader(sProgram, vShader);
-	glAttachShader(sProgram, fShader);
-	glLinkProgram(sProgram);
-	glDeleteShader(vShader);
-	glDeleteShader(fShader);
+	Shader test("C:/Programowanie/CPP/SimpleEngine3D/SimpleEngine3D/core/graphic/shaders/shader.vs", "C:/Programowanie/CPP/SimpleEngine3D/SimpleEngine3D/core/graphic/shaders/shader.fs");
 
 	GLuint VBO, VAO;
 	glGenVertexArrays(1, &VAO);
@@ -57,7 +44,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
-	glUseProgram(sProgram);
+	//glUseProgram(sProgram);
 
 	// -------------------------------------------
 
@@ -80,9 +67,11 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 
 		// ---------- TEST OPENGL UPDATE --------------
+		test.Bind();
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		glBindVertexArray(0);
+		test.Unbind();
 		// -------------------------------------------
 
 
