@@ -4,20 +4,25 @@
 
 namespace SE3D {
 
-	struct IMAGE {
-		int32_t Width;
-		int32_t Height;
-		void *Pixels;
-		FILE File;
-	};
-
 	class Image {
 
 	private:
-		IMAGE m_Image;
+		int32_t m_Width;
+		int32_t m_Height;
+		void *m_Pixels;
+		FILE m_File;
+
 	public:
-		static IMAGE LoadBMP(const char* filePath);
-		static void Delete(IMAGE img);
+		~Image();
+		Image(const char * filePath);
+
+		inline int32_t getWidth() { return m_Width; }
+		inline int32_t getHeight() { return m_Height; }
+		inline void* getPixels() { return m_Pixels; }
+		void Delete();
+
+	private:
+		void LoadBMP();
 
 	};
 

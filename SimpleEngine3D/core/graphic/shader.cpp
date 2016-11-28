@@ -24,6 +24,10 @@ namespace SE3D {
 		{
 			glGetShaderInfoLog(vShader, 512, NULL, infoLog);
 			// TODO: Add to log
+			m_Program = -1;
+			File::GetInstance().Delete(vsFile);
+			File::GetInstance().Delete(fsFile);
+			return;
 		}
 
 		fShader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -33,6 +37,10 @@ namespace SE3D {
 		{
 			glGetShaderInfoLog(fShader, 512, NULL, infoLog);
 			// TODO: Add to log
+			m_Program = -1;
+			File::GetInstance().Delete(vsFile);
+			File::GetInstance().Delete(fsFile);
+			return;
 		}
 
 
@@ -44,6 +52,10 @@ namespace SE3D {
 		{
 			glGetProgramInfoLog(m_Program, 512, NULL, infoLog);
 			// TODO: Add to log
+			m_Program = -1;
+			File::GetInstance().Delete(vsFile);
+			File::GetInstance().Delete(fsFile);
+			return;
 		}
 
 

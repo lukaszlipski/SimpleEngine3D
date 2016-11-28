@@ -18,8 +18,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	win.Init("Lukasz Lipski : SimpleEngine3D",1024,720,hInstance);
 	Timer timer;
-	//IMAGE img = Image::LoadBMP("C:/Programowanie/CPP/test.bmp");
-	//Image::Delete(img);
+	//Image img("C:/Programowanie/CPP/testps.bmp");
 
 	win.SetCursor(true);
 	win.SetFullScreen(false);
@@ -64,7 +63,6 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 		short x = win.GetMousePositionX();
 		short y = win.GetMousePositionY();
-
 
 		// ---------- TEST OPENGL UPDATE --------------
 		test.Bind();

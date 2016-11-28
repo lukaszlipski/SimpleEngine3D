@@ -2,39 +2,43 @@
 
 namespace SE3D {
 
-	IMAGE Image::LoadBMP(const char * filePath)
+	Image::~Image()
 	{
-		IMAGE img;
+		Delete();
+	}
 
-		img.File = File::GetInstance().ReadSync(filePath);
+	Image::Image(const char * filePath)
+	{
+		m_File = File::GetInstance().ReadSync(filePath);
+		if (m_File.Size == 0) { File::GetInstance().Delete(m_File); }
 
-		if (img.File.Size == 0)
+		int16_t Signature = *((int16_t*)m_File.Content);
+		if (Signature == 0x4d42) 
 		{
-			File::GetInstance().Delete(img.File);
-			return IMAGE{ -1,-1,nullptr,FILE{} };
+			LoadBMP();
 		}
-
-		int16_t Signature = *((int16_t*)img.File.Content);
-		if (Signature != 0x4d42)
-		{
-			File::GetInstance().Delete(img.File);
-			return IMAGE{ -1,-1,nullptr,FILE{} };
+		else
+		{ 
+			File::GetInstance().Delete(m_File); 
 		}
-
-		img.Width = *( (int32_t*)( (int8_t*)img.File.Content + 18 ) );
-		img.Height = *( (int32_t*)( (int8_t*)img.File.Content + 22 ) );
-
-		int8_t offset = *((int8_t*)img.File.Content + 10);
-		img.Pixels = (int8_t*)img.File.Content + offset;
-
-		return img;
 
 	}
 
-	void Image::Delete(IMAGE img)
+	void Image::LoadBMP()
 	{
-		if (img.File.Content != nullptr)
-			File::GetInstance().Delete(img.File);
+
+		m_Width = *( (int32_t*)( (int8_t*)m_File.Content + 18 ) );
+		m_Height = *( (int32_t*)( (int8_t*)m_File.Content + 22 ) );
+
+		int8_t offset = *((int8_t*)m_File.Content + 10);
+		m_Pixels = (int8_t*)m_File.Content + offset;
+
+	}
+
+	void Image::Delete()
+	{
+		if (m_File.Content != nullptr)
+			File::GetInstance().Delete(m_File);
 	}
 
 }
