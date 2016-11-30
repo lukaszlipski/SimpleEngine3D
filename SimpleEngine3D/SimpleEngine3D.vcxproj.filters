@@ -68,6 +68,9 @@
     <ClInclude Include="core\graphic\shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="core\utilities\assertion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="core\graphic\shaders\shader.vs" />

@@ -138,6 +138,7 @@
     <ClInclude Include="core\system\window.h" />
     <ClInclude Include="core\platform\opengl\win32_opengl.h" />
     <ClInclude Include="core\platform\windows\win32_input.h" />
+    <ClInclude Include="core\utilities\assertion.h" />
     <ClInclude Include="core\utilities\image.h" />
   </ItemGroup>
   <ItemGroup>

@@ -6,6 +6,7 @@
 #include "system/file.h"
 #include "utilities/image.h"
 #include "graphic/shader.h"
+#include "utilities/assertion.h"
 
 // debug
 #include <stdio.h>
@@ -13,7 +14,6 @@ using namespace SE3D;
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	
 	Window win;
 
 	win.Init("Lukasz Lipski : SimpleEngine3D",1024,720,hInstance);
