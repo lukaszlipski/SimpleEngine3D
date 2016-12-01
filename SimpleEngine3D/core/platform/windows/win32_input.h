@@ -1,6 +1,8 @@
 #pragma once
 #include <Windows.h>
 
+#include "../utilities/types.h"
+
 namespace SE3D {
 
 	class Win32_Input {
@@ -8,16 +10,16 @@ namespace SE3D {
 	private:
 		bool m_Keyboard[1024];
 		bool m_Mouse[3];
-		short m_MousePositionX;
-		short m_MousePositionY;
+		int16 m_MousePositionX;
+		int16 m_MousePositionY;
 
 	public:
 		void ProcessInput(MSG Message);
 		bool getKey(const char key);
 		bool getMouseButton(byte mouse);
 
-		short getMousePositionX();
-		short getMousePositionY();
+		int16 getMousePositionX();
+		int16 getMousePositionY();
 
 	};
 }

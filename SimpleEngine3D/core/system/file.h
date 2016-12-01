@@ -1,11 +1,11 @@
 #pragma once
-#include <cstdint>
+#include "../utilities/types.h"
 
 namespace SE3D {
 
 	struct FILE
 	{
-		uint64_t Size;
+		uint64 Size;
 		void* Content;
 	};
 
@@ -24,7 +24,7 @@ namespace SE3D {
 		FILE ReadSync(const char * filePath);
 		FILE ReadTextSync(const char * filePath);
 		bool WriteSync(const char* filePath, void* buffer, unsigned int bufferSize);
-		uint64_t GetSize(const char * filePath);
+		uint64 GetSize(const char * filePath);
 		void Delete(FILE file);
 
 	};

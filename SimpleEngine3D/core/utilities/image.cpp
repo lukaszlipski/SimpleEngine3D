@@ -12,7 +12,7 @@ namespace SE3D {
 		m_File = File::GetInstance().ReadSync(filePath);
 		if (m_File.Size == 0) { File::GetInstance().Delete(m_File); }
 
-		int16_t Signature = *((int16_t*)m_File.Content);
+		int16 Signature = *((int16*)m_File.Content);
 		if (Signature == 0x4d42) 
 		{
 			LoadBMP();
@@ -27,11 +27,11 @@ namespace SE3D {
 	void Image::LoadBMP()
 	{
 
-		m_Width = *( (int32_t*)( (int8_t*)m_File.Content + 18 ) );
-		m_Height = *( (int32_t*)( (int8_t*)m_File.Content + 22 ) );
+		m_Width = *( (int32*)( (int8*)m_File.Content + 18 ) );
+		m_Height = *( (int32*)( (int8*)m_File.Content + 22 ) );
 
-		int8_t offset = *((int8_t*)m_File.Content + 10);
-		m_Pixels = (int8_t*)m_File.Content + offset;
+		int8 offset = *((int8*)m_File.Content + 10);
+		m_Pixels = (int8*)m_File.Content + offset;
 
 	}
 

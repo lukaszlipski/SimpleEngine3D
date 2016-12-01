@@ -2,13 +2,15 @@
 //if Windows
 #include <Windows.h>
 
+#include "../utilities/types.h"
+
 namespace SE3D {
 
 	class Timer {
 
 	private:
-		long long m_Frequency;
-		long long m_StartCounter;
+		int64 m_Frequency;
+		int64 m_StartCounter;
 		double m_Timer;
 
 	public:

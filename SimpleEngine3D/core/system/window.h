@@ -3,6 +3,8 @@
 #include "../platform/windows/win32_input.h"
 #include "../platform/opengl/win32_opengl.h"
 
+#include "../utilities/types.h"
+
 namespace SE3D {
 
 	class Window {
@@ -17,7 +19,7 @@ namespace SE3D {
 
 		int m_Width;
 		int m_Height;
-		short m_VSync;
+		int16 m_VSync;
 		bool m_Cursor;
 		bool m_FullScreen;
 		static bool m_IsRunning;
@@ -43,12 +45,12 @@ namespace SE3D {
 		Middle mouse button - 2
 		*/
 		inline bool GetMouseButton(const byte mouse) { return m_Input.getMouseButton(mouse); }
-		inline short GetMousePositionX() { return m_Input.getMousePositionX(); }
-		inline short GetMousePositionY() { return m_Input.getMousePositionY(); }
+		inline int16 GetMousePositionX() { return m_Input.getMousePositionX(); }
+		inline int16 GetMousePositionY() { return m_Input.getMousePositionY(); }
 
 
 		// Graphics
-		void SetVSync(short vsync);
+		void SetVSync(int16 vsync);
 		inline void Clear() { m_GraphicsAPI.PlatformClear(); }
 		inline void SwapBuffers() { m_GraphicsAPI.PlatformUpdate(); }
 

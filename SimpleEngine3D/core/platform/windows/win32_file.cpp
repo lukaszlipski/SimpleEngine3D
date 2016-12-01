@@ -1,5 +1,6 @@
-#include "../system/file.h"
 #include <Windows.h>
+#include "../system/file.h"
+#include "../utilities/assertion.h"
 
 namespace SE3D {
 
@@ -20,10 +21,11 @@ namespace SE3D {
 			CloseHandle(fileHandle);
 			return FILE{ 0,nullptr };
 		}
-
+		Assert(fileSize <= MAX_UINT32)
+		
 		void* buffer = new BYTE[fileSize+1];
 		DWORD bRead;
-		if (ReadFile(fileHandle, buffer, fileSize, &bRead, 0) && (bRead == fileSize))
+		if (ReadFile(fileHandle, buffer, static_cast<uint32>(fileSize), &bRead, 0) && (bRead == fileSize))
 		{
 			CloseHandle(fileHandle);
 			return FILE{ fileSize,buffer };
@@ -72,7 +74,7 @@ namespace SE3D {
 		}
 	}
 
-	uint64_t File::GetSize(const char * filePath)
+	uint64 File::GetSize(const char * filePath)
 	{
 		HANDLE fileHandle = CreateFile(filePath, GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0);
 		if (fileHandle == INVALID_HANDLE_VALUE)

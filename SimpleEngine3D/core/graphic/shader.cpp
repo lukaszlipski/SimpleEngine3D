@@ -22,7 +22,7 @@ namespace SE3D {
 		glGetShaderiv(vShader, GL_COMPILE_STATUS, &success);
 		if (!success)
 		{
-			glGetShaderInfoLog(vShader, 512, NULL, infoLog);
+			glGetShaderInfoLog(vShader, 512, 0, infoLog);
 			// TODO: Add to log
 			m_Program = -1;
 			File::GetInstance().Delete(vsFile);
@@ -35,7 +35,7 @@ namespace SE3D {
 		glCompileShader(fShader);
 		if (!success)
 		{
-			glGetShaderInfoLog(fShader, 512, NULL, infoLog);
+			glGetShaderInfoLog(fShader, 512, 0, infoLog);
 			// TODO: Add to log
 			m_Program = -1;
 			File::GetInstance().Delete(vsFile);
@@ -50,7 +50,7 @@ namespace SE3D {
 		glLinkProgram(m_Program);
 		if (!success)
 		{
-			glGetProgramInfoLog(m_Program, 512, NULL, infoLog);
+			glGetProgramInfoLog(m_Program, 512, 0, infoLog);
 			// TODO: Add to log
 			m_Program = -1;
 			File::GetInstance().Delete(vsFile);

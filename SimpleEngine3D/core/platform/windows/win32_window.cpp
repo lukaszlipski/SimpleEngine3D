@@ -111,18 +111,6 @@ namespace SE3D {
 
 		switch (uMsg)
 		{
-			//case WM_SIZE:
-			//{
-			//	RECT ClientRect;
-			//	GetClientRect(hwnd, &ClientRect);
-			//	int Height = ClientRect.bottom - ClientRect.top;
-			//	int Width = ClientRect.right - ClientRect.left;
-
-			//	// TODO: Add DirectX
-			//	Win32_Opengl::PlatformResize(Width, Height);
-			//	
-			//	break;
-			//}
 		case WM_DESTROY:
 		{
 			//PostQuitMessage(0);

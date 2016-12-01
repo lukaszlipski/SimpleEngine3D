@@ -10,6 +10,7 @@
 
 // debug
 #include <stdio.h>
+
 using namespace SE3D;
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)

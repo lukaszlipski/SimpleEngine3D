@@ -6,19 +6,22 @@ namespace SE3D {
 	{
 		if (key < 1024 && key >= 0)
 			return m_Keyboard[key];
+		return false;
 	}
 
 	bool Win32_Input::getMouseButton(byte mouse)
 	{
-		return m_Mouse[mouse];
+		if(mouse < 4 && mouse >=0)
+			return m_Mouse[mouse];
+		return false;
 	}
 
-	short Win32_Input::getMousePositionX()
+	int16 Win32_Input::getMousePositionX()
 	{
 		return m_MousePositionX;
 	}
 
-	short Win32_Input::getMousePositionY()
+	int16 Win32_Input::getMousePositionY()
 	{
 		return m_MousePositionY;
 	}
@@ -75,11 +78,10 @@ namespace SE3D {
 		}
 		case WM_MOUSEMOVE:
 		{
-			m_MousePositionX = Message.lParam;
-			m_MousePositionY = Message.lParam >> 16;
+			m_MousePositionX = static_cast<int16>(Message.lParam);
+			m_MousePositionY = static_cast<int16>(Message.lParam >> 16);
 			break;
 		}
-
 
 		}
 
