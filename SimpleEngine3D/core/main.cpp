@@ -7,6 +7,7 @@
 #include "utilities/image.h"
 #include "graphic/shader.h"
 #include "utilities/assertion.h"
+#include "math/vector2d.h"
 
 // debug
 #include <stdio.h>

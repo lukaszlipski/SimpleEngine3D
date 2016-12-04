@@ -45,6 +45,9 @@
     <ClCompile Include="core\graphic\shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\math\vector2d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\platform\opengl\win32_opengl.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\utilities\types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\math\vector2d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

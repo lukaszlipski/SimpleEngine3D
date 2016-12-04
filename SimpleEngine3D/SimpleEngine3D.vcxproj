@@ -121,6 +121,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="core\graphic\shader.cpp" />
+    <ClCompile Include="core\math\vector2d.cpp" />
     <ClCompile Include="core\system\file.cpp" />
     <ClCompile Include="core\system\window.cpp" />
     <ClCompile Include="core\main.cpp" />
@@ -133,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\graphic\shader.h" />
+    <ClInclude Include="core\math\vector2d.h" />
     <ClInclude Include="core\system\file.h" />
     <ClInclude Include="core\system\timer.h" />
     <ClInclude Include="core\system\window.h" />
