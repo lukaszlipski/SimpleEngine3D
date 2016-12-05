@@ -7,7 +7,7 @@
 #include "utilities/image.h"
 #include "graphic/shader.h"
 #include "utilities/assertion.h"
-#include "math/vector2d.h"
+#include "math/math.h"
 
 // debug
 #include <stdio.h>
@@ -46,7 +46,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 	//glUseProgram(sProgram);
-
+	
 	// -------------------------------------------
 
 	
