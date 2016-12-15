@@ -10,18 +10,18 @@ namespace SE3D {
 		Vector2D();
 		Vector2D(float a,float b);
 
-		float Length();
-		float LengthSquared();
-		float Dot(const Vector2D& right);
-		Vector2D Normalize();
+		float Length() const;
+		float LengthSquared() const;
+		float Dot(const Vector2D& right) const;
+		Vector2D Normalize() const;
 
-		Vector2D operator+(const Vector2D& right);
-		Vector2D operator-(const Vector2D& right);
+		friend Vector2D operator+(Vector2D left, const Vector2D& right);
+		friend Vector2D operator-(Vector2D left, const Vector2D& right);
 
-		Vector2D operator+(float s);
-		Vector2D operator-(float s);
-		Vector2D operator*(float s);
-		Vector2D operator/(float s);
+		friend Vector2D operator+(Vector2D left, float s);
+		friend Vector2D operator-(Vector2D left, float s);
+		friend Vector2D operator*(Vector2D left, float s);
+		friend Vector2D operator/(Vector2D left, float s);
 
 		Vector2D& operator+=(const Vector2D& right);
 		Vector2D& operator-=(const Vector2D& right);
@@ -31,7 +31,8 @@ namespace SE3D {
 		Vector2D& operator*=(float s);
 		Vector2D& operator/=(float s);
 
-		bool operator==(const Vector2D& right);
+		friend bool operator==(Vector2D left, const Vector2D& right);
+		friend bool operator!=(Vector2D left, const Vector2D& right);
 	};
 
 }

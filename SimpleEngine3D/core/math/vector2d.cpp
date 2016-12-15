@@ -13,22 +13,22 @@ namespace SE3D {
 	{
 	}
 
-	float Vector2D::Length()
+	float Vector2D::Length() const
 	{
 		return sqrtf(x*x + y*y);
 	}
 
-	float Vector2D::LengthSquared()
+	float Vector2D::LengthSquared() const
 	{
 		return x*x + y*y;
 	}
 
-	float Vector2D::Dot(const Vector2D & right)
+	float Vector2D::Dot(const Vector2D & right) const
 	{
 		return (this->x * right.x) + (this->y * right.y);
 	}
 
-	Vector2D Vector2D::Normalize()
+	Vector2D Vector2D::Normalize() const
 	{
 		Vector2D newVec(this->x, this->y);
 		float length = this->Length();
@@ -37,34 +37,34 @@ namespace SE3D {
 		return newVec;
 	}
 
-	Vector2D Vector2D::operator+(const Vector2D & right)
+	Vector2D operator+(Vector2D left, const Vector2D & right)
 	{
-		return Vector2D(x + right.x, y + right.y);
+		return Vector2D(left.x + right.x, left.y + right.y);
 	}
 
-	Vector2D Vector2D::operator-(const Vector2D & right)
+	Vector2D operator-(Vector2D left, const Vector2D & right)
 	{
-		return Vector2D(x - right.x, y - right.y);
+		return Vector2D(left.x - right.x, left.y - right.y);
 	}
 
-	Vector2D Vector2D::operator+(float s)
+	Vector2D operator+(Vector2D left, float s)
 	{
-		return Vector2D(x + s,y + s);
+		return Vector2D(left.x + s, left.y + s);
 	}
 
-	Vector2D Vector2D::operator-(float s)
+	Vector2D operator-(Vector2D left, float s)
 	{
-		return Vector2D(x - s, y - s);
+		return Vector2D(left.x - s, left.y - s);
 	}
 
-	Vector2D Vector2D::operator*(float s)
+	Vector2D operator*(Vector2D left, float s)
 	{
-		return Vector2D(x * s, y * s);
+		return Vector2D(left.x * s, left.y * s);
 	}
 
-	Vector2D Vector2D::operator/(float s)
+	Vector2D operator/(Vector2D left, float s)
 	{
-		return Vector2D(x / s, y / s);
+		return Vector2D(left.x / s, left.y / s);
 	}
 
 	Vector2D & Vector2D::operator+=(const Vector2D & right)
@@ -109,9 +109,14 @@ namespace SE3D {
 		return *this;
 	}
 
-	bool Vector2D::operator==(const Vector2D & right)
+	bool operator==(Vector2D left, const Vector2D & right)
 	{
-		return (this->x == right.x && this->y == right.y);
+		return (left.x == right.x && left.y == right.y);
+	}
+
+	bool operator!=(Vector2D left, const Vector2D & right)
+	{
+		return !(left == right);
 	}
 
 }

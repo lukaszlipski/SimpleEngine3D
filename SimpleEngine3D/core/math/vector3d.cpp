@@ -18,22 +18,22 @@ namespace SE3D {
 	{
 	}
 
-	float Vector3D::Length()
+	float Vector3D::Length() const
 	{
 		return sqrtf(x*x + y*y + z*z);
 	}
 
-	float Vector3D::LengthSquared()
+	float Vector3D::LengthSquared() const
 	{
 		return x*x + y*y + z*z;
 	}
 
-	float Vector3D::Dot(const Vector3D & right)
+	float Vector3D::Dot(const Vector3D & right) const
 	{
 		return (this->x * right.x) + (this->y * right.y) + (this->z * right.z);
 	}
 
-	Vector3D Vector3D::Normalize()
+	Vector3D Vector3D::Normalize() const
 	{
 		Vector3D newVec(this->x, this->y, this->z);
 		float length = this->Length();
@@ -42,39 +42,39 @@ namespace SE3D {
 		return newVec;
 	}
 
-	Vector3D Vector3D::Cross(const Vector3D & right)
+	Vector3D Vector3D::Cross(const Vector3D & right) const
 	{
 		return Vector3D(this->y*right.z - this->z*right.y,this->z*right.x-this->x*right.z,this->x*right.y-this->y*right.x);
 	}
 
-	Vector3D Vector3D::operator+(const Vector3D & right)
+	Vector3D operator+(Vector3D left, const Vector3D & right)
 	{
-		return Vector3D(x + right.x, y + right.y, z + right.z);
+		return Vector3D(left.x + right.x, left.y + right.y, left.z + right.z);
 	}
 
-	Vector3D Vector3D::operator-(const Vector3D & right)
+	Vector3D operator-(Vector3D left, const Vector3D & right)
 	{
-		return Vector3D(x - right.x, y - right.y,z - right.z);
+		return Vector3D(left.x - right.x, left.y - right.y,left.z - right.z);
 	}
 
-	Vector3D Vector3D::operator+(float s)
+	Vector3D operator+(Vector3D left, float s)
 	{
-		return Vector3D(x + s, y + s, z + s);
+		return Vector3D(left.x + s, left.y + s, left.z + s);
 	}
 
-	Vector3D Vector3D::operator-(float s)
+	Vector3D operator-(Vector3D left, float s)
 	{
-		return Vector3D(x - s, y - s, z - s);
+		return Vector3D(left.x - s, left.y - s, left.z - s);
 	}
 
-	Vector3D Vector3D::operator*(float s)
+	Vector3D operator*(Vector3D left, float s)
 	{
-		return Vector3D(x * s, y * s, z * s);
+		return Vector3D(left.x * s, left.y * s, left.z * s);
 	}
 
-	Vector3D Vector3D::operator/(float s)
+	Vector3D operator/(Vector3D left, float s)
 	{
-		return Vector3D(x / s, y / s, z / s);
+		return Vector3D(left.x / s, left.y / s, left.z / s);
 	}
 
 	Vector3D & Vector3D::operator+=(const Vector3D & right)
@@ -125,9 +125,14 @@ namespace SE3D {
 		return *this;
 	}
 
-	bool Vector3D::operator==(const Vector3D & right)
+	bool operator==(Vector3D left, const Vector3D & right)
 	{
-		return (this->x == right.x && this->y == right.y && this->z == right.z);
+		return (left.x == right.x && left.y == right.y && left.z == right.z);
+	}
+
+	bool operator!=(Vector3D left, const Vector3D & right)
+	{
+		return !(left == right);
 	}
 
 }
