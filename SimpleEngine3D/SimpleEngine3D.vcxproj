@@ -120,6 +120,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="core\containers\dynamic_array.cpp" />
     <ClCompile Include="core\graphic\shader.cpp" />
     <ClCompile Include="core\math\matrix4d.cpp" />
     <ClCompile Include="core\math\vector2d.cpp" />
@@ -136,6 +137,7 @@
     <ClCompile Include="core\utilities\image.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="core\containers\dynamic_array.h" />
     <ClInclude Include="core\graphic\shader.h" />
     <ClInclude Include="core\math\math.h" />
     <ClInclude Include="core\math\matrix4d.h" />

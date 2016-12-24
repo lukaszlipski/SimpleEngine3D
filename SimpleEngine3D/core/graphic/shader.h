@@ -9,6 +9,7 @@ namespace SE3D {
 		GLuint m_Program;
 	public:
 		Shader(const char* filePathVS, const char* filePathFS);
+		~Shader();
 		void Bind();
 		void Unbind();
 	};

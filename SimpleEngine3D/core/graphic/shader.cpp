@@ -66,6 +66,11 @@ namespace SE3D {
 
 	}
 
+	Shader::~Shader()
+	{
+		glDeleteProgram(m_Program);
+	}
+
 	void Shader::Bind()
 	{
 		glUseProgram(m_Program);

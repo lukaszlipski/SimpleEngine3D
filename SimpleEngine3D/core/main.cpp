@@ -1,6 +1,7 @@
 //if Windows
 #include <Windows.h>
 
+#include "utilities/types.h"
 #include "system/window.h"
 #include "system/timer.h"
 #include "system/file.h"
@@ -8,6 +9,7 @@
 #include "graphic/shader.h"
 #include "utilities/assertion.h"
 #include "math/math.h"
+#include "containers/dynamic_array.h"
 
 // debug
 #include <stdio.h>
@@ -21,7 +23,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	win.Init("Lukasz Lipski : SimpleEngine3D",1024,720,hInstance);
 	Timer timer;
 	//Image img("C:/Programowanie/CPP/testps.bmp");
-
+	
 	win.SetCursor(true);
 	win.SetFullScreen(false);
 	//win.SetWindowSize(800, 600);

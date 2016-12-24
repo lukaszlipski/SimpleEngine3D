@@ -57,6 +57,9 @@
     <ClCompile Include="core\math\matrix4d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\containers\dynamic_array.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\platform\opengl\win32_opengl.h">
@@ -99,6 +102,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\math\matrix4d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\containers\dynamic_array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
