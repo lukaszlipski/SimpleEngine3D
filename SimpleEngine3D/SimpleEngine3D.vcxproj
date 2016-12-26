@@ -120,7 +120,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="core\containers\dynamic_array.cpp" />
     <ClCompile Include="core\graphic\shader.cpp" />
     <ClCompile Include="core\math\matrix4d.cpp" />
     <ClCompile Include="core\math\vector2d.cpp" />
@@ -135,6 +134,8 @@
     <ClCompile Include="core\platform\windows\win32_timer.cpp" />
     <ClCompile Include="core\platform\windows\win32_window.cpp" />
     <ClCompile Include="core\utilities\image.cpp" />
+    <ClCompile Include="core\utilities\obj_loader.cpp" />
+    <ClCompile Include="core\utilities\string.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\containers\dynamic_array.h" />
@@ -151,6 +152,8 @@
     <ClInclude Include="core\platform\windows\win32_input.h" />
     <ClInclude Include="core\utilities\assertion.h" />
     <ClInclude Include="core\utilities\image.h" />
+    <ClInclude Include="core\utilities\obj_loader.h" />
+    <ClInclude Include="core\utilities\string.h" />
     <ClInclude Include="core\utilities\types.h" />
   </ItemGroup>
   <ItemGroup>

@@ -57,7 +57,10 @@
     <ClCompile Include="core\math\matrix4d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="core\containers\dynamic_array.cpp">
+    <ClCompile Include="core\utilities\obj_loader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="core\utilities\string.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -98,13 +101,19 @@
     <ClInclude Include="core\math\math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="core\math\vector4d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="core\math\matrix4d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\containers\dynamic_array.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\utilities\obj_loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\utilities\string.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\math\vector4d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
