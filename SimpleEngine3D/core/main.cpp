@@ -10,6 +10,8 @@
 #include "utilities/assertion.h"
 #include "math/math.h"
 #include "containers/dynamic_array.h"
+#include "utilities/obj_loader.h"
+#include "utilities/string.h"
 
 // debug
 #include <stdio.h>
@@ -23,6 +25,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	win.Init("Lukasz Lipski : SimpleEngine3D",1024,720,hInstance);
 	Timer timer;
 	//Image img("C:/Programowanie/CPP/testps.bmp");
+	OBJLoader a("C:/Programowanie/CPP/monkeyTriangulate.obj");
 	
 	win.SetCursor(true);
 	win.SetFullScreen(false);

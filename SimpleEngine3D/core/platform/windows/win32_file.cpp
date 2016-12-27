@@ -9,17 +9,17 @@ namespace SE3D {
 	{
 		HANDLE fileHandle = CreateFile(filePath, GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0);
 		if (fileHandle == INVALID_HANDLE_VALUE)
-			return FILE{ 0,nullptr };
+			return FILE{ 0,nullptr,nullptr };
 
 		LARGE_INTEGER fileSizeStruct;
 		if (!GetFileSizeEx(fileHandle, &fileSizeStruct))
-			return FILE{ 0,nullptr };
+			return FILE{ 0,nullptr,nullptr };
 
 		UINT64 fileSize = fileSizeStruct.QuadPart;
 		if (fileSize == 0)
 		{
 			CloseHandle(fileHandle);
-			return FILE{ 0,nullptr };
+			return FILE{ 0,nullptr,nullptr };
 		}
 		Assert(fileSize <= MAX_UINT32)
 		
@@ -28,13 +28,13 @@ namespace SE3D {
 		if (ReadFile(fileHandle, buffer, static_cast<uint32>(fileSize), &bRead, 0) && (bRead == fileSize))
 		{
 			CloseHandle(fileHandle);
-			return FILE{ fileSize,buffer };
+			return FILE{ fileSize,buffer,(char*)buffer };
 		}
 		else
 		{
 			CloseHandle(fileHandle);
 			delete buffer;
-			return FILE{ 0,nullptr };
+			return FILE{ 0,nullptr,nullptr };
 		}
 	}
 

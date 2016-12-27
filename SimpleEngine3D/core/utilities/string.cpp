@@ -94,6 +94,11 @@ namespace SE3D {
 		return String::ToInt32(this->CString());
 	}
 
+	uint32 String::ToUInt32() const
+	{
+		return String::ToUInt32(this->CString());
+	}
+
 	float String::ToFloat(const char * string)
 	{
 		if (!string) { return 0; }
@@ -141,7 +146,7 @@ namespace SE3D {
 	{
 		if (!string) { return 0; }
 		const char *tmp = string;
-		float intPart = 0;
+		int32 intPart = 0;
 		int32 sign = 1;
 
 		if (tmp[0] == '-')
@@ -159,8 +164,25 @@ namespace SE3D {
 		}
 
 		return sign * intPart;
+	}
 
+	uint32 String::ToUInt32(const char * string)
+	{
+		if (!string) { return 0; }
+		const char *tmp = string;
+		uint32 intPart = 0;
 
+		if (tmp[0] == '-') { tmp++; }
+		else if (tmp[0] == '+') { tmp++; }
+
+		while (*tmp != '\0')
+		{
+			if (*tmp >= '0' && *tmp <= '9') { intPart = intPart * 10 + (*tmp - '0'); }
+			else { return intPart; }
+			tmp++;
+		}
+
+		return intPart;
 	}
 
 }
