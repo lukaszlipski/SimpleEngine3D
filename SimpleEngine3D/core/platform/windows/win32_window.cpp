@@ -1,12 +1,12 @@
 #include "../system/window.h"
-#include <Windows.h>
+#include "../system/graphics.h"
 
 namespace SE3D {
 
 	LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	bool Window::m_IsRunning = true;
 
-	bool Window::Init(const char * title, int width, int height, HINSTANCE hInstance)
+	bool Window::Startup(const char * title, int width, int height, HINSTANCE hInstance)
 	{
 		m_FullScreen = false;
 		m_VSync = 1;
@@ -29,31 +29,10 @@ namespace SE3D {
 
 		GetWindowPlacement(m_WindowHandle, &m_WindowPreviousPosition);
 
-		// TODO: function for choosing version number & choosing opengl
-		m_GraphicsAPI.PlatformSetOpenGlVersion(3, 3);
-		m_GraphicsAPI.PlatformInit(m_WindowHandle,width,height);
-
 		return true;
 	}
 
-	void Window::ProcessInput()
-	{
-		MSG Message;
-		while (PeekMessage(&Message, 0, 0, 0, PM_REMOVE))
-		{
-			if (Message.message == WM_QUIT)
-				m_IsRunning = false;
-
-			m_Input.ProcessInput(Message);
-
-
-			TranslateMessage(&Message);
-			DispatchMessageA(&Message);
-
-		}
-	}
-
-	void Window::Terminate()
+	void Window::Shutdown()
 	{
 		PostQuitMessage(0);
 		DestroyWindow(m_WindowHandle);
@@ -71,14 +50,14 @@ namespace SE3D {
 				SetWindowLong(m_WindowHandle, GWL_STYLE, dwStyle & ~WS_OVERLAPPEDWINDOW);
 				SetWindowPos(m_WindowHandle, HWND_TOP, mi.rcMonitor.left, mi.rcMonitor.top, mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top, SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
 			}
-			m_GraphicsAPI.PlatformResize(mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top);
+			Graphics::GetInstance().Resize(mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top);
 		}
 		else
 		{
 			SetWindowLong(m_WindowHandle, GWL_STYLE, dwStyle | WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX);
 			SetWindowPlacement(m_WindowHandle, &m_WindowPreviousPosition);
 			SetWindowPos(m_WindowHandle, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
-			m_GraphicsAPI.PlatformResize(m_Width, m_Height);
+			Graphics::GetInstance().Resize(m_Width, m_Height);
 		}
 	}
 
@@ -93,7 +72,7 @@ namespace SE3D {
 
 		SetWindowPos(m_WindowHandle, NULL, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
 		GetWindowPlacement(m_WindowHandle, &m_WindowPreviousPosition);
-		m_GraphicsAPI.PlatformResize(width, height);
+		Graphics::GetInstance().Resize(width, height);
 
 		if (wasFS)
 			SetFullScreen(true);

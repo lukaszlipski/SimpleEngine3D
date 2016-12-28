@@ -1,11 +1,12 @@
-#include "win32_opengl.h"
-//#include <gl/GL.h>
+#include "../system/graphics.h"
+#include "../system/window.h"
 
 namespace SE3D {
 
-	bool Win32_Opengl::PlatformInit(HWND hwnd, int width, int height)
+	bool Graphics::Startup(GLubyte major, GLubyte minor)
 	{
-		m_Hwnd = hwnd;
+		m_MajorVersion = major;
+		m_MinorVersion = minor;
 
 		PIXELFORMATDESCRIPTOR DesiredPixelFormat = {};
 		DesiredPixelFormat.nSize = sizeof(DesiredPixelFormat);
@@ -19,7 +20,7 @@ namespace SE3D {
 		DesiredPixelFormat.iLayerType = PFD_MAIN_PLANE;
 
 
-		HDC WindowDC = GetDC(hwnd);
+		HDC WindowDC = GetDC(Window::GetInstance().GetWindowHandle());
 
 		int SuggestedPixelFormatIndex = ChoosePixelFormat(WindowDC, &DesiredPixelFormat);
 		PIXELFORMATDESCRIPTOR SuggestedPixelFormat = {};
@@ -55,33 +56,27 @@ namespace SE3D {
 		else
 			return false;
 
-		PlatformSetVSync(1);
-		glViewport(0, 0, width, height);
+		SetVSync(1);
+		glViewport(0, 0, Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
 
-		ReleaseDC(hwnd, WindowDC);
+		ReleaseDC(Window::GetInstance().GetWindowHandle(), WindowDC);
 
 		return true;
 	}
 
-	void Win32_Opengl::PlatformUpdate()
+	void Graphics::Update()
 	{
-		HDC WindowDC = GetDC(m_Hwnd);
+		HDC WindowDC = GetDC(Window::GetInstance().GetWindowHandle());
 		SwapBuffers(WindowDC);
-		ReleaseDC(m_Hwnd, WindowDC);
+		ReleaseDC(Window::GetInstance().GetWindowHandle(), WindowDC);
 	}
 
-	void Win32_Opengl::PlatformSetOpenGlVersion(GLubyte major, GLubyte minor)
+	void Graphics::Shutdown()
 	{
-		m_MajorVersion = major;
-		m_MinorVersion = minor;
-	}
-
-	Win32_Opengl::~Win32_Opengl()
-	{
-		HDC WindowDC = GetDC(m_Hwnd);
+		HDC WindowDC = GetDC(Window::GetInstance().GetWindowHandle());
 		wglMakeCurrent(WindowDC, NULL);
 		wglDeleteContext(m_OpenGLRC);
-		ReleaseDC(m_Hwnd, WindowDC);
+		ReleaseDC(Window::GetInstance().GetWindowHandle(), WindowDC);
 	}
 
 }

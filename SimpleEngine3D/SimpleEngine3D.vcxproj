@@ -126,7 +126,7 @@
     <ClCompile Include="core\math\vector3d.cpp" />
     <ClCompile Include="core\math\vector4d.cpp" />
     <ClCompile Include="core\system\file.cpp" />
-    <ClCompile Include="core\system\window.cpp" />
+    <ClCompile Include="core\system\input.cpp" />
     <ClCompile Include="core\main.cpp" />
     <ClCompile Include="core\platform\opengl\win32_opengl.cpp" />
     <ClCompile Include="core\platform\windows\win32_file.cpp" />
@@ -146,10 +146,10 @@
     <ClInclude Include="core\math\vector3d.h" />
     <ClInclude Include="core\math\vector4d.h" />
     <ClInclude Include="core\system\file.h" />
+    <ClInclude Include="core\system\graphics.h" />
+    <ClInclude Include="core\system\input.h" />
     <ClInclude Include="core\system\timer.h" />
     <ClInclude Include="core\system\window.h" />
-    <ClInclude Include="core\platform\opengl\win32_opengl.h" />
-    <ClInclude Include="core\platform\windows\win32_input.h" />
     <ClInclude Include="core\utilities\assertion.h" />
     <ClInclude Include="core\utilities\image.h" />
     <ClInclude Include="core\utilities\obj_loader.h" />

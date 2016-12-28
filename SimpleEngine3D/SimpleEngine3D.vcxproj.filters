@@ -33,9 +33,6 @@
     <ClCompile Include="core\platform\windows\win32_timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="core\system\window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="core\utilities\image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,14 +60,11 @@
     <ClCompile Include="core\utilities\string.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\system\input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core\platform\opengl\win32_opengl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="core\platform\windows\win32_input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="core\system\window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -114,6 +108,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\math\vector4d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\system\input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\system\graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

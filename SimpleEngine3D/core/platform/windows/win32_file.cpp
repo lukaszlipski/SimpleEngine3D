@@ -4,7 +4,6 @@
 
 namespace SE3D {
 
-
 	FILE File::ReadSync(const char * filePath)
 	{
 		HANDLE fileHandle = CreateFile(filePath, GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, 0, 0);

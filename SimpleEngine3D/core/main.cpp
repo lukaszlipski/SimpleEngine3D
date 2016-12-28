@@ -3,6 +3,8 @@
 
 #include "utilities/types.h"
 #include "system/window.h"
+#include "system/graphics.h"
+#include "system/input.h"
 #include "system/timer.h"
 #include "system/file.h"
 #include "utilities/image.h"
@@ -20,16 +22,18 @@ using namespace SE3D;
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	Window win;
-
-	win.Init("Lukasz Lipski : SimpleEngine3D",1024,720,hInstance);
+	File::GetInstance().Startup();
+	Window::GetInstance().Startup("Lukasz Lipski : SimpleEngine3D",1024,720,hInstance);
+	Graphics::GetInstance().Startup(3, 3);
+	Input::GetInstance().Startup();
 	Timer timer;
+
 	//Image img("C:/Programowanie/CPP/testps.bmp");
-	OBJLoader a("C:/Programowanie/CPP/monkeyTriangulate.obj");
+	//OBJLoader a("C:/Programowanie/CPP/monkeyTriangulate.obj");
 	
-	win.SetCursor(true);
-	win.SetFullScreen(false);
-	//win.SetWindowSize(800, 600);
+	Window::GetInstance().SetCursor(true);
+	Window::GetInstance().SetFullScreen(false);
+	//Window::GetInstance().SetWindowSize(800, 600);
 
 	// ---------- TEST OPENGL INIT --------------
 	GLfloat vertices[] = {
@@ -56,20 +60,20 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	
 	timer.Init();
-	while (!win.ShouldWindowClose())
+	while (!Window::GetInstance().ShouldWindowClose())
 	{
-		win.Clear();
-		win.ProcessInput();
+		Graphics::GetInstance().Clear();
+		Input::GetInstance().Update();
 
-		if (win.GetMouseButton(0))
+		if (Input::GetInstance().GetMouseButton(0))
 			OutputDebugString("!");
 
 		char Buffer[256];
 		sprintf_s(Buffer,"TimeElapsed: %f\n",timer.TimeSEC());
 		OutputDebugString(Buffer);
 
-		short x = win.GetMousePositionX();
-		short y = win.GetMousePositionY();
+		int16 x = Input::GetInstance().GetMousePositionX();
+		int16 y = Input::GetInstance().GetMousePositionY();
 
 		// ---------- TEST OPENGL UPDATE --------------
 		test.Bind();
@@ -80,11 +84,14 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		// -------------------------------------------
 
 
-		win.SwapBuffers();
+		Graphics::GetInstance().Update();
 		timer.Update();
 	}
 
-	win.Terminate();
+	Input::GetInstance().Shutown();
+	Graphics::GetInstance().Shutdown();
+	Window::GetInstance().Shutdown();
+	File::GetInstance().Shutdown();
 
 	return EXIT_SUCCESS;
 }

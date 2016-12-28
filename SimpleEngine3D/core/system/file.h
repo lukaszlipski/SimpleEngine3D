@@ -38,6 +38,8 @@ namespace SE3D {
 			return *instance;
 		}
 
+		bool Startup();
+		void Shutdown();
 		FILE ReadSync(const char * filePath);
 		FILE ReadTextSync(const char * filePath);
 		bool WriteSync(const char* filePath, void* buffer, unsigned int bufferSize);

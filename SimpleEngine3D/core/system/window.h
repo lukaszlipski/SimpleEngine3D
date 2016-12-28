@@ -1,7 +1,6 @@
 #pragma once
 //if Windows
-#include "../platform/windows/win32_input.h"
-#include "../platform/opengl/win32_opengl.h"
+#include <Windows.h>
 
 #include "../utilities/types.h"
 
@@ -10,49 +9,39 @@ namespace SE3D {
 	class Window {
 
 	private:
-
 		//if Windows
-		Win32_Input m_Input;
-		Win32_Opengl m_GraphicsAPI;
 		WINDOWPLACEMENT m_WindowPreviousPosition = { sizeof(m_WindowPreviousPosition) };
 		HWND m_WindowHandle;
 
-		int m_Width;
-		int m_Height;
+		int32 m_Width;
+		int32 m_Height;
 		int16 m_VSync;
 		bool m_Cursor;
 		bool m_FullScreen;
 		static bool m_IsRunning;
+		Window() {}
 
 	public:
-		// Window
-		bool Init(const char * title, int width, int height, HINSTANCE hInstance);
+		static Window& GetInstance()
+		{
+			static Window *instance = new Window();
+			return *instance;
+		}
+		bool Startup(const char * title, int width, int height, HINSTANCE hInstance);
+		void Shutdown();
 		void SetCursor(bool cursor);
 		void SetFullScreen(bool fs);
 		void SetWindowSize(int width, int height);
-		void ProcessInput();
-		void Terminate();
+		inline int32 GetSizeX() { return m_Width; }
+		inline int32 GetSizeY() { return m_Height; }
 		inline bool ShouldWindowClose() { return !m_IsRunning; }
+		inline void CloseWindow() { m_IsRunning = false; }
+
+		// if Windows
+		inline HWND GetWindowHandle() { return m_WindowHandle; }
+
 	private:
 		friend LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
-	public:
-		// Input
-		inline bool GetKey(const char key) { return m_Input.getKey(key); }
-		/**
-		Left mouse button - 0
-		Right mouse button - 1
-		Middle mouse button - 2
-		*/
-		inline bool GetMouseButton(const byte mouse) { return m_Input.getMouseButton(mouse); }
-		inline int16 GetMousePositionX() { return m_Input.getMousePositionX(); }
-		inline int16 GetMousePositionY() { return m_Input.getMousePositionY(); }
-
-
-		// Graphics
-		void SetVSync(int16 vsync);
-		inline void Clear() { m_GraphicsAPI.PlatformClear(); }
-		inline void SwapBuffers() { m_GraphicsAPI.PlatformUpdate(); }
 
 	};
 

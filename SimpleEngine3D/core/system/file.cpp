@@ -2,6 +2,14 @@
 
 namespace SE3D {
 
+	bool File::Startup()
+	{
+		return true;
+	}
+	void File::Shutdown()
+	{
+	}
+
 	LINE File::GetLine(FILE& file)
 	{
 		LINE line;
