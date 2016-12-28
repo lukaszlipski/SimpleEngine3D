@@ -23,14 +23,14 @@ using namespace SE3D;
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	File::GetInstance().Startup();
-	Window::GetInstance().Startup("Lukasz Lipski : SimpleEngine3D",1024,720,hInstance);
-	Graphics::GetInstance().Startup(3, 3);
+	Window::GetInstance().Startup("Lukasz Lipski : SimpleEngine3D", 1024, 720, hInstance);
+	Graphics::GetInstance().Startup();
 	Input::GetInstance().Startup();
 	Timer timer;
 
 	//Image img("C:/Programowanie/CPP/testps.bmp");
 	//OBJLoader a("C:/Programowanie/CPP/monkeyTriangulate.obj");
-	
+
 	Window::GetInstance().SetCursor(true);
 	Window::GetInstance().SetFullScreen(false);
 	//Window::GetInstance().SetWindowSize(800, 600);
@@ -39,7 +39,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	GLfloat vertices[] = {
 		-0.5f, -0.5f, 0.0f,
 		0.5f, -0.5f, 0.0f,
-		0.0f,  0.5f, 0.0f
+		0.0f, 0.5f, 0.0f
 	};
 
 	Shader test("C:/Programowanie/CPP/SimpleEngine3D/SimpleEngine3D/core/graphic/shaders/shader.vs", "C:/Programowanie/CPP/SimpleEngine3D/SimpleEngine3D/core/graphic/shaders/shader.fs");
@@ -50,15 +50,15 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), static_cast<GLvoid*>(0));
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 	//glUseProgram(sProgram);
-	
+
 	// -------------------------------------------
 
-	
+
 	timer.Init();
 	while (!Window::GetInstance().ShouldWindowClose())
 	{
@@ -66,10 +66,10 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		Input::GetInstance().Update();
 
 		if (Input::GetInstance().GetMouseButton(0))
-			OutputDebugString("!");
+		OutputDebugString("!");
 
 		char Buffer[256];
-		sprintf_s(Buffer,"TimeElapsed: %f\n",timer.TimeSEC());
+		sprintf_s(Buffer, "TimeElapsed: %f\n", timer.TimeSEC());
 		OutputDebugString(Buffer);
 
 		int16 x = Input::GetInstance().GetMousePositionX();

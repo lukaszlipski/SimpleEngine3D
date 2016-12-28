@@ -1,16 +1,15 @@
 #include "shader.h"
 #include "../system/file.h"
 
-namespace SE3D {
-
-	Shader::Shader(const char * filePathVS, const char * filePathFS)
+namespace SE3D
+{
+	Shader::Shader(const char* filePathVS, const char* filePathFS)
 	{
-
 		FILE vsFile = File::GetInstance().ReadTextSync(filePathVS);
 		FILE fsFile = File::GetInstance().ReadTextSync(filePathFS);
 
-		const GLchar* vsSource = (GLchar*)vsFile.Content;
-		const GLchar* fsSource = (GLchar*)fsFile.Content;
+		const GLchar* vsSource = static_cast<GLchar*>(vsFile.Content);
+		const GLchar* fsSource = static_cast<GLchar*>(fsFile.Content);
 
 		GLuint vShader, fShader;
 		GLint success;
@@ -63,7 +62,6 @@ namespace SE3D {
 		glDeleteShader(fShader);
 		File::GetInstance().Delete(vsFile);
 		File::GetInstance().Delete(fsFile);
-
 	}
 
 	Shader::~Shader()
@@ -71,7 +69,7 @@ namespace SE3D {
 		glDeleteProgram(m_Program);
 	}
 
-	void Shader::Bind()
+	void Shader::Bind() const
 	{
 		glUseProgram(m_Program);
 	}
@@ -80,5 +78,4 @@ namespace SE3D {
 	{
 		glUseProgram(0);
 	}
-
 }

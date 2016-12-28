@@ -2,16 +2,17 @@
 #include "../containers/dynamic_array.h"
 #include "../math/math.h"
 
-namespace SE3D {
-
-	struct OBJindex {
+namespace SE3D
+{
+	struct OBJindex
+	{
 		uint32 VertexIndex;
 		uint32 TextCoordIndex;
 		uint32 NormalIndex;
 	};
 
-	class OBJLoader {
-
+	class OBJLoader
+	{
 	private:
 		bool m_HasNormals;
 		bool m_HasTextureCoordinates;
@@ -22,7 +23,5 @@ namespace SE3D {
 	public:
 
 		OBJLoader(const char* path);
-
 	};
-
 }

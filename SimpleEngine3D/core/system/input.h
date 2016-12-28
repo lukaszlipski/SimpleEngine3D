@@ -4,21 +4,24 @@
 #define SE3D_KEYBOARD_KEYS 1024
 #define SE3D_MOUSE_BUTTONS 3
 
-namespace SE3D {
-
-	class Input {
-
+namespace SE3D
+{
+	class Input
+	{
 	private:
 		bool m_Keyboard[SE3D_KEYBOARD_KEYS];
 		bool m_Mouse[SE3D_MOUSE_BUTTONS];
 		int16 m_MousePositionX;
 		int16 m_MousePositionY;
 
-		Input() {}
+		Input()
+		{
+		}
+
 	public:
 		static Input& GetInstance()
 		{
-			static Input *instance = new Input();
+			static Input* instance = new Input();
 			return *instance;
 		}
 
@@ -33,9 +36,7 @@ namespace SE3D {
 		*/
 		bool GetMouseButton(byte mouse);
 
-		int16 GetMousePositionX();
-		int16 GetMousePositionY();
-
+		int16 GetMousePositionX() const;
+		int16 GetMousePositionY() const;
 	};
-
 }

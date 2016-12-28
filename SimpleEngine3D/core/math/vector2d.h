@@ -1,14 +1,14 @@
 #pragma once
 
-namespace SE3D {
-
+namespace SE3D
+{
 	struct Vector2D
 	{
 		float x;
 		float y;
 
 		Vector2D();
-		Vector2D(float a,float b);
+		Vector2D(float a, float b);
 
 		float Length() const;
 		float LengthSquared() const;
@@ -34,5 +34,4 @@ namespace SE3D {
 		friend bool operator==(Vector2D left, const Vector2D& right);
 		friend bool operator!=(Vector2D left, const Vector2D& right);
 	};
-
 }

@@ -2,8 +2,8 @@
 #include "../system/timer.h"
 #include <Windows.h>
 
-namespace SE3D {
-
+namespace SE3D
+{
 	Timer::Timer()
 	{
 		Init();
@@ -22,7 +22,7 @@ namespace SE3D {
 		LARGE_INTEGER CurrentCounter;
 		QueryPerformanceCounter(&CurrentCounter);
 
-		m_Timer = (DOUBLE)(CurrentCounter.QuadPart - m_StartCounter) / (DOUBLE)m_Frequency;
+		m_Timer = static_cast<DOUBLE>(CurrentCounter.QuadPart - m_StartCounter) / static_cast<DOUBLE>(m_Frequency);
 	}
 
 	void Timer::Reset()
@@ -32,14 +32,13 @@ namespace SE3D {
 		m_StartCounter = start.QuadPart;
 	}
 
-	double Timer::TimeMS()
+	double Timer::TimeMS() const
 	{
 		return m_Timer * 1024;
 	}
 
-	double Timer::TimeSEC()
+	double Timer::TimeSEC() const
 	{
 		return m_Timer;
 	}
-
 }

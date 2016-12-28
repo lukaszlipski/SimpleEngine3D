@@ -1,7 +1,8 @@
 #pragma once
 #include "vector2d.h"
 
-namespace SE3D {
+namespace SE3D
+{
 	struct Matrix3D;
 
 	struct Vector3D
@@ -44,5 +45,4 @@ namespace SE3D {
 		friend bool operator==(Vector3D left, const Vector3D& right);
 		friend bool operator!=(Vector3D left, const Vector3D& right);
 	};
-
 }

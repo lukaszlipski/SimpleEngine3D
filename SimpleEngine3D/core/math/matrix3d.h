@@ -3,17 +3,17 @@
 #include "../utilities/types.h"
 #include "vector3d.h"
 
-namespace SE3D {
-
-	struct Matrix3D {
-
+namespace SE3D
+{
+	struct Matrix3D
+	{
 	private:
 		union
 		{
 			Vector3D rows[3];
 			float elements[3 * 3];
 		};
-		
+
 	public:
 		Matrix3D();
 		Matrix3D(const Vector3D& row1, const Vector3D& row2, const Vector3D& row3);
@@ -27,8 +27,20 @@ namespace SE3D {
 		inline float GetElement(int32 index) const { return this->elements[index]; };
 		inline Vector3D GetRow(int32 index) const { return this->rows[index]; }
 		inline Vector3D GetColumn(int32 index) const { return Vector3D(this->elements[index], this->elements[index + 3], this->elements[index + 6]); }
-		inline Matrix3D& SetRow(int32 index,Vector3D row) { this->rows[index] = row; return *this; }
-		inline Matrix3D& SetColumn(int32 index, Vector3D col) { this->elements[index] = col.x; this->elements[index + 3] = col.y; this->elements[index + 6] = col.z; return *this; }
+
+		inline Matrix3D& SetRow(int32 index, Vector3D row)
+		{
+			this->rows[index] = row;
+			return *this;
+		}
+
+		inline Matrix3D& SetColumn(int32 index, Vector3D col)
+		{
+			this->elements[index] = col.x;
+			this->elements[index + 3] = col.y;
+			this->elements[index + 6] = col.z;
+			return *this;
+		}
 
 		Matrix3D& Transpose();
 		Matrix3D& Invert();
@@ -56,6 +68,5 @@ namespace SE3D {
 
 		bool operator==(const Matrix3D& right);
 		bool operator!=(const Matrix3D& right);
-
 	};
 }

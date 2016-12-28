@@ -1,19 +1,19 @@
 #pragma once
 #include "../utilities/types.h"
-#include "../utilities/assertion.h"
 
-namespace SE3D {
-
+namespace SE3D
+{
 	template <class T>
-	class DynamicArray {
-
+	class DynamicArray
+	{
 		uint32 m_Size;
 		uint32 m_Capacity;
 		T* m_Data;
 
 	public:
 
-		DynamicArray() {
+		DynamicArray()
+		{
 			m_Size = 0;
 			m_Capacity = 0;
 			m_Data = nullptr;
@@ -30,13 +30,14 @@ namespace SE3D {
 			}
 
 			uint32 newCap;
-			if (m_Capacity)	{ newCap = ((m_Capacity * 3)/2) + 1; } else { newCap = 1; }
+			if (m_Capacity) { newCap = ((m_Capacity * 3) / 2) + 1; }
+			else { newCap = 1; }
 			T* newData = new T[newCap];
 			for (uint32 i = 0; i < m_Size; i++)
 			{
 				newData[i] = m_Data[i];
 			}
-			
+
 			delete[] m_Data;
 			m_Data = newData;
 			m_Capacity = newCap;
@@ -50,7 +51,7 @@ namespace SE3D {
 			{
 				for (uint32 i = m_Size; i > index; i--)
 				{
-					m_Data[i] = m_Data[i-1];
+					m_Data[i] = m_Data[i - 1];
 				}
 				m_Data[index] = element;
 				m_Size += 1;
@@ -72,14 +73,13 @@ namespace SE3D {
 			newData[index] = element;
 			for (uint32 i = index; i < m_Size; i++)
 			{
-				newData[i+1] = m_Data[i];
+				newData[i + 1] = m_Data[i];
 			}
 
 			m_Size += 1;
 			delete[] m_Data;
 			m_Data = newData;
 			m_Capacity = newCap;
-
 		}
 
 		void Remove(uint32 index)
@@ -112,10 +112,8 @@ namespace SE3D {
 			m_Data = newData;
 		}
 
-		inline uint32 Size() { return m_Size; }
+		inline uint32 Size() const { return m_Size; }
 
 		T& operator[](uint32 index) const { return m_Data[index]; }
-
 	};
-	
 }

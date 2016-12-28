@@ -3,11 +3,11 @@
 #include "math.h"
 #include <math.h>
 
-namespace SE3D {
-
+namespace SE3D
+{
 	Matrix3D::Matrix3D()
 	{
-		for(int16 i=0;i<9;i++)
+		for (int16 i = 0; i < 9; i++)
 		{
 			this->elements[i] = 0;
 		}
@@ -16,7 +16,7 @@ namespace SE3D {
 		this->elements[3 * 2 + 2] = 1;
 	}
 
-	Matrix3D::Matrix3D(const Vector3D & row1, const Vector3D & row2, const Vector3D & row3)
+	Matrix3D::Matrix3D(const Vector3D& row1, const Vector3D& row2, const Vector3D& row3)
 	{
 		this->rows[0] = row1;
 		this->rows[1] = row2;
@@ -32,11 +32,11 @@ namespace SE3D {
 		return identity;
 	}
 
-	Matrix3D Matrix3D::Transpose(const Matrix3D & matrix)
+	Matrix3D Matrix3D::Transpose(const Matrix3D& matrix)
 	{
 		return Matrix3D(Vector3D(matrix.rows[0].x, matrix.rows[1].x, matrix.rows[2].x),
-						Vector3D(matrix.rows[0].y, matrix.rows[1].y, matrix.rows[2].y),
-						Vector3D(matrix.rows[0].z, matrix.rows[1].z, matrix.rows[2].z));
+		                Vector3D(matrix.rows[0].y, matrix.rows[1].y, matrix.rows[2].y),
+		                Vector3D(matrix.rows[0].z, matrix.rows[1].z, matrix.rows[2].z));
 	}
 
 	Matrix3D Matrix3D::Invert(const Matrix3D& matrix)
@@ -55,8 +55,8 @@ namespace SE3D {
 
 		float det = matrix.rows[0].x * invert.elements[0] + matrix.rows[0].y * invert.elements[1] + matrix.rows[0].z * invert.elements[2];
 		Assert(det != 0);
-		
-		return Matrix3D::Transpose(invert) * (1/det);
+
+		return Matrix3D::Transpose(invert) * (1 / det);
 	}
 
 	Matrix3D Matrix3D::Rotate(float angle, const Vector3D& axis)
@@ -211,8 +211,8 @@ namespace SE3D {
 	Vector3D Matrix3D::operator*(const Vector3D& right) const
 	{
 		return Vector3D(this->GetRow(0).x * right.x + this->GetRow(0).y * right.y + this->GetRow(0).z * right.z,
-						this->GetRow(1).x * right.x + this->GetRow(1).y * right.y + this->GetRow(1).z * right.z,
-						this->GetRow(2).x * right.x + this->GetRow(2).y * right.y + this->GetRow(2).z * right.z);
+		                this->GetRow(1).x * right.x + this->GetRow(1).y * right.y + this->GetRow(1).z * right.z,
+		                this->GetRow(2).x * right.x + this->GetRow(2).y * right.y + this->GetRow(2).z * right.z);
 	}
 
 	Matrix3D& Matrix3D::operator+=(const Matrix3D& right)

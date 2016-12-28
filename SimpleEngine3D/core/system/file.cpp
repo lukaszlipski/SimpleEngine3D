@@ -1,11 +1,12 @@
 #include "file.h"
 
-namespace SE3D {
-
+namespace SE3D
+{
 	bool File::Startup()
 	{
 		return true;
 	}
+
 	void File::Shutdown()
 	{
 	}
@@ -20,7 +21,8 @@ namespace SE3D {
 		{
 			line.Length++;
 		}
-		if (*file.Seek != '\0') { line.IsNextLine = true; } else { line.IsNextLine = false; }
+		if (*file.Seek != '\0') { line.IsNextLine = true; }
+		else { line.IsNextLine = false; }
 		line.Content = new char[line.Length + 1];
 		for (uint32 i = 0; i < line.Length; i++)
 		{
@@ -36,5 +38,4 @@ namespace SE3D {
 		if (file.Content != nullptr)
 			delete[] file.Content;
 	}
-
 }

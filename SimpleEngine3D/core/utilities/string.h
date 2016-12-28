@@ -1,11 +1,12 @@
 #pragma once
 #include "../containers/dynamic_array.h"
 
-namespace SE3D {
-	class String {
-
+namespace SE3D
+{
+	class String
+	{
 	private:
-		const char *m_String;
+		const char* m_String;
 		uint32 m_Length;
 
 	public:

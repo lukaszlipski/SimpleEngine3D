@@ -1,13 +1,10 @@
 #pragma once
-//if Windows
-#include <Windows.h>
-
 #include "../utilities/types.h"
 
-namespace SE3D {
-
-	class Timer {
-
+namespace SE3D
+{
+	class Timer
+	{
 	private:
 		int64 m_Frequency;
 		int64 m_StartCounter;
@@ -18,9 +15,7 @@ namespace SE3D {
 		void Init();
 		void Update();
 		void Reset();
-		double TimeMS();
-		double TimeSEC();
-
+		double TimeMS() const;
+		double TimeSEC() const;
 	};
-
 }

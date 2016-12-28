@@ -1,12 +1,12 @@
 #include "../system/window.h"
 #include "../system/graphics.h"
 
-namespace SE3D {
-
+namespace SE3D
+{
 	LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	bool Window::m_IsRunning = true;
 
-	bool Window::Startup(const char * title, int width, int height, HINSTANCE hInstance)
+	bool Window::Startup(const char* title, int width, int height, HINSTANCE hInstance)
 	{
 		m_FullScreen = false;
 		m_VSync = 1;
@@ -32,7 +32,7 @@ namespace SE3D {
 		return true;
 	}
 
-	void Window::Shutdown()
+	void Window::Shutdown() const
 	{
 		PostQuitMessage(0);
 		DestroyWindow(m_WindowHandle);
@@ -44,7 +44,7 @@ namespace SE3D {
 		m_FullScreen = fullscreen;
 		if (fullscreen)
 		{
-			MONITORINFO mi = { sizeof(mi) };
+			MONITORINFO mi = {sizeof(mi)};
 			if (GetWindowPlacement(m_WindowHandle, &m_WindowPreviousPosition) && GetMonitorInfo(MonitorFromWindow(m_WindowHandle, MONITOR_DEFAULTTOPRIMARY), &mi))
 			{
 				SetWindowLong(m_WindowHandle, GWL_STYLE, dwStyle & ~WS_OVERLAPPEDWINDOW);
@@ -91,25 +91,25 @@ namespace SE3D {
 		switch (uMsg)
 		{
 		case WM_DESTROY:
-		{
-			//PostQuitMessage(0);
-			Window::m_IsRunning = false;
-			break;
-		}
+			{
+				//PostQuitMessage(0);
+				Window::m_IsRunning = false;
+				break;
+			}
 		case WM_CLOSE:
-		{
-			//DestroyWindow(hwnd);
-			Window::m_IsRunning = false;
-			break;
-		}
+			{
+				//DestroyWindow(hwnd);
+				Window::m_IsRunning = false;
+				break;
+			}
 		case WM_ACTIVATEAPP:
-		{
-			break;
-		}
+			{
+				break;
+			}
 		default:
-		{
-			result = DefWindowProc(hwnd, uMsg, wParam, lParam);
-		}
+			{
+				result = DefWindowProc(hwnd, uMsg, wParam, lParam);
+			}
 		}
 		return result;
 	}

@@ -4,17 +4,17 @@
 #include "vector4d.h"
 #include "matrix3d.h"
 
-namespace SE3D {
-
-	struct Matrix4D {
-
+namespace SE3D
+{
+	struct Matrix4D
+	{
 	private:
 		union
 		{
 			Vector4D rows[4];
 			float elements[4 * 4];
 		};
-		
+
 	public:
 		Matrix4D();
 		Matrix4D(const Vector4D& row1, const Vector4D& row2, const Vector4D& row3, const Vector4D& row4);
@@ -34,9 +34,22 @@ namespace SE3D {
 		inline float GetElement(int32 index) const { return this->elements[index]; };
 		inline Vector4D GetRow(int32 index) const { return this->rows[index]; }
 		inline Vector4D GetColumn(int32 index) const { return Vector4D(this->elements[index], this->elements[index + 4], this->elements[index + 8], this->elements[index + 12]); }
-		inline Vector3D GetPosition() const { return Vector3D(this->rows[0].w,this->rows[1].w,this->rows[2].w); }
-		inline Matrix4D& SetRow(int32 index, Vector4D row) { this->rows[index] = row; return *this; }
-		inline Matrix4D& SetColumn(int32 index, Vector4D col) { this->elements[index] = col.x; this->elements[index + 4] = col.y; this->elements[index + 8] = col.z; this->elements[index + 12] = col.w; return *this; }
+		inline Vector3D GetPosition() const { return Vector3D(this->rows[0].w, this->rows[1].w, this->rows[2].w); }
+
+		inline Matrix4D& SetRow(int32 index, Vector4D row)
+		{
+			this->rows[index] = row;
+			return *this;
+		}
+
+		inline Matrix4D& SetColumn(int32 index, Vector4D col)
+		{
+			this->elements[index] = col.x;
+			this->elements[index + 4] = col.y;
+			this->elements[index + 8] = col.z;
+			this->elements[index + 12] = col.w;
+			return *this;
+		}
 
 		Matrix4D& Transpose();
 		//Matrix4D& Invert();
@@ -64,6 +77,5 @@ namespace SE3D {
 
 		bool operator==(const Matrix4D& right);
 		bool operator!=(const Matrix4D& right);
-
 	};
 }

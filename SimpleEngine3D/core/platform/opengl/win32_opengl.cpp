@@ -1,13 +1,10 @@
 #include "../system/graphics.h"
 #include "../system/window.h"
 
-namespace SE3D {
-
-	bool Graphics::Startup(GLubyte major, GLubyte minor)
+namespace SE3D
+{
+	bool Graphics::Startup()
 	{
-		m_MajorVersion = major;
-		m_MinorVersion = minor;
-
 		PIXELFORMATDESCRIPTOR DesiredPixelFormat = {};
 		DesiredPixelFormat.nSize = sizeof(DesiredPixelFormat);
 		DesiredPixelFormat.nVersion = 1;
@@ -39,9 +36,9 @@ namespace SE3D {
 			WGL_CONTEXT_MAJOR_VERSION_ARB, m_MajorVersion,
 			WGL_CONTEXT_MINOR_VERSION_ARB, m_MinorVersion,
 			WGL_CONTEXT_FLAGS_ARB, WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB
-	#ifdef _DEBUG
+#ifdef _DEBUG
 			| WGL_CONTEXT_DEBUG_BIT_ARB
-	#endif // _DEBUG
+#endif // _DEBUG
 			,WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
 			0
 		};
@@ -71,12 +68,11 @@ namespace SE3D {
 		ReleaseDC(Window::GetInstance().GetWindowHandle(), WindowDC);
 	}
 
-	void Graphics::Shutdown()
+	void Graphics::Shutdown() const
 	{
 		HDC WindowDC = GetDC(Window::GetInstance().GetWindowHandle());
-		wglMakeCurrent(WindowDC, NULL);
+		wglMakeCurrent(WindowDC, 0);
 		wglDeleteContext(m_OpenGLRC);
 		ReleaseDC(Window::GetInstance().GetWindowHandle(), WindowDC);
 	}
-
 }

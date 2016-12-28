@@ -127,6 +127,7 @@
     <ClCompile Include="core\math\vector3d.cpp" />
     <ClCompile Include="core\math\vector4d.cpp" />
     <ClCompile Include="core\system\file.cpp" />
+    <ClCompile Include="core\system\graphics.cpp" />
     <ClCompile Include="core\system\input.cpp" />
     <ClCompile Include="core\main.cpp" />
     <ClCompile Include="core\platform\opengl\win32_opengl.cpp" />

@@ -1,7 +1,7 @@
 #include "input.h"
 
-namespace SE3D {
-
+namespace SE3D
+{
 	bool Input::GetKey(const char key)
 	{
 		if (key < SE3D_KEYBOARD_KEYS && key >= 0)
@@ -16,12 +16,12 @@ namespace SE3D {
 		return false;
 	}
 
-	int16 Input::GetMousePositionX()
+	int16 Input::GetMousePositionX() const
 	{
 		return m_MousePositionX;
 	}
 
-	int16 Input::GetMousePositionY()
+	int16 Input::GetMousePositionY() const
 	{
 		return m_MousePositionY;
 	}
@@ -36,11 +36,12 @@ namespace SE3D {
 		{
 			m_Mouse[i] = false;
 		}
+		m_MousePositionX = 0;
+		m_MousePositionY = 0;
 		return true;
 	}
 
 	void Input::Shutown()
 	{
 	}
-
 }

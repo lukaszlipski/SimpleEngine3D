@@ -3,27 +3,37 @@
 #include <Gl/glew.h>
 #include <GL/wglew.h>
 
-namespace SE3D {
-
-	class Graphics {
-
+namespace SE3D
+{
+	class Graphics
+	{
 	private:
 		HGLRC m_OpenGLRC;
 		GLubyte m_MajorVersion;
 		GLubyte m_MinorVersion;
-		Graphics() {}
+
+		Graphics()
+		{
+			m_MajorVersion = 3;
+			m_MinorVersion = 3;
+		}
+
 	public:
 		static Graphics& GetInstance()
 		{
-			static Graphics *instance = new Graphics();
+			static Graphics* instance = new Graphics();
 			return *instance;
 		}
 
-		bool Startup(GLubyte major, GLubyte minor);
-		void Shutdown();
+		bool Startup();
+		void Shutdown() const;
 		void Update();
+		void SetOpenGLVersion(GLubyte major, GLubyte minor);
 
-		inline void SetVSync(short vsync) { wglSwapIntervalEXT(vsync); }
+		inline void SetVSync(short vsync)
+		{
+			wglSwapIntervalEXT(vsync);
+		}
 
 		inline void Resize(int width, int height) { glViewport(0, 0, width, height); }
 

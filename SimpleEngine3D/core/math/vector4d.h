@@ -3,7 +3,8 @@
 #include "vector2d.h"
 #include "vector3d.h"
 
-namespace SE3D {
+namespace SE3D
+{
 	struct Matrix4D;
 
 	struct Vector4D
@@ -44,5 +45,4 @@ namespace SE3D {
 		friend bool operator==(Vector4D left, const Vector4D& right);
 		friend bool operator!=(Vector4D left, const Vector4D& right);
 	};
-
 }

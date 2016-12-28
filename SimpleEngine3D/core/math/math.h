@@ -8,7 +8,8 @@
 
 #define M_PI 3.14159265358979323846
 
-namespace SE3D {
-	inline float ToRadians(float degree) { return ((float)M_PI / 180.0f) * degree; }
-	inline float ToDegrees(float radian) { return (180.0f / (float)M_PI) * radian; }
+namespace SE3D
+{
+	inline float ToRadians(float degree) { return (static_cast<float>(M_PI) / 180.0f) * degree; }
+	inline float ToDegrees(float radian) { return (180.0f / static_cast<float>(M_PI)) * radian; }
 }

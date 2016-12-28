@@ -1,14 +1,14 @@
 #include "string.h"
 
-namespace SE3D {
-	
+namespace SE3D
+{
 	String::String()
 		: m_Length(0)
 	{
 		m_String = nullptr;
 	}
 
-	String::String(const String & string)
+	String::String(const String& string)
 	{
 		m_Length = string.Length();
 		char* newString = new char[m_Length + 1];
@@ -20,23 +20,22 @@ namespace SE3D {
 		m_String = newString;
 	}
 
-	String::String(const char * string)
+	String::String(const char* string)
 	{
 		m_Length = 0;
-		const char * tmp = string;
+		const char* tmp = string;
 		while (*tmp++ != '\0')
 		{
 			m_Length++;
 		}
-		
-		char* newString = new char[m_Length+1];
-		
+
+		char* newString = new char[m_Length + 1];
+
 		for (uint32 i = 0; i <= m_Length; i++)
 		{
 			newString[i] = string[i];
 		}
 		m_String = newString;
-
 	}
 
 	String::~String()
@@ -46,10 +45,10 @@ namespace SE3D {
 	}
 
 
-	String operator+(String left, const String & right)
+	String operator+(String left, const String& right)
 	{
 		uint32 newLength = left.Length() + right.Length();
-		char * newStringPtr = new char[newLength+1];
+		char* newStringPtr = new char[newLength + 1];
 
 		for (uint32 i = 0; i < left.Length(); i++)
 		{
@@ -58,15 +57,15 @@ namespace SE3D {
 
 		for (uint32 i = 0; i <= right.Length(); i++)
 		{
-			newStringPtr[i+left.Length()] = right[i];
+			newStringPtr[i + left.Length()] = right[i];
 		}
 		return String(newStringPtr);
 	}
 
-	String & String::operator+=(const String & right)
+	String& String::operator+=(const String& right)
 	{
 		uint32 newLength = this->Length() + right.Length();
-		char * newStringPtr = new char[newLength + 1];
+		char* newStringPtr = new char[newLength + 1];
 
 		for (uint32 i = 0; i < this->Length(); i++)
 		{
@@ -99,10 +98,10 @@ namespace SE3D {
 		return String::ToUInt32(this->CString());
 	}
 
-	float String::ToFloat(const char * string)
+	float String::ToFloat(const char* string)
 	{
 		if (!string) { return 0; }
-		const char *tmp = string;
+		const char* tmp = string;
 		float intPart = 0;
 		float fracPart = 0;
 		float sign = 1;
@@ -114,38 +113,37 @@ namespace SE3D {
 			sign = -1;
 			tmp++;
 		}
-		else if (tmp[0] == '+')	{ tmp++; }
+		else if (tmp[0] == '+') { tmp++; }
 
 		while (*tmp != '\0')
 		{
 			if (*tmp >= '0' && *tmp <= '9')
 			{
 				if (!inFraction) { intPart = intPart * 10 + (*tmp - '0'); }
-				else 
-				{ 
-					fracPart = fracPart * 10 + (*tmp - '0'); 
+				else
+				{
+					fracPart = fracPart * 10 + (*tmp - '0');
 					divFrac *= 10;
 				};
 			}
 			else if (*tmp == '.' || *tmp == ',')
 			{
-				if (!inFraction) { inFraction = true; } 
-				else { return sign * (intPart + fracPart/divFrac); }
+				if (!inFraction) { inFraction = true; }
+				else { return sign * (intPart + fracPart / divFrac); }
 			}
 			else
 			{
-				return sign * (intPart + fracPart/divFrac);
+				return sign * (intPart + fracPart / divFrac);
 			}
 			tmp++;
 		}
-		return sign * (intPart + fracPart/divFrac);
-
+		return sign * (intPart + fracPart / divFrac);
 	}
 
-	int32 String::ToInt32(const char * string)
+	int32 String::ToInt32(const char* string)
 	{
 		if (!string) { return 0; }
-		const char *tmp = string;
+		const char* tmp = string;
 		int32 intPart = 0;
 		int32 sign = 1;
 
@@ -166,10 +164,10 @@ namespace SE3D {
 		return sign * intPart;
 	}
 
-	uint32 String::ToUInt32(const char * string)
+	uint32 String::ToUInt32(const char* string)
 	{
 		if (!string) { return 0; }
-		const char *tmp = string;
+		const char* tmp = string;
 		uint32 intPart = 0;
 
 		if (tmp[0] == '-') { tmp++; }
@@ -184,5 +182,4 @@ namespace SE3D {
 
 		return intPart;
 	}
-
 }
