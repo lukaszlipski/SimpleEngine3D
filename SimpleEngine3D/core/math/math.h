@@ -3,6 +3,7 @@
 #include "vector2d.h"
 #include "vector3d.h"
 #include "vector4d.h"
+#include "matrix3d.h"
 #include "matrix4d.h"
 
 #define M_PI 3.14159265358979323846

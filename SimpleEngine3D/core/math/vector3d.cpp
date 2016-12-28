@@ -1,4 +1,5 @@
 #include "vector3d.h"
+#include "matrix3d.h"
 #include <math.h>
 
 namespace SE3D {
@@ -47,34 +48,46 @@ namespace SE3D {
 		return Vector3D(this->y*right.z - this->z*right.y,this->z*right.x-this->x*right.z,this->x*right.y-this->y*right.x);
 	}
 
-	Vector3D operator+(Vector3D left, const Vector3D & right)
+	Vector3D Vector3D::Transform(const Matrix3D& right) const
 	{
-		return Vector3D(left.x + right.x, left.y + right.y, left.z + right.z);
+		return right * *this;
 	}
 
-	Vector3D operator-(Vector3D left, const Vector3D & right)
+	Vector3D Vector3D::operator+(const Vector3D & right) const
 	{
-		return Vector3D(left.x - right.x, left.y - right.y,left.z - right.z);
+		return Vector3D(this->x + right.x, this->y + right.y, this->z + right.z);
 	}
 
-	Vector3D operator+(Vector3D left, float s)
+	Vector3D Vector3D::operator-(const Vector3D & right) const
 	{
-		return Vector3D(left.x + s, left.y + s, left.z + s);
+		return Vector3D(this->x - right.x, this->y - right.y, this->z - right.z);
 	}
 
-	Vector3D operator-(Vector3D left, float s)
+	Vector3D Vector3D::operator+(float s) const
 	{
-		return Vector3D(left.x - s, left.y - s, left.z - s);
+		return Vector3D(this->x + s, this->y + s, this->z + s);
 	}
 
-	Vector3D operator*(Vector3D left, float s)
+	Vector3D Vector3D::operator-(float s) const
 	{
-		return Vector3D(left.x * s, left.y * s, left.z * s);
+		return Vector3D(this->x - s, this->y - s, this->z - s);
 	}
 
-	Vector3D operator/(Vector3D left, float s)
+	Vector3D Vector3D::operator*(float s) const
 	{
-		return Vector3D(left.x / s, left.y / s, left.z / s);
+		return Vector3D(this->x * s, this->y * s, this->z * s);
+	}
+
+	Vector3D Vector3D::operator/(float s) const
+	{
+		return Vector3D(this->x / s, this->y / s, this->z / s);
+	}
+
+	Vector3D Vector3D::operator*(const Matrix3D& right) const
+	{
+		return Vector3D(right.GetColumn(0).x * this->x + right.GetColumn(0).y * this->y + right.GetColumn(0).z * this->z,
+						right.GetColumn(1).x * this->x + right.GetColumn(1).y * this->y + right.GetColumn(1).z * this->z,
+						right.GetColumn(2).x * this->x + right.GetColumn(2).y * this->y + right.GetColumn(2).z * this->z);
 	}
 
 	Vector3D & Vector3D::operator+=(const Vector3D & right)
@@ -122,6 +135,19 @@ namespace SE3D {
 		this->x /= s;
 		this->y /= s;
 		this->z /= s;
+		return *this;
+	}
+
+	Vector3D& Vector3D::operator*=(const Matrix3D& right)
+	{
+		float x = right.GetColumn(0).x * this->x + right.GetColumn(0).y * this->y + right.GetColumn(0).z * this->z;
+		float y = right.GetColumn(1).x * this->x + right.GetColumn(1).y * this->y + right.GetColumn(1).z * this->z;
+		float z = right.GetColumn(2).x * this->x + right.GetColumn(2).y * this->y + right.GetColumn(2).z * this->z;
+
+		this->x = x;
+		this->y = y;
+		this->z = z;
+
 		return *this;
 	}
 

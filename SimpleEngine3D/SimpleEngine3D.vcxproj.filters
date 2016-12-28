@@ -63,6 +63,9 @@
     <ClCompile Include="core\system\input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\math\matrix3d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\system\window.h">
@@ -114,6 +117,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\system\graphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\math\matrix3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

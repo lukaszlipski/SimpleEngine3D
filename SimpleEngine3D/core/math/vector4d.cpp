@@ -1,4 +1,5 @@
 #include "vector4d.h"
+#include "matrix4d.h"
 #include <math.h>
 
 namespace SE3D {
@@ -28,34 +29,47 @@ namespace SE3D {
 		return (this->x * right.x) + (this->y * right.y) + (this->z * right.z) + (this->w * right.w);
 	}
 
-	Vector4D operator+(Vector4D left, const Vector4D & right)
+	Vector4D Vector4D::Transform(const Matrix4D& right) const
 	{
-		return Vector4D(left.x + right.x, left.y + right.y, left.z + right.z, left.w + right.w);
+		return right * *this;
 	}
 
-	Vector4D operator-(Vector4D left, const Vector4D & right)
+	Vector4D Vector4D::operator+(const Vector4D & right) const
 	{
-		return Vector4D(left.x - right.x, left.y - right.y, left.z - right.z, left.w - right.w);
+		return Vector4D(this->x + right.x, this->y + right.y, this->z + right.z, this->w + right.w);
 	}
 
-	Vector4D operator+(Vector4D left, float s)
+	Vector4D Vector4D::operator-(const Vector4D & right) const
 	{
-		return Vector4D(left.x + s, left.y + s, left.z + s, left.w + s);
+		return Vector4D(this->x - right.x, this->y - right.y, this->z - right.z, this->w - right.w);
 	}
 
-	Vector4D operator-(Vector4D left, float s)
+	Vector4D Vector4D::operator+(float s) const
 	{
-		return Vector4D(left.x - s, left.y - s, left.z - s, left.w - s);
+		return Vector4D(this->x + s, this->y + s, this->z + s, this->w + s);
 	}
 
-	Vector4D operator*(Vector4D left, float s)
+	Vector4D Vector4D::operator-(float s) const
 	{
-		return Vector4D(left.x * s, left.y * s, left.z * s, left.w * s);
+		return Vector4D(this->x - s, this->y - s, this->z - s, this->w - s);
 	}
 
-	Vector4D operator/(Vector4D left, float s)
+	Vector4D Vector4D::operator*(float s) const
 	{
-		return Vector4D(left.x / s, left.y / s, left.z / s , left.w / s);
+		return Vector4D(this->x * s, this->y * s, this->z * s, this->w * s);
+	}
+
+	Vector4D Vector4D::operator/(float s) const
+	{
+		return Vector4D(this->x / s, this->y / s, this->z / s , this->w / s);
+	}
+
+	Vector4D Vector4D::operator*(const Matrix4D& right) const
+	{
+		return Vector4D(right.GetColumn(0).x * this->x + right.GetColumn(0).y * this->y + right.GetColumn(0).z * this->z + right.GetColumn(0).w * this->w,
+			right.GetColumn(1).x * this->x + right.GetColumn(1).y * this->y + right.GetColumn(1).z * this->z + right.GetColumn(1).w * this->w,
+			right.GetColumn(2).x * this->x + right.GetColumn(2).y * this->y + right.GetColumn(2).z * this->z + right.GetColumn(2).w * this->w,
+			right.GetColumn(3).x * this->x + right.GetColumn(3).y * this->y + right.GetColumn(3).z * this->z + right.GetColumn(3).w * this->w);
 	}
 
 	Vector4D & Vector4D::operator+=(const Vector4D & right)
@@ -109,6 +123,21 @@ namespace SE3D {
 		this->y /= s;
 		this->z /= s;
 		this->w /= s;
+		return *this;
+	}
+
+	Vector4D& Vector4D::operator*=(const Matrix4D& right)
+	{
+		float x = right.GetColumn(0).x * this->x + right.GetColumn(0).y * this->y + right.GetColumn(0).z * this->z + right.GetColumn(0).w * this->w;
+		float y = right.GetColumn(1).x * this->x + right.GetColumn(1).y * this->y + right.GetColumn(1).z * this->z + right.GetColumn(1).w * this->w;
+		float z = right.GetColumn(2).x * this->x + right.GetColumn(2).y * this->y + right.GetColumn(2).z * this->z + right.GetColumn(2).w * this->w;
+		float w = right.GetColumn(3).x * this->x + right.GetColumn(3).y * this->y + right.GetColumn(3).z * this->z + right.GetColumn(3).w * this->w;
+
+		this->x = x;
+		this->y = y;
+		this->z = z;
+		this->w = w;
+
 		return *this;
 	}
 

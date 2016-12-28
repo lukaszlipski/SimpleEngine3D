@@ -4,6 +4,7 @@
 #include "vector3d.h"
 
 namespace SE3D {
+	struct Matrix4D;
 
 	struct Vector4D
 	{
@@ -18,14 +19,17 @@ namespace SE3D {
 		Vector4D(Vector3D abc, float d);
 
 		float Dot(const Vector4D& right) const;
+		Vector4D Transform(const Matrix4D& right) const;
 
-		friend Vector4D operator+(Vector4D left, const Vector4D& right);
-		friend Vector4D operator-(Vector4D left, const Vector4D& right);
+		Vector4D operator+(const Vector4D& right) const;
+		Vector4D operator-(const Vector4D& right) const;
 
-		friend Vector4D operator+(Vector4D left, float s);
-		friend Vector4D operator-(Vector4D left, float s);
-		friend Vector4D operator*(Vector4D left, float s);
-		friend Vector4D operator/(Vector4D left, float s);
+		Vector4D operator+(float s) const;
+		Vector4D operator-(float s) const;
+		Vector4D operator*(float s) const;
+		Vector4D operator/(float s) const;
+
+		Vector4D operator*(const Matrix4D& right) const;
 
 		Vector4D& operator+=(const Vector4D& right);
 		Vector4D& operator-=(const Vector4D& right);
@@ -34,6 +38,8 @@ namespace SE3D {
 		Vector4D& operator-=(float s);
 		Vector4D& operator*=(float s);
 		Vector4D& operator/=(float s);
+
+		Vector4D& operator*=(const Matrix4D& right);
 
 		friend bool operator==(Vector4D left, const Vector4D& right);
 		friend bool operator!=(Vector4D left, const Vector4D& right);

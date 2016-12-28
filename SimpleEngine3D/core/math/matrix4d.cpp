@@ -1,14 +1,19 @@
 #include "matrix4d.h"
+#include "math.h"
 #include <math.h>
 
 namespace SE3D {
 
 	Matrix4D::Matrix4D()
 	{
-		for (int i = 0; i < sizeof(elements); i++)
+		for (int16 i = 0; i<16; i++)
 		{
-			elements[i] = 0;
+			this->elements[i] = 0;
 		}
+		this->elements[0] = 1;
+		this->elements[4 * 1 + 1] = 1;
+		this->elements[4 * 2 + 2] = 1;
+		this->elements[4 * 3 + 3] = 1;
 	}
 
 	Matrix4D::Matrix4D(const Vector4D & row1, const Vector4D & row2, const Vector4D & row3, const Vector4D & row4)
@@ -17,6 +22,14 @@ namespace SE3D {
 		this->rows[1] = row2;
 		this->rows[2] = row3;
 		this->rows[3] = row4;
+	}
+
+	Matrix4D::Matrix4D(const Matrix3D& mat)
+	{
+		this->rows[0] = Vector4D(mat.GetRow(0), 0);
+		this->rows[1] = Vector4D(mat.GetRow(1), 0);
+		this->rows[2] = Vector4D(mat.GetRow(2), 0);
+		this->rows[3] = Vector4D(0,0,0,1);
 	}
 
 	Matrix4D Matrix4D::Orthographic(float left, float right, float bottom, float top, float nearPlane, float farPlane)
@@ -37,7 +50,7 @@ namespace SE3D {
 	{
 		Matrix4D persp = Matrix4D::Identity();
 
-		float q = 1.0f / (float)tan(ToRadians(0.5f * fov));
+		float q = 1.0f / static_cast<float>(tan(ToRadians(0.5f * fov)));
 		float a = q / aspectRatio;
 
 		float b = (nearPlane + farPlane) / (nearPlane - farPlane);
@@ -72,6 +85,16 @@ namespace SE3D {
 		return lookAt;
 	}
 
+	Matrix4D Matrix4D::Identity()
+	{
+		Matrix4D identity;
+		identity.elements[0] = 1;
+		identity.elements[4 * 1 + 1] = 1;
+		identity.elements[4 * 2 + 2] = 1;
+		identity.elements[4 * 3 + 3] = 1;
+		return identity;
+	}
+
 	Matrix4D Matrix4D::Transpose(const Matrix4D & matrix)
 	{
 		return Matrix4D(Vector4D(matrix.rows[0].x, matrix.rows[1].x, matrix.rows[2].x, matrix.rows[3].x),
@@ -96,8 +119,8 @@ namespace SE3D {
 		Matrix4D rotate;
 
 		float r = ToRadians(angle);
-		float c = (float)cos(r);
-		float s = (float)sin(r);
+		float c = static_cast<float>(cos(r));
+		float s = static_cast<float>(sin(r));
 		float omc = 1.0f - c;
 
 		float x = axis.x;
@@ -128,27 +151,31 @@ namespace SE3D {
 		return s;
 	}
 
-	void Matrix4D::Transpose()
+	Matrix4D& Matrix4D::Transpose()
 	{
 		*this = Matrix4D::Transpose(*this);
+		return *this;
 	}
 
-	void Matrix4D::Add(const Matrix4D & matrix)
+	Matrix4D& Matrix4D::Add(const Matrix4D & matrix)
 	{
 		*this += matrix;
+		return *this;
 	}
 
-	void Matrix4D::Subtract(const Matrix4D & matrix)
+	Matrix4D& Matrix4D::Subtract(const Matrix4D & matrix)
 	{
 		*this -= matrix;
+		return *this;
 	}
 
-	void Matrix4D::Multiply(const Matrix4D & matrix)
+	Matrix4D& Matrix4D::Multiply(const Matrix4D & matrix)
 	{
 		*this *= matrix;
+		return *this;
 	}
 
-	Matrix4D Matrix4D::operator*(const Matrix4D & right)
+	Matrix4D Matrix4D::operator*(const Matrix4D & right) const
 	{
 		Matrix4D result;
 		for (int32 row = 0; row < 4; row++)
@@ -167,28 +194,75 @@ namespace SE3D {
 		return result;
 	}
 
-	Matrix4D Matrix4D::operator+(const Matrix4D & right)
+	Matrix4D Matrix4D::operator+(float s) const
 	{
-		Matrix4D tmp;
-
+		Matrix4D result;
 		for (int32 row = 0; row < 4; row++)
 		{
-			tmp.rows[row] = this->rows[row] + right.rows[row];
+			for (int32 col = 0; col < 4; col++)
+			{
+				result.elements[col + row * 4] = this->elements[col + row * 4] + s;
+			}
 		}
-
-		return tmp;
+		return result;
 	}
 
-	Matrix4D Matrix4D::operator-(const Matrix4D & right)
+	Matrix4D Matrix4D::operator-(float s) const
 	{
-		Matrix4D tmp;
+		Matrix4D result;
+		for (int32 row = 0; row < 4; row++)
+		{
+			for (int32 col = 0; col < 4; col++)
+			{
+				result.elements[col + row * 4] = this->elements[col + row * 4] - s;
+			}
+		}
+		return result;
+	}
+
+	Matrix4D Matrix4D::operator*(float s) const
+	{
+		Matrix4D result;
+		for (int32 row = 0; row < 4; row++)
+		{
+			for (int32 col = 0; col < 4; col++)
+			{
+				result.elements[col + row * 4] = this->elements[col + row * 4] * s;
+			}
+		}
+		return result;
+	}
+
+	Vector4D Matrix4D::operator*(const Vector4D& right) const
+	{
+		return Vector4D(this->GetRow(0).x * right.x + this->GetRow(0).y * right.y + this->GetRow(0).z * right.z + this->GetRow(0).w * right.w,
+			this->GetRow(1).x * right.x + this->GetRow(1).y * right.y + this->GetRow(1).z * right.z + this->GetRow(1).w * right.w,
+			this->GetRow(2).x * right.x + this->GetRow(2).y * right.y + this->GetRow(2).z * right.z + this->GetRow(2).w * right.w,
+			this->GetRow(3).x * right.x + this->GetRow(3).y * right.y + this->GetRow(3).z * right.z + this->GetRow(3).w * right.w);
+	}
+
+	Matrix4D Matrix4D::operator+(const Matrix4D & right) const
+	{
+		Matrix4D result;
 
 		for (int32 row = 0; row < 4; row++)
 		{
-			tmp.rows[row] = this->rows[row] - right.rows[row];
+			result.rows[row] = this->rows[row] + right.rows[row];
 		}
 
-		return tmp;
+		return result;
+	}
+
+	Matrix4D Matrix4D::operator-(const Matrix4D & right) const
+	{
+		Matrix4D result;
+
+		for (int32 row = 0; row < 4; row++)
+		{
+			result.rows[row] = this->rows[row] - right.rows[row];
+		}
+
+		return result;
 	}
 
 	Matrix4D & Matrix4D::operator*=(const Matrix4D & right)
@@ -208,6 +282,42 @@ namespace SE3D {
 			}
 		}
 
+		return *this;
+	}
+
+	Matrix4D& Matrix4D::operator+=(float s)
+	{
+		for (int32 row = 0; row < 4; row++)
+		{
+			for (int32 col = 0; col < 4; col++)
+			{
+				this->elements[col + row * 4] += s;
+			}
+		}
+		return *this;
+	}
+
+	Matrix4D& Matrix4D::operator-=(float s)
+	{
+		for (int32 row = 0; row < 4; row++)
+		{
+			for (int32 col = 0; col < 4; col++)
+			{
+				this->elements[col + row * 4] -= s;
+			}
+		}
+		return *this;
+	}
+
+	Matrix4D& Matrix4D::operator*=(float s)
+	{
+		for (int32 row = 0; row < 4; row++)
+		{
+			for (int32 col = 0; col < 4; col++)
+			{
+				this->elements[col + row * 4] *= s;
+			}
+		}
 		return *this;
 	}
 
