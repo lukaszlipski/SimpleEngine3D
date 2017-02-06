@@ -21,8 +21,8 @@ namespace SE3D
 		static Matrix3D Identity();
 		static Matrix3D Transpose(const Matrix3D& matrix);
 		static Matrix3D Invert(const Matrix3D& matrix);
-		static Matrix3D Rotate(float angle, const Vector3D& axis);
-		static Matrix3D Scale(const Vector3D& scale);
+		static Matrix3D RotateMatrix(float angle, const Vector3D& axis);
+		static Matrix3D ScaleMatrix(const Vector3D& scale);
 
 		inline float GetElement(int32 index) const { return this->elements[index]; };
 		inline Vector3D GetRow(int32 index) const { return this->rows[index]; }
@@ -47,6 +47,9 @@ namespace SE3D
 		Matrix3D& Add(const Matrix3D& matrix);
 		Matrix3D& Subtract(const Matrix3D& matrix);
 		Matrix3D& Multiply(const Matrix3D& matrix);
+
+		Matrix3D Rotate(float angle, const Vector3D& axis) const;
+		Matrix3D Scale(const Vector3D& scale) const;
 
 		Matrix3D operator+(const Matrix3D& right) const;
 		Matrix3D operator-(const Matrix3D& right) const;

@@ -40,6 +40,7 @@ namespace SE3D
 		float length = this->Length();
 		newVec.x /= length;
 		newVec.y /= length;
+		newVec.z /= length;
 		return newVec;
 	}
 

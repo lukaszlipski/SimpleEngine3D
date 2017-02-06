@@ -59,7 +59,7 @@ namespace SE3D
 		return Matrix3D::Transpose(invert) * (1 / det);
 	}
 
-	Matrix3D Matrix3D::Rotate(float angle, const Vector3D& axis)
+	Matrix3D Matrix3D::RotateMatrix(float angle, const Vector3D& axis)
 	{
 		Matrix3D rotate;
 
@@ -85,7 +85,7 @@ namespace SE3D
 		return rotate;
 	}
 
-	Matrix3D Matrix3D::Scale(const Vector3D& scale)
+	Matrix3D Matrix3D::ScaleMatrix(const Vector3D& scale)
 	{
 		Matrix3D s;
 
@@ -124,6 +124,16 @@ namespace SE3D
 	{
 		*this *= matrix;
 		return *this;
+	}
+
+	Matrix3D Matrix3D::Rotate(float angle, const Vector3D& axis) const
+	{
+		return *this * RotateMatrix(angle, axis);
+	}
+
+	Matrix3D Matrix3D::Scale(const Vector3D& scale) const
+	{
+		return *this * ScaleMatrix(scale);
 	}
 
 	Matrix3D Matrix3D::operator+(const Matrix3D& right) const

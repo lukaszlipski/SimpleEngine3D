@@ -11,8 +11,8 @@ namespace SE3D
 	private:
 		union
 		{
-			Vector4D rows[4];
 			float elements[4 * 4];
+			Vector4D rows[4];
 		};
 
 	public:
@@ -27,9 +27,9 @@ namespace SE3D
 		static Matrix4D Identity();
 		static Matrix4D Transpose(const Matrix4D& matrix);
 		//static Matrix4D Invert(const Matrix4D& matrix);
-		static Matrix4D Translate(const Vector3D& translation);
-		static Matrix4D Rotate(float angle, const Vector3D& axis);
-		static Matrix4D Scale(const Vector3D& scale);
+		static Matrix4D TranslateMatrix(const Vector3D& translation);
+		static Matrix4D RotateMatrix(float angle, const Vector3D& axis);
+		static Matrix4D ScaleMatrix(const Vector3D& scale);
 
 		inline float GetElement(int32 index) const { return this->elements[index]; };
 		inline Vector4D GetRow(int32 index) const { return this->rows[index]; }
@@ -51,11 +51,17 @@ namespace SE3D
 			return *this;
 		}
 
+		const void* GetPtr() const { return this; }
+
 		Matrix4D& Transpose();
 		//Matrix4D& Invert();
 		Matrix4D& Add(const Matrix4D& matrix);
 		Matrix4D& Subtract(const Matrix4D& matrix);
 		Matrix4D& Multiply(const Matrix4D& matrix);
+
+		Matrix4D Translate(const Vector3D& translation) const;
+		Matrix4D Rotate(float angle, const Vector3D& axis) const;
+		Matrix4D Scale(const Vector3D& scale) const;
 
 		Matrix4D operator+(const Matrix4D& right) const;
 		Matrix4D operator-(const Matrix4D& right) const;
