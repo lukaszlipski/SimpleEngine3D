@@ -120,6 +120,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="core\graphic\camera\fps_camera.cpp" />
     <ClCompile Include="core\graphic\shader.cpp" />
     <ClCompile Include="core\math\matrix3d.cpp" />
     <ClCompile Include="core\math\matrix4d.cpp" />
@@ -141,6 +142,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\containers\dynamic_array.h" />
+    <ClInclude Include="core\graphic\camera\camera.h" />
+    <ClInclude Include="core\graphic\camera\fps_camera.h" />
     <ClInclude Include="core\graphic\shader.h" />
     <ClInclude Include="core\math\math.h" />
     <ClInclude Include="core\math\matrix3d.h" />
