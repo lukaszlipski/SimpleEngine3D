@@ -1,5 +1,6 @@
 #pragma once
 #include "../utilities/types.h"
+#include "../math/vector2d.h"
 
 #define SE3D_KEYBOARD_KEYS 1024
 #define SE3D_MOUSE_BUTTONS 3
@@ -11,8 +12,8 @@ namespace SE3D
 	private:
 		bool m_Keyboard[SE3D_KEYBOARD_KEYS];
 		bool m_Mouse[SE3D_MOUSE_BUTTONS];
-		int16 m_MousePositionX;
-		int16 m_MousePositionY;
+		uint32 m_MousePositionX;
+		uint32 m_MousePositionY;
 
 		Input()
 		{
@@ -36,7 +37,11 @@ namespace SE3D
 		*/
 		bool GetMouseButton(byte mouse);
 
-		int16 GetMousePositionX() const;
-		int16 GetMousePositionY() const;
+		inline uint32 GetMousePositionX() const { return m_MousePositionX; }
+		inline uint32 GetMousePositionY() const { return m_MousePositionY; }
+		inline Vector2D GetMousePosition() const { return Vector2D(m_MousePositionX, m_MousePositionY); }
+
+		void SetMousePosition(uint32 x, uint32 y);
+		void SetMousePosition(const Vector2D& position);
 	};
 }

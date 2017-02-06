@@ -59,16 +59,35 @@ namespace SE3D
 					m_Mouse[1] = false;
 					break;
 				}
-			case WM_MOUSEMOVE:
-				{
-					m_MousePositionX = static_cast<int16>(Message.lParam);
-					m_MousePositionY = static_cast<int16>(Message.lParam >> 16);
-					break;
-				}
+				/*case WM_MOUSEMOVE:
+					{
+						
+						break;
+					}*/
 			}
 
 			TranslateMessage(&Message);
 			DispatchMessageA(&Message);
 		}
+
+		POINT coursorCoords;
+		GetCursorPos(&coursorCoords);
+		ScreenToClient(Window::GetInstance().GetWindowHandle(), &coursorCoords);
+		m_MousePositionX = coursorCoords.x;
+		m_MousePositionY = coursorCoords.y;
+	}
+
+	void Input::SetMousePosition(const Vector2D& position)
+	{
+		POINT coursorCoords = {position.x, position.y};
+		ClientToScreen(Window::GetInstance().GetWindowHandle(), &coursorCoords);
+		SetCursorPos(coursorCoords.x, coursorCoords.y);
+	}
+
+	void Input::SetMousePosition(uint32 x, uint32 y)
+	{
+		POINT coursorCoords = {x, y};
+		ClientToScreen(Window::GetInstance().GetWindowHandle(), &coursorCoords);
+		SetCursorPos(coursorCoords.x, coursorCoords.y);
 	}
 }

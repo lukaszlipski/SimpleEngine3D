@@ -16,16 +16,6 @@ namespace SE3D
 		return false;
 	}
 
-	int16 Input::GetMousePositionX() const
-	{
-		return m_MousePositionX;
-	}
-
-	int16 Input::GetMousePositionY() const
-	{
-		return m_MousePositionY;
-	}
-
 	bool Input::Startup()
 	{
 		for (uint16 i = 0; i < SE3D_KEYBOARD_KEYS; i++)
