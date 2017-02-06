@@ -55,6 +55,7 @@ namespace SE3D
 
 		SetVSync(1);
 		glViewport(0, 0, Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
+		glEnable(GL_DEPTH_TEST);
 
 		ReleaseDC(Window::GetInstance().GetWindowHandle(), WindowDC);
 
@@ -74,5 +75,13 @@ namespace SE3D
 		wglMakeCurrent(WindowDC, 0);
 		wglDeleteContext(m_OpenGLRC);
 		ReleaseDC(Window::GetInstance().GetWindowHandle(), WindowDC);
+	}
+
+	void Graphics::SetDepthBuffer(bool db)
+	{
+		if (db)
+			glEnable(GL_DEPTH_TEST);
+		else
+			glDisable(GL_DEPTH_TEST);
 	}
 }

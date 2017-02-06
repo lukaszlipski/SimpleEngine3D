@@ -29,6 +29,7 @@ namespace SE3D
 		void Shutdown() const;
 		void Update();
 		void SetOpenGLVersion(GLubyte major, GLubyte minor);
+		void SetDepthBuffer(bool db);
 
 		inline void SetVSync(short vsync)
 		{
@@ -40,7 +41,7 @@ namespace SE3D
 		inline void Clear()
 		{
 			glClearColor(0.4f, 0.7f, 1.0f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 	};
 }

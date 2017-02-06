@@ -88,6 +88,7 @@ namespace SE3D
 			m_Size -= 1;
 			if (m_Size > m_Capacity / 2)
 			{
+				delete m_Data[i];
 				for (uint32 i = index; i < m_Size; i++)
 				{
 					m_Data[i] = m_Data[i + 1];
