@@ -4,17 +4,17 @@
 
 namespace SE3D
 {
-	Timer::Timer()
-	{
-		Init();
-	}
-
-	void Timer::Init()
+	void Timer::Startup()
 	{
 		LARGE_INTEGER freq;
 		QueryPerformanceFrequency(&freq);
 		m_Frequency = freq.QuadPart;
+		m_LastFrameTime = 0.0f;
 		Reset();
+	}
+
+	void Timer::Shutown()
+	{
 	}
 
 	void Timer::Update()
@@ -23,6 +23,9 @@ namespace SE3D
 		QueryPerformanceCounter(&CurrentCounter);
 
 		m_Timer = static_cast<DOUBLE>(CurrentCounter.QuadPart - m_StartCounter) / static_cast<DOUBLE>(m_Frequency);
+
+		m_DeltaTime = m_Timer - m_LastFrameTime;
+		m_LastFrameTime = m_Timer;
 	}
 
 	void Timer::Reset()
