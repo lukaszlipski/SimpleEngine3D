@@ -2,7 +2,7 @@
 #include "../../system/window.h"
 #include "../../system/input.h"
 #include "../../math/math.h"
-#include "../../system/timer.h"
+#include "../../system/global_timer.h"
 
 namespace SE3D
 {
@@ -57,7 +57,7 @@ namespace SE3D
 			direction += m_Right;
 
 		if (direction != Vector3D(0,0,0))
-			m_Position += direction.Normalize() * m_Speed * Timer::GetInstance().DeltaTime();
+			m_Position += direction.Normalize() * m_Speed * GlobalTimer::GetInstance().DeltaTime();
 		
 	}
 }

@@ -134,7 +134,7 @@
     <ClCompile Include="core\platform\opengl\win32_opengl.cpp" />
     <ClCompile Include="core\platform\windows\win32_file.cpp" />
     <ClCompile Include="core\platform\windows\win32_input.cpp" />
-    <ClCompile Include="core\platform\windows\win32_timer.cpp" />
+    <ClCompile Include="core\platform\windows\win32_global_timer.cpp" />
     <ClCompile Include="core\platform\windows\win32_window.cpp" />
     <ClCompile Include="core\utilities\image.cpp" />
     <ClCompile Include="core\utilities\obj_loader.cpp" />
@@ -154,7 +154,7 @@
     <ClInclude Include="core\system\file.h" />
     <ClInclude Include="core\system\graphics.h" />
     <ClInclude Include="core\system\input.h" />
-    <ClInclude Include="core\system\timer.h" />
+    <ClInclude Include="core\system\global_timer.h" />
     <ClInclude Include="core\system\window.h" />
     <ClInclude Include="core\utilities\assertion.h" />
     <ClInclude Include="core\utilities\image.h" />

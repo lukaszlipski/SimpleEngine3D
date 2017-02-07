@@ -30,9 +30,6 @@
     <ClCompile Include="core\platform\windows\win32_file.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="core\platform\windows\win32_timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="core\utilities\image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -72,12 +69,12 @@
     <ClCompile Include="core\graphic\camera\fps_camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\platform\windows\win32_global_timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\system\window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="core\system\timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\system\file.h">
@@ -132,6 +129,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\graphic\camera\fps_camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\system\global_timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

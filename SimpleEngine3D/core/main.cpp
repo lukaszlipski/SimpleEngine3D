@@ -5,7 +5,7 @@
 #include "system/window.h"
 #include "system/graphics.h"
 #include "system/input.h"
-#include "system/timer.h"
+#include "system/global_timer.h"
 #include "system/file.h"
 #include "utilities/image.h"
 #include "graphic/shader.h"
@@ -27,7 +27,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	Window::GetInstance().Startup("Lukasz Lipski : SimpleEngine3D", 1024, 720, hInstance);
 	Graphics::GetInstance().Startup();
 	Input::GetInstance().Startup();
-	Timer::GetInstance().Startup();
+	GlobalTimer::GetInstance().Startup();
 
 	//Image img("C:/Programowanie/CPP/testps.bmp");
 	//OBJLoader a("C:/Programowanie/CPP/monkeyTriangulate.obj");
@@ -63,7 +63,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	
 	// -------------------------------------------
 
-	Timer::GetInstance().Reset();
+	GlobalTimer::GetInstance().Reset();
 	while (!Window::GetInstance().ShouldWindowClose())
 	{
 		Graphics::GetInstance().Clear();
@@ -76,7 +76,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		int16 y = Input::GetInstance().GetMousePositionY();
 
 		char Buffer[256];
-		sprintf_s(Buffer, "TimeElapsed: %f\n", Timer::GetInstance().DeltaTime());
+		sprintf_s(Buffer, "TimeElapsed: %f\n", (float)GlobalTimer::GetInstance().TimeSEC());
 		OutputDebugString(Buffer);
 
 
@@ -102,10 +102,10 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 
 		Graphics::GetInstance().Update();
-		Timer::GetInstance().Update();
+		GlobalTimer::GetInstance().Update();
 	}
 
-	Timer::GetInstance().Shutown();
+	GlobalTimer::GetInstance().Shutown();
 	Input::GetInstance().Shutown();
 	Graphics::GetInstance().Shutdown();
 	Window::GetInstance().Shutdown();
