@@ -8,6 +8,8 @@ namespace SE3D
 	private:
 		const char* m_String;
 		uint32 m_Length;
+		bool m_HasStringID;
+		uint32 m_StringID;
 
 	public:
 		String();
@@ -25,8 +27,13 @@ namespace SE3D
 		float ToFloat() const;
 		int32 ToInt32() const;
 		uint32 ToUInt32() const;
+		int32 GetStringID();
 		static float ToFloat(const char* string);
 		static int32 ToInt32(const char* string);
 		static uint32 ToUInt32(const char* string);
+
+	private:
+		//CRC32
+		uint32 GenerateStringID() const;
 	};
 }

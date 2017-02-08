@@ -3,12 +3,13 @@
 namespace SE3D
 {
 	String::String()
-		: m_Length(0)
+		: m_Length(0), m_HasStringID(false)
 	{
 		m_String = nullptr;
 	}
 
 	String::String(const String& string)
+		: m_HasStringID(string.m_HasStringID), m_StringID(string.m_StringID)
 	{
 		m_Length = string.Length();
 		char* newString = new char[m_Length + 1];
@@ -21,6 +22,7 @@ namespace SE3D
 	}
 
 	String::String(const char* string)
+		: m_HasStringID(false)
 	{
 		m_Length = 0;
 		const char* tmp = string;
@@ -64,22 +66,22 @@ namespace SE3D
 
 	String& String::operator+=(const String& right)
 	{
-		uint32 newLength = this->Length() + right.Length();
+		uint32 newLength = Length() + right.Length();
 		char* newStringPtr = new char[newLength + 1];
 
-		for (uint32 i = 0; i < this->Length(); i++)
+		for (uint32 i = 0; i < Length(); i++)
 		{
 			newStringPtr[i] = (*this)[i];
 		}
 
 		for (uint32 i = 0; i <= right.Length(); i++)
 		{
-			newStringPtr[i + this->Length()] = right[i];
+			newStringPtr[i + Length()] = right[i];
 		}
-		delete[] this->m_String;
-		this->m_String = newStringPtr;
-		this->m_Length = newLength;
-
+		delete[] m_String;
+		m_String = newStringPtr;
+		m_Length = newLength;
+		m_HasStringID = false;
 		return *this;
 	}
 
@@ -96,6 +98,15 @@ namespace SE3D
 	uint32 String::ToUInt32() const
 	{
 		return String::ToUInt32(this->CString());
+	}
+
+	int32 String::GetStringID()
+	{
+		if (m_HasStringID)
+			return m_StringID;
+
+		m_HasStringID = true;
+		return m_StringID = GenerateStringID();
 	}
 
 	float String::ToFloat(const char* string)
@@ -181,5 +192,26 @@ namespace SE3D
 		}
 
 		return intPart;
+	}
+
+	uint32 String::GenerateStringID() const
+	{
+		uint32 stringID = 0;
+		for (uint32 i = 0; i < m_Length; i++)
+		{
+			stringID ^= (m_String[i] << 24);
+			for (uint8 j = 8; j > 0; j--)
+			{
+				if (stringID & (1 << 31))
+				{
+					stringID = (stringID << 1) ^ 0x04C11DB7;
+				}
+				else
+				{
+					stringID = stringID << 1;
+				}
+			}
+		}
+		return stringID;
 	}
 }
