@@ -100,7 +100,7 @@ namespace SE3D
 		return String::ToUInt32(this->CString());
 	}
 
-	int32 String::GetStringID()
+	uint32 String::GetStringID()
 	{
 		if (m_HasStringID)
 			return m_StringID;

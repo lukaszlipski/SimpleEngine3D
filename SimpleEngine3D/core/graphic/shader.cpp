@@ -1,5 +1,7 @@
 #include "shader.h"
 #include "../system/file.h"
+#include "../utilities/string.h"
+#include <winerror.h>
 
 namespace SE3D
 {
@@ -57,6 +59,8 @@ namespace SE3D
 			return;
 		}
 
+		EnableAllAttributes();
+		GetAllUniforms();
 
 		glDeleteShader(vShader);
 		glDeleteShader(fShader);
@@ -74,8 +78,43 @@ namespace SE3D
 		glUseProgram(m_Program);
 	}
 
-	void Shader::Unbind()
+	void Shader::Unbind() const
 	{
 		glUseProgram(0);
+	}
+
+	bool Shader::CheckParam(uint32 paramID, ParamType type) const
+	{
+		bool result = false;
+		for(uint32 i=0;i<m_Uniforms.Size();i++)
+		{
+			if (m_Uniforms[i].m_ParamID == paramID && m_Uniforms[i].m_Type == type)
+				result = true;
+		}
+		return result;
+	}
+
+	void Shader::EnableAllAttributes() const
+	{
+		GLint count;
+		glGetProgramiv(m_Program, GL_ACTIVE_ATTRIBUTES, &count);
+		for (int32 i = 0; i < count; i++)
+		{
+			glEnableVertexAttribArray(0);
+		}
+	}
+
+	void Shader::GetAllUniforms()
+	{
+		GLint count;
+		GLchar name[256];
+		GLenum type;
+		glGetProgramiv(m_Program, GL_ACTIVE_UNIFORMS, &count);
+		for(int32 i=0;i<count;i++)
+		{
+			glGetActiveUniform(m_Program, i, 256, nullptr, nullptr, &type, name);
+			String strName(name);
+			m_Uniforms.Push(ShaderParam{strName.GetStringID(),ParamType(type)});
+		}
 	}
 }

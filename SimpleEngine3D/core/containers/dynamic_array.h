@@ -19,6 +19,24 @@ namespace SE3D
 			m_Data = nullptr;
 		}
 
+		DynamicArray(uint32 size)
+		{
+			m_Size = 0;
+			m_Capacity = size;
+			m_Data = new T[size];
+		}
+
+		DynamicArray(const DynamicArray<T>& other)
+		{
+			m_Size = other.m_Size;
+			m_Capacity = other.m_Capacity;
+			m_Data = new T[m_Size];
+			for(uint32 i=0;i<m_Size;i++)
+			{
+				m_Data[i] = other[i];
+			}
+		}
+
 		~DynamicArray() { delete[] m_Data; }
 
 		void Push(const T& element)
@@ -88,7 +106,7 @@ namespace SE3D
 			m_Size -= 1;
 			if (m_Size > m_Capacity / 2)
 			{
-				delete m_Data[i];
+				//delete m_Data[index]; 
 				for (uint32 i = index; i < m_Size; i++)
 				{
 					m_Data[i] = m_Data[i + 1];
@@ -116,5 +134,11 @@ namespace SE3D
 		inline uint32 Size() const { return m_Size; }
 
 		T& operator[](uint32 index) const { return m_Data[index]; }
+	};
+
+	template <class T>
+	class DynamicArray<T*>
+	{
+		//TODO: implement
 	};
 }
