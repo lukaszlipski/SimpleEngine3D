@@ -24,6 +24,7 @@ namespace SE3D
 	{
 		uint32 m_ParamID;
 		ParamType m_Type;
+		int32 m_Location;
 	};
 
 	class Shader
@@ -36,10 +37,12 @@ namespace SE3D
 		~Shader();
 		void Bind() const;
 		void Unbind() const;
+
 		uint32 GetProgram() const { return m_Program; }
-		bool CheckParam(uint32 paramID, ParamType type) const;
+		int32 CheckParam(uint32 paramID, ParamType type) const;
+
+		inline uint32 GetNumberOfParams() const { return m_Uniforms.Size(); }
 	private:
-		void EnableAllAttributes() const;
 		void GetAllUniforms();
 	};
 }

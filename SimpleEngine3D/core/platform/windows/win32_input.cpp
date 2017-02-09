@@ -77,16 +77,16 @@ namespace SE3D
 		m_MousePositionY = coursorCoords.y;
 	}
 
-	void Input::SetMousePosition(const Vector2D& position)
+	void Input::SetMousePosition(const Vector2D& position) const
 	{
-		POINT coursorCoords = {position.x, position.y};
+		POINT coursorCoords = {static_cast<LONG>(position.x), static_cast<LONG>(position.y)};
 		ClientToScreen(Window::GetInstance().GetWindowHandle(), &coursorCoords);
 		SetCursorPos(coursorCoords.x, coursorCoords.y);
 	}
 
-	void Input::SetMousePosition(uint32 x, uint32 y)
+	void Input::SetMousePosition(uint32 x, uint32 y) const
 	{
-		POINT coursorCoords = {x, y};
+		POINT coursorCoords = {static_cast<LONG>(x), static_cast<LONG>(y)};
 		ClientToScreen(Window::GetInstance().GetWindowHandle(), &coursorCoords);
 		SetCursorPos(coursorCoords.x, coursorCoords.y);
 	}

@@ -14,15 +14,14 @@ namespace SE3D
 
 	void FPSCamera::Update()
 	{
-
-		int32 centerX = Window::GetInstance().GetSizeX() / 2.0f;
-		int32 centerY = Window::GetInstance().GetSizeY() / 2.0f;
+		int32 centerX = static_cast<int32>(Window::GetInstance().GetSizeX() / 2.0f);
+		int32 centerY = static_cast<int32>(Window::GetInstance().GetSizeY() / 2.0f);
 		int32 x;
 		int32 y;
 		if (!m_FirstMouseUsage)
 		{
-			 x = Input::GetInstance().GetMousePositionX();
-			 y = Input::GetInstance().GetMousePositionY();
+			x = Input::GetInstance().GetMousePositionX();
+			y = Input::GetInstance().GetMousePositionY();
 		}
 		else
 		{
@@ -34,18 +33,18 @@ namespace SE3D
 		x = (x - centerX);
 		y = (centerY - y);
 
-		if(x*x != 1)
+		if (x * x != 1)
 			m_Yaw += x * this->m_MouseSensitivity;
-		if(y*y != 1)
+		if (y * y != 1)
 			m_Pitch += y * this->m_MouseSensitivity;
 
-		m_Front.x = cos(ToRadians(m_Yaw)) * cos(ToRadians(m_Pitch));
-		m_Front.y = sin(ToRadians(m_Pitch));
-		m_Front.z = sin(ToRadians(m_Yaw)) * cos(ToRadians(m_Pitch));
+		m_Front.x = static_cast<float>(cos(ToRadians(m_Yaw)) * cos(ToRadians(m_Pitch)));
+		m_Front.y = static_cast<float>(sin(ToRadians(m_Pitch)));
+		m_Front.z = static_cast<float>(sin(ToRadians(m_Yaw)) * cos(ToRadians(m_Pitch)));
 		m_Front = m_Front.Normalize();
 		m_Right = m_Front.Cross(m_WorldUp).Normalize();
 		m_Up = m_Right.Cross(m_Front).Normalize();
-		
+
 		Vector3D direction = {};
 		if (Input::GetInstance().GetKey('W'))
 			direction += m_Front;
@@ -56,8 +55,7 @@ namespace SE3D
 		if (Input::GetInstance().GetKey('D'))
 			direction += m_Right;
 
-		if (direction != Vector3D(0,0,0))
+		if (direction != Vector3D(0, 0, 0))
 			m_Position += direction.Normalize() * m_Speed * GlobalTimer::GetInstance().DeltaTime();
-		
 	}
 }

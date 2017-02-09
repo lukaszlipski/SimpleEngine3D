@@ -72,7 +72,10 @@
     <ClCompile Include="core\platform\windows\win32_global_timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="core\graphic\mesh.cpp">
+    <ClCompile Include="core\graphic\shader_params\param_matrix4d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="core\graphic\material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -137,7 +140,13 @@
     <ClInclude Include="core\system\global_timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="core\graphic\mesh.h">
+    <ClInclude Include="core\graphic\material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\graphic\shader_params\shader_parameter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\graphic\shader_params\param_matrix4d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

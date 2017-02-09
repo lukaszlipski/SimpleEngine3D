@@ -39,9 +39,9 @@ namespace SE3D
 
 		inline uint32 GetMousePositionX() const { return m_MousePositionX; }
 		inline uint32 GetMousePositionY() const { return m_MousePositionY; }
-		inline Vector2D GetMousePosition() const { return Vector2D(m_MousePositionX, m_MousePositionY); }
+		inline Vector2D GetMousePosition() const { return Vector2D(static_cast<float>(m_MousePositionX), static_cast<float>(m_MousePositionY)); }
 
-		void SetMousePosition(uint32 x, uint32 y);
-		void SetMousePosition(const Vector2D& position);
+		void SetMousePosition(uint32 x, uint32 y) const;
+		void SetMousePosition(const Vector2D& position) const;
 	};
 }

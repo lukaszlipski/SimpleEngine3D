@@ -49,7 +49,7 @@ namespace SE3D
 	{
 		Matrix4D persp = {};
 
-		float tanHalfFov = tan(fov / 2.0f);
+		float tanHalfFov = static_cast<float>(tan(fov / 2.0f));
 
 		persp.SetColumn(0, Vector4D(1.0f / (aspectRatio * tanHalfFov), 0, 0, 0));
 		persp.SetColumn(1, Vector4D(0, 1.0f / tanHalfFov, 0, 0));

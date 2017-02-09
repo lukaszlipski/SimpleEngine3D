@@ -15,6 +15,7 @@
 #include "utilities/obj_loader.h"
 #include "utilities/string.h"
 #include "graphic/camera/fps_camera.h"
+#include "graphic/material.h"
 
 // debug
 #include <stdio.h>
@@ -32,11 +33,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	//Image img("C:/Programowanie/CPP/testps.bmp");
 	//OBJLoader a("C:/Programowanie/CPP/monkeyTriangulate.obj");
 
-	//Window::GetInstance().SetCursor(true);
-	Window::GetInstance().SetFullScreen(false);
-	//Window::GetInstance().SetWindowSize(800, 600);
-
-	FPSCamera TestCamera(Matrix4D::Perspective(45.0f, (float)Window::GetInstance().GetSizeX() / (float)Window::GetInstance().GetSizeY(), 0.1f, 100.0f),Vector3D(0,0,-3));
+	FPSCamera TestCamera(Matrix4D::Perspective(45.0f, (float)Window::GetInstance().GetSizeX() / (float)Window::GetInstance().GetSizeY(), 0.1f, 100.0f), Vector3D(0, 0, -3));
 	TestCamera.SetPosition(Vector3D(0, 0, -3.0f));
 
 
@@ -48,6 +45,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	};
 
 	Shader test("C:/Programowanie/CPP/SimpleEngine3D/SimpleEngine3D/core/graphic/shaders/shader.vs", "C:/Programowanie/CPP/SimpleEngine3D/SimpleEngine3D/core/graphic/shaders/shader.fs");
+	Material mat(test);
 
 	GLuint VBO, VAO;
 	glGenVertexArrays(1, &VAO);
@@ -59,8 +57,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
-	//glUseProgram(sProgram);
-	
+
 	// -------------------------------------------
 
 	GlobalTimer::GetInstance().Reset();
@@ -69,12 +66,6 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		Graphics::GetInstance().Clear();
 		Input::GetInstance().Update();
 
-		if (Input::GetInstance().GetMouseButton(0))
-		OutputDebugString("!");
-
-		int16 x = Input::GetInstance().GetMousePositionX();
-		int16 y = Input::GetInstance().GetMousePositionY();
-
 		char Buffer[256];
 		sprintf_s(Buffer, "TimeElapsed: %f\n", (float)GlobalTimer::GetInstance().TimeSEC());
 		OutputDebugString(Buffer);
@@ -82,22 +73,18 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 		TestCamera.Update();
 		// ---------- TEST OPENGL UPDATE --------------
-		test.Bind();
+		mat.Bind();
 
-		Matrix4D proj = TestCamera.GetProjection();
-		//Matrix4D proj2 = Matrix4D::Orthographic(0.0f, -(float)Window::GetInstance().GetSizeX(), 0.0f, (float)Window::GetInstance().GetSizeY(), 0.1f, 100.0f);
-		Matrix4D view = TestCamera.GetView();
 		Matrix4D model = Matrix4D::Identity();
-		//model2 = model2.Translate(Vector3D(100, 100, 0)).Scale(Vector3D(100, 100, 1));
-		
-		glUniformMatrix4fv(glGetUniformLocation(test.GetProgram(), "u_model"), 1, GL_TRUE, (GLfloat*)model.GetPtr());
-		glUniformMatrix4fv(glGetUniformLocation(test.GetProgram(), "u_view"), 1, GL_TRUE, (GLfloat*)view.GetPtr());
-		glUniformMatrix4fv(glGetUniformLocation(test.GetProgram(), "u_projection"), 1, GL_TRUE, (GLfloat*)proj.GetPtr());
+
+		mat.SetParamMatrix4D(String("u_model").GetStringID(), model);
+		mat.SetParamMatrix4D(String("u_view").GetStringID(), TestCamera.GetView());
+		mat.SetParamMatrix4D(String("u_projection").GetStringID(), TestCamera.GetProjection());
 
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		glBindVertexArray(0);
-		test.Unbind();
+		mat.Unbind();
 		// -------------------------------------------
 
 

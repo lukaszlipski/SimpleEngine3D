@@ -59,7 +59,6 @@ namespace SE3D
 			return;
 		}
 
-		EnableAllAttributes();
 		GetAllUniforms();
 
 		glDeleteShader(vShader);
@@ -83,25 +82,14 @@ namespace SE3D
 		glUseProgram(0);
 	}
 
-	bool Shader::CheckParam(uint32 paramID, ParamType type) const
+	int32 Shader::CheckParam(uint32 paramID, ParamType type) const
 	{
-		bool result = false;
-		for(uint32 i=0;i<m_Uniforms.Size();i++)
+		for (uint32 i = 0; i < m_Uniforms.Size(); i++)
 		{
 			if (m_Uniforms[i].m_ParamID == paramID && m_Uniforms[i].m_Type == type)
-				result = true;
+				return m_Uniforms[i].m_Location;
 		}
-		return result;
-	}
-
-	void Shader::EnableAllAttributes() const
-	{
-		GLint count;
-		glGetProgramiv(m_Program, GL_ACTIVE_ATTRIBUTES, &count);
-		for (int32 i = 0; i < count; i++)
-		{
-			glEnableVertexAttribArray(0);
-		}
+		return -1;
 	}
 
 	void Shader::GetAllUniforms()
@@ -110,11 +98,11 @@ namespace SE3D
 		GLchar name[256];
 		GLenum type;
 		glGetProgramiv(m_Program, GL_ACTIVE_UNIFORMS, &count);
-		for(int32 i=0;i<count;i++)
+		for (int32 i = 0; i < count; i++)
 		{
 			glGetActiveUniform(m_Program, i, 256, nullptr, nullptr, &type, name);
 			String strName(name);
-			m_Uniforms.Push(ShaderParam{strName.GetStringID(),ParamType(type)});
+			m_Uniforms.Push(ShaderParam{strName.GetStringID(),ParamType(type), glGetUniformLocation(m_Program, name)});
 		}
 	}
 }
