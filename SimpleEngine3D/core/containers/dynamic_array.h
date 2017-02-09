@@ -6,6 +6,7 @@ namespace SE3D
 	template <class T>
 	class DynamicArray
 	{
+	private:
 		uint32 m_Size;
 		uint32 m_Capacity;
 		T* m_Data;
@@ -31,13 +32,23 @@ namespace SE3D
 			m_Size = other.m_Size;
 			m_Capacity = other.m_Capacity;
 			m_Data = new T[m_Size];
-			for(uint32 i=0;i<m_Size;i++)
+			for (uint32 i = 0; i < m_Size; i++)
 			{
 				m_Data[i] = other[i];
 			}
 		}
 
-		~DynamicArray() { delete[] m_Data; }
+		~DynamicArray()
+		{
+			if (m_Size > 0 && IsPointer(m_Data[0]))
+			{
+				for (uint32 i = 0; i < m_Size; i++)
+				{
+					DeleteIfPointer(m_Data[i]);
+				}
+			}
+			delete[] m_Data;
+		}
 
 		void Push(const T& element)
 		{
@@ -106,14 +117,14 @@ namespace SE3D
 			m_Size -= 1;
 			if (m_Size > m_Capacity / 2)
 			{
-				//delete m_Data[index]; 
+				DeleteIfPointer(m_Data[index]);
 				for (uint32 i = index; i < m_Size; i++)
 				{
 					m_Data[i] = m_Data[i + 1];
 				}
 				return;
 			}
-
+			DeleteIfPointer(m_Data[index]);
 			m_Capacity = ((m_Size * 3) / 2) + 1;
 			T* newData = new T[m_Capacity];
 
@@ -134,11 +145,20 @@ namespace SE3D
 		inline uint32 Size() const { return m_Size; }
 
 		T& operator[](uint32 index) const { return m_Data[index]; }
-	};
 
-	template <class T>
-	class DynamicArray<T*>
-	{
-		//TODO: implement
+	private:
+		template <typename T>
+		static void DeleteIfPointer(T& element)
+		{
+		}
+
+		template <typename T>
+		static void DeleteIfPointer(T* element) { delete element; }
+
+		template <typename T>
+		static bool IsPointer(T& item) { return false; }
+
+		template <typename T>
+		static bool IsPointer(T* item) { return true; }
 	};
 }
