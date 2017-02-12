@@ -72,9 +72,6 @@
     <ClCompile Include="core\platform\windows\win32_global_timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="core\graphic\shader_params\param_matrix4d.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="core\graphic\material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -147,6 +144,30 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\graphic\shader_params\param_matrix4d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\graphic\shader_params\param_float.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\graphic\shader_params\param_vector2d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\graphic\shader_params\param_vector3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\graphic\shader_params\param_vector4d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\graphic\shader_params\param_int32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\graphic\shader_params\param_uint32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\graphic\shader_params\param_bool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\graphic\shader_params\param_matrix3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

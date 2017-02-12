@@ -123,7 +123,6 @@
     <ClCompile Include="core\graphic\camera\fps_camera.cpp" />
     <ClCompile Include="core\graphic\material.cpp" />
     <ClCompile Include="core\graphic\shader.cpp" />
-    <ClCompile Include="core\graphic\shader_params\param_matrix4d.cpp" />
     <ClCompile Include="core\math\matrix3d.cpp" />
     <ClCompile Include="core\math\matrix4d.cpp" />
     <ClCompile Include="core\math\vector2d.cpp" />
@@ -148,7 +147,15 @@
     <ClInclude Include="core\graphic\camera\fps_camera.h" />
     <ClInclude Include="core\graphic\material.h" />
     <ClInclude Include="core\graphic\shader.h" />
+    <ClInclude Include="core\graphic\shader_params\param_bool.h" />
+    <ClInclude Include="core\graphic\shader_params\param_float.h" />
+    <ClInclude Include="core\graphic\shader_params\param_int32.h" />
+    <ClInclude Include="core\graphic\shader_params\param_matrix3d.h" />
     <ClInclude Include="core\graphic\shader_params\param_matrix4d.h" />
+    <ClInclude Include="core\graphic\shader_params\param_uint32.h" />
+    <ClInclude Include="core\graphic\shader_params\param_vector2d.h" />
+    <ClInclude Include="core\graphic\shader_params\param_vector3d.h" />
+    <ClInclude Include="core\graphic\shader_params\param_vector4d.h" />
     <ClInclude Include="core\graphic\shader_params\shader_parameter.h" />
     <ClInclude Include="core\math\math.h" />
     <ClInclude Include="core\math\matrix3d.h" />

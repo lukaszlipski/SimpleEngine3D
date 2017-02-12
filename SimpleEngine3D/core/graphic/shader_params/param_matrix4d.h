@@ -9,8 +9,16 @@ namespace SE3D
 	private:
 		Matrix4D m_Value;
 	public:
-		ParamMatrix4D(Matrix4D value);
-		void Bind() override;
-		void SetValue(Matrix4D value);
+		ParamMatrix4D(Matrix4D value, uint32 nameID, int32 location)
+			: ShaderParameter(nameID, MATRIX4D, location), m_Value(value)
+		{
+		}
+
+		void Bind() override
+		{
+			glUniformMatrix4fv(m_Location, 1, GL_TRUE, (GLfloat*)m_Value.GetPtr());
+		}
+
+		void SetValue(Matrix4D value) { m_Value = value; }
 	};
 }

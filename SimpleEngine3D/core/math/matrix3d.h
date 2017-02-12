@@ -42,6 +42,8 @@ namespace SE3D
 			return *this;
 		}
 
+		const void* GetPtr() const { return this; }
+
 		Matrix3D& Transpose();
 		Matrix3D& Invert();
 		Matrix3D& Add(const Matrix3D& matrix);
