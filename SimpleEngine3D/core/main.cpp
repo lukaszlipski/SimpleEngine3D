@@ -16,6 +16,7 @@
 #include "utilities/string.h"
 #include "graphic/camera/fps_camera.h"
 #include "graphic/material.h"
+#include "system/resource_manager.h"
 
 // debug
 #include <stdio.h>
@@ -29,6 +30,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	Graphics::GetInstance().Startup();
 	Input::GetInstance().Startup();
 	GlobalTimer::GetInstance().Startup();
+	ResourceManager::GetInstance().Startup();
 
 	//Image img("C:/Programowanie/CPP/testps.bmp");
 	//OBJLoader a("C:/Programowanie/CPP/monkeyTriangulate.obj");
@@ -44,8 +46,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		0.0f, 0.5f, 0.0f
 	};
 
-	Shader test("C:/Programowanie/CPP/SimpleEngine3D/SimpleEngine3D/core/graphic/shaders/shader.vs", "C:/Programowanie/CPP/SimpleEngine3D/SimpleEngine3D/core/graphic/shaders/shader.fs");
-	Material mat(test);
+	Material mat("C:/Programowanie/CPP/SimpleEngine3D/SimpleEngine3D/core/graphic/shaders/shader.vs", "C:/Programowanie/CPP/SimpleEngine3D/SimpleEngine3D/core/graphic/shaders/shader.fs");
 
 	GLuint VBO, VAO;
 	glGenVertexArrays(1, &VAO);
@@ -92,6 +93,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		GlobalTimer::GetInstance().Update();
 	}
 
+	ResourceManager::GetInstance().Shutdown();
 	GlobalTimer::GetInstance().Shutown();
 	Input::GetInstance().Shutown();
 	Graphics::GetInstance().Shutdown();

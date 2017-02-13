@@ -7,17 +7,18 @@
 #include "shader_params/param_int32.h"
 #include "shader_params/param_float.h"
 #include "shader_params/param_bool.h"
+#include "../system/resource_manager.h"
 
 namespace SE3D
 {
-	Material::Material(const Shader& shader)
-		: m_Shader(shader)
+	Material::Material(const String& vertShader, const String& fragShader)
 	{
+		m_Shader = ResourceManager::GetInstance().GetShader(vertShader, fragShader);
 	}
 
 	void Material::Bind() const
 	{
-		m_Shader.Bind();
+		m_Shader->Bind();
 		for (uint32 i = 0; i < m_Params.Size(); i++)
 		{
 			m_Params[i]->Bind();
@@ -26,7 +27,7 @@ namespace SE3D
 
 	void Material::Unbind() const
 	{
-		m_Shader.Unbind();
+		m_Shader->Unbind();
 	}
 
 	bool Material::SetParamBool(uint32 nameID, bool value)
@@ -40,7 +41,7 @@ namespace SE3D
 			}
 		}
 		int32 location;
-		if ((location = m_Shader.CheckParam(nameID, BOOL)) >= 0)
+		if ((location = m_Shader->CheckParam(nameID, BOOL)) >= 0)
 		{
 			ParamBool* param = new ParamBool(value, nameID, location);
 			m_Params.Push(param);
@@ -60,7 +61,7 @@ namespace SE3D
 			}
 		}
 		int32 location;
-		if ((location = m_Shader.CheckParam(nameID, FLOAT)) >= 0)
+		if ((location = m_Shader->CheckParam(nameID, FLOAT)) >= 0)
 		{
 			ParamFloat* param = new ParamFloat(value, nameID, location);
 			m_Params.Push(param);
@@ -80,7 +81,7 @@ namespace SE3D
 			}
 		}
 		int32 location;
-		if ((location = m_Shader.CheckParam(nameID, INT32)) >= 0)
+		if ((location = m_Shader->CheckParam(nameID, INT32)) >= 0)
 		{
 			ParamInt32* param = new ParamInt32(value, nameID, location);
 			m_Params.Push(param);
@@ -100,7 +101,7 @@ namespace SE3D
 			}
 		}
 		int32 location;
-		if ((location = m_Shader.CheckParam(nameID, UINT32)) >= 0)
+		if ((location = m_Shader->CheckParam(nameID, UINT32)) >= 0)
 		{
 			ParamUInt32* param = new ParamUInt32(value, nameID, location);
 			m_Params.Push(param);
@@ -120,7 +121,7 @@ namespace SE3D
 			}
 		}
 		int32 location;
-		if ((location = m_Shader.CheckParam(nameID, MATRIX3D)) >= 0)
+		if ((location = m_Shader->CheckParam(nameID, MATRIX3D)) >= 0)
 		{
 			ParamMatrix3D* param = new ParamMatrix3D(value, nameID, location);
 			m_Params.Push(param);
@@ -140,7 +141,7 @@ namespace SE3D
 			}
 		}
 		int32 location;
-		if ((location = m_Shader.CheckParam(nameID, MATRIX4D)) >= 0)
+		if ((location = m_Shader->CheckParam(nameID, MATRIX4D)) >= 0)
 		{
 			ParamMatrix4D* param = new ParamMatrix4D(value, nameID, location);
 			m_Params.Push(param);

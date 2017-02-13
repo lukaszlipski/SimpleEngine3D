@@ -25,7 +25,7 @@ namespace SE3D
 		{
 			glGetShaderInfoLog(vShader, 512, 0, infoLog);
 			// TODO: Add to log
-			m_Program = -1;
+			m_IsValid = false;
 			File::GetInstance().Delete(vsFile);
 			File::GetInstance().Delete(fsFile);
 			return;
@@ -38,7 +38,7 @@ namespace SE3D
 		{
 			glGetShaderInfoLog(fShader, 512, 0, infoLog);
 			// TODO: Add to log
-			m_Program = -1;
+			m_IsValid = false;
 			File::GetInstance().Delete(vsFile);
 			File::GetInstance().Delete(fsFile);
 			return;
@@ -61,6 +61,7 @@ namespace SE3D
 
 		GetAllUniforms();
 
+		m_IsValid = true;
 		glDeleteShader(vShader);
 		glDeleteShader(fShader);
 		File::GetInstance().Delete(vsFile);

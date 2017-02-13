@@ -75,6 +75,9 @@
     <ClCompile Include="core\graphic\material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\system\resource_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\system\window.h">
@@ -168,6 +171,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\graphic\shader_params\param_matrix3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\system\resource_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

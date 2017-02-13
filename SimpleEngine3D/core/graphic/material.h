@@ -1,6 +1,7 @@
 #pragma once
 #include "shader.h"
 #include "shader_params/shader_parameter.h"
+#include "../utilities/string.h"
 
 namespace SE3D
 {
@@ -10,11 +11,11 @@ namespace SE3D
 	class Material
 	{
 	private:
-		Shader m_Shader;
+		Shader *m_Shader;
 		DynamicArray<ShaderParameter*> m_Params;
 		// TODO: Add textures
 	public:
-		Material(const Shader& shader);
+		Material(const String& vertShader, const String& fragShader);
 
 		void Bind() const;
 		void Unbind() const;

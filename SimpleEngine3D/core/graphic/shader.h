@@ -30,6 +30,7 @@ namespace SE3D
 	{
 	private:
 		GLuint m_Program;
+		bool m_IsValid;
 		DynamicArray<ShaderParam> m_Uniforms;
 	public:
 		Shader(const char* filePathVS, const char* filePathFS);
@@ -41,6 +42,7 @@ namespace SE3D
 		int32 CheckParam(uint32 paramID, ParamType type) const;
 
 		inline uint32 GetNumberOfParams() const { return m_Uniforms.Size(); }
+		inline bool IsValid() const { return m_IsValid; }
 	private:
 		void GetAllUniforms();
 	};
