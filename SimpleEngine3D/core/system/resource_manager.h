@@ -28,6 +28,8 @@ namespace SE3D
 			return *instance;
 		}
 
+		~ResourceManager();
+
 		void Startup()
 		{
 		}

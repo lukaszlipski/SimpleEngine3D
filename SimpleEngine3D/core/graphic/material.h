@@ -16,6 +16,7 @@ namespace SE3D
 		// TODO: Add textures
 	public:
 		Material(const String& vertShader, const String& fragShader);
+		~Material();
 
 		void Bind() const;
 		void Unbind() const;

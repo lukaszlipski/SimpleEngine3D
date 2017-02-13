@@ -2,6 +2,14 @@
 
 namespace SE3D
 {
+	ResourceManager::~ResourceManager()
+	{
+		for(uint32 i=0;i< m_Shaders.Size() ; i++)
+		{
+			delete m_Shaders[i].m_Shader;
+		}
+	}
+
 	Shader* ResourceManager::AddShader(const String& vertexShaderFile, const String& fragmentShaderFile)
 	{
 		Shader* shader = new Shader(vertexShaderFile.CString(), fragmentShaderFile.CString());

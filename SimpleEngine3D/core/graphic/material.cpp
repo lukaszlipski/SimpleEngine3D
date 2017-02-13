@@ -16,6 +16,14 @@ namespace SE3D
 		m_Shader = ResourceManager::GetInstance().GetShader(vertShader, fragShader);
 	}
 
+	Material::~Material()
+	{
+		for(uint32 i=0;i<m_Params.Size();i++)
+		{
+			delete m_Params[i];
+		}
+	}
+
 	void Material::Bind() const
 	{
 		m_Shader->Bind();

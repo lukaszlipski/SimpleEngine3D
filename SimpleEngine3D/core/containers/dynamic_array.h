@@ -40,13 +40,6 @@ namespace SE3D
 
 		~DynamicArray()
 		{
-			if (m_Size > 0 && IsPointer(m_Data[0]))
-			{
-				for (uint32 i = 0; i < m_Size; i++)
-				{
-					DeleteIfPointer(m_Data[i]);
-				}
-			}
 			delete[] m_Data;
 		}
 
@@ -117,14 +110,14 @@ namespace SE3D
 			m_Size -= 1;
 			if (m_Size > m_Capacity / 2)
 			{
-				DeleteIfPointer(m_Data[index]);
+				//DeleteIfPointer(m_Data[index]);
 				for (uint32 i = index; i < m_Size; i++)
 				{
 					m_Data[i] = m_Data[i + 1];
 				}
 				return;
 			}
-			DeleteIfPointer(m_Data[index]);
+			//DeleteIfPointer(m_Data[index]);
 			m_Capacity = ((m_Size * 3) / 2) + 1;
 			T* newData = new T[m_Capacity];
 
