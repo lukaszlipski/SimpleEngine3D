@@ -176,6 +176,9 @@
     <ClInclude Include="core\system\resource_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="core\utilities\debug_msg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="core\graphic\shaders\shader.vs" />

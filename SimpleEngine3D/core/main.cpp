@@ -17,6 +17,7 @@
 #include "graphic/camera/fps_camera.h"
 #include "graphic/material.h"
 #include "system/resource_manager.h"
+#include "utilities/debug_msg.h"
 
 // debug
 #include <stdio.h>
@@ -36,8 +37,6 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	//OBJLoader a("C:/Programowanie/CPP/monkeyTriangulate.obj");
 
 	FPSCamera TestCamera(Matrix4D::Perspective(45.0f, (float)Window::GetInstance().GetSizeX() / (float)Window::GetInstance().GetSizeY(), 0.1f, 100.0f), Vector3D(0, 0, -3));
-	TestCamera.SetPosition(Vector3D(0, 0, -3.0f));
-
 
 	// ---------- TEST OPENGL INIT --------------
 	GLfloat vertices[] = {
@@ -67,9 +66,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		Graphics::GetInstance().Clear();
 		Input::GetInstance().Update();
 
-		char Buffer[256];
-		sprintf_s(Buffer, "TimeElapsed: %f\n", (float)GlobalTimer::GetInstance().TimeSEC());
-		OutputDebugString(Buffer);
+		DebugOutputMSG("TimeElapsed: %fs\n", static_cast<float>(GlobalTimer::GetInstance().TimeSEC()));
 
 
 		TestCamera.Update();
