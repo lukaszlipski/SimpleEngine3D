@@ -41,10 +41,11 @@ namespace SE3D
 
 	bool File::IsLittleEndian() const
 	{
-		union {
+		union
+		{
 			uint32 i;
 			char c[4];
-		} bint = { 0x01000000 };
+		} bint = {0x01000000};
 
 		return bint.c[3] == 1;
 	}

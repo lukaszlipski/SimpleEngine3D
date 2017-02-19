@@ -12,23 +12,23 @@ namespace SE3D
 		uint32 m_FragNameID;
 	};
 
-	class ResourceManager
+	class ShaderManager
 	{
 	private:
 		DynamicArray<SHADER_RES> m_Shaders;
 
-		ResourceManager()
+		ShaderManager()
 		{
 		}
 
 	public:
-		static ResourceManager& GetInstance()
+		static ShaderManager& GetInstance()
 		{
-			static ResourceManager* instance = new ResourceManager();
+			static ShaderManager* instance = new ShaderManager();
 			return *instance;
 		}
 
-		~ResourceManager();
+		~ShaderManager();
 
 		void Startup()
 		{

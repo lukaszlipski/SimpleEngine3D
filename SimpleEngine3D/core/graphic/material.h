@@ -11,7 +11,7 @@ namespace SE3D
 	class Material
 	{
 	private:
-		Shader *m_Shader;
+		Shader* m_Shader;
 		DynamicArray<ShaderParameter*> m_Params;
 		// TODO: Add textures
 	public:
@@ -27,5 +27,6 @@ namespace SE3D
 		bool SetParamUInt32(uint32 nameID, uint32 value);
 		bool SetParamMatrix3D(uint32 nameID, const Matrix3D& value);
 		bool SetParamMatrix4D(uint32 nameID, const Matrix4D& value);
+		bool SetTexture2D(uint32 nameID, const String& path);
 	};
 }

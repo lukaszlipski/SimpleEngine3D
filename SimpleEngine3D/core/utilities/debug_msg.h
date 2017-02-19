@@ -13,7 +13,7 @@ inline void DebugOutputMSG(const char* msg, ...)
 	va_start(argList, msg);
 	vsnprintf(buffer, MAX_CHARS, msg, argList);
 	va_end(argList);
-	OutputDebugString(buffer);	
+	OutputDebugString(buffer);
 }
 #else
 inline void DebugOutputMSG(const char* format, ...) {}

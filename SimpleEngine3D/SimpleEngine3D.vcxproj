@@ -123,6 +123,7 @@
     <ClCompile Include="core\graphic\camera\fps_camera.cpp" />
     <ClCompile Include="core\graphic\material.cpp" />
     <ClCompile Include="core\graphic\shader.cpp" />
+    <ClCompile Include="core\graphic\texture2d.cpp" />
     <ClCompile Include="core\math\matrix3d.cpp" />
     <ClCompile Include="core\math\matrix4d.cpp" />
     <ClCompile Include="core\math\vector2d.cpp" />
@@ -137,7 +138,8 @@
     <ClCompile Include="core\platform\windows\win32_input.cpp" />
     <ClCompile Include="core\platform\windows\win32_global_timer.cpp" />
     <ClCompile Include="core\platform\windows\win32_window.cpp" />
-    <ClCompile Include="core\system\resource_manager.cpp" />
+    <ClCompile Include="core\system\shader_manager.cpp" />
+    <ClCompile Include="core\system\texture_manager.cpp" />
     <ClCompile Include="core\utilities\image.cpp" />
     <ClCompile Include="core\utilities\obj_loader.cpp" />
     <ClCompile Include="core\utilities\string.cpp" />
@@ -153,11 +155,13 @@
     <ClInclude Include="core\graphic\shader_params\param_int32.h" />
     <ClInclude Include="core\graphic\shader_params\param_matrix3d.h" />
     <ClInclude Include="core\graphic\shader_params\param_matrix4d.h" />
+    <ClInclude Include="core\graphic\shader_params\param_texture2d.h" />
     <ClInclude Include="core\graphic\shader_params\param_uint32.h" />
     <ClInclude Include="core\graphic\shader_params\param_vector2d.h" />
     <ClInclude Include="core\graphic\shader_params\param_vector3d.h" />
     <ClInclude Include="core\graphic\shader_params\param_vector4d.h" />
     <ClInclude Include="core\graphic\shader_params\shader_parameter.h" />
+    <ClInclude Include="core\graphic\texture2d.h" />
     <ClInclude Include="core\math\math.h" />
     <ClInclude Include="core\math\matrix3d.h" />
     <ClInclude Include="core\math\matrix4d.h" />
@@ -168,7 +172,8 @@
     <ClInclude Include="core\system\graphics.h" />
     <ClInclude Include="core\system\input.h" />
     <ClInclude Include="core\system\global_timer.h" />
-    <ClInclude Include="core\system\resource_manager.h" />
+    <ClInclude Include="core\system\shader_manager.h" />
+    <ClInclude Include="core\system\texture_manager.h" />
     <ClInclude Include="core\system\window.h" />
     <ClInclude Include="core\utilities\assertion.h" />
     <ClInclude Include="core\utilities\debug_msg.h" />

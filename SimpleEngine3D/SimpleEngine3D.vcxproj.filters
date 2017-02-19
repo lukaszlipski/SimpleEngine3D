@@ -75,7 +75,13 @@
     <ClCompile Include="core\graphic\material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="core\system\resource_manager.cpp">
+    <ClCompile Include="core\system\shader_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="core\graphic\texture2d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="core\system\texture_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -173,10 +179,19 @@
     <ClInclude Include="core\graphic\shader_params\param_matrix3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="core\system\resource_manager.h">
+    <ClInclude Include="core\utilities\debug_msg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="core\utilities\debug_msg.h">
+    <ClInclude Include="core\system\shader_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\graphic\shader_params\param_texture2d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\graphic\texture2d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\system\texture_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

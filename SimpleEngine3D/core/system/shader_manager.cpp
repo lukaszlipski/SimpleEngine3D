@@ -1,16 +1,16 @@
-#include "resource_manager.h"
+#include "shader_manager.h"
 
 namespace SE3D
 {
-	ResourceManager::~ResourceManager()
+	ShaderManager::~ShaderManager()
 	{
-		for(uint32 i=0;i< m_Shaders.Size() ; i++)
+		for (uint32 i = 0; i < m_Shaders.Size(); i++)
 		{
 			delete m_Shaders[i].m_Shader;
 		}
 	}
 
-	Shader* ResourceManager::AddShader(const String& vertexShaderFile, const String& fragmentShaderFile)
+	Shader* ShaderManager::AddShader(const String& vertexShaderFile, const String& fragmentShaderFile)
 	{
 		Shader* shader = new Shader(vertexShaderFile.CString(), fragmentShaderFile.CString());
 		if (!shader->IsValid())
@@ -23,7 +23,7 @@ namespace SE3D
 		return m_Shaders[m_Shaders.Size() - 1].m_Shader;
 	}
 
-	Shader* ResourceManager::GetShader(const String& vertexShaderFile, const String& fragmentShaderFile)
+	Shader* ShaderManager::GetShader(const String& vertexShaderFile, const String& fragmentShaderFile)
 	{
 		uint32 vertID = String(vertexShaderFile).GetStringID();
 		uint32 fragID = String(fragmentShaderFile).GetStringID();

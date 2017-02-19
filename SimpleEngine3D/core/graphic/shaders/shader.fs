@@ -1,7 +1,12 @@
 #version 330 core
+
+uniform sampler2D u_texture;
+
+in vec2 texCoord;
+
 out vec4 color;
 
 void main()
 {
-    color = vec4(0.66f, 0, 1.0f, 1.0f);
+    color = texture(u_texture,texCoord);
 }
