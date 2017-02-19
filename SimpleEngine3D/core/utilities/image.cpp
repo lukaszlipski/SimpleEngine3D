@@ -12,10 +12,20 @@ namespace SE3D
 		m_File = File::GetInstance().ReadSync(filePath);
 		if (m_File.Size == 0) { File::GetInstance().Delete(m_File); }
 
-		int16 Signature = *static_cast<int16*>(m_File.Content);
+		int16 Signature = reinterpret_cast<int16*>(m_File.Content)[0];
 		if (Signature == 0x4d42)
 		{
-			LoadBMP();
+			int8 version = static_cast<int8*>(m_File.Content)[2];
+			if (version == '6')
+			{
+				LoadBMP6();
+				m_Format = RGB;
+			}
+			if (version == '8')
+			{
+				LoadBMP8();
+				m_Format = RGBA;
+			}
 		}
 		else
 		{
@@ -23,13 +33,42 @@ namespace SE3D
 		}
 	}
 
-	void Image::LoadBMP()
+	void Image::LoadBMP6()
 	{
 		m_Width = *reinterpret_cast<int32*>(static_cast<int8*>(m_File.Content) + 18);
 		m_Height = *reinterpret_cast<int32*>(static_cast<int8*>(m_File.Content) + 22);
 
 		int8 offset = *(static_cast<int8*>(m_File.Content) + 10);
 		m_Pixels = static_cast<int8*>(m_File.Content) + offset;
+
+		if (File::GetInstance().IsLittleEndian())
+		{
+			for (uint32 i = 0; i < m_Width*m_Height * 3; i = i + 3)
+			{
+				int8 tmp = static_cast<int8*>(m_Pixels)[i];
+				static_cast<int8*>(m_Pixels)[i] = static_cast<int8*>(m_Pixels)[i + 2];
+				static_cast<int8*>(m_Pixels)[i + 2] = tmp;
+			}
+		}
+	}
+
+	void Image::LoadBMP8()
+	{
+		m_Width = *reinterpret_cast<int32*>(static_cast<int8*>(m_File.Content) + 18);
+		m_Height = *reinterpret_cast<int32*>(static_cast<int8*>(m_File.Content) + 22);
+
+		int8 offset = *(static_cast<int8*>(m_File.Content) + 10);
+		m_Pixels = static_cast<int8*>(m_File.Content) + offset;
+
+		if (File::GetInstance().IsLittleEndian())
+		{
+			for (uint32 i = 0; i < m_Width*m_Height * 4; i = i + 4)
+			{
+				int8 tmp = static_cast<int8*>(m_Pixels)[i];
+				static_cast<int8*>(m_Pixels)[i] = static_cast<int8*>(m_Pixels)[i + 2];
+				static_cast<int8*>(m_Pixels)[i + 2] = tmp;
+			}
+		}
 	}
 
 	void Image::Delete() const

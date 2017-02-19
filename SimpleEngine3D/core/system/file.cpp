@@ -38,4 +38,14 @@ namespace SE3D
 		if (file.Content != nullptr)
 			delete[] file.Content;
 	}
+
+	bool File::IsLittleEndian() const
+	{
+		union {
+			uint32 i;
+			char c[4];
+		} bint = { 0x01000000 };
+
+		return bint.c[3] == 1;
+	}
 }

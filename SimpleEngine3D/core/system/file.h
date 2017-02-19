@@ -6,8 +6,8 @@ namespace SE3D
 	struct FILE
 	{
 		uint64 Size;
-		void* Content;
-		char* Seek;
+		int8* Content;
+		int8* Seek;
 	};
 
 	struct LINE
@@ -57,5 +57,6 @@ namespace SE3D
 		uint64 GetSize(const char* filePath);
 		LINE GetLine(FILE& file);
 		void Delete(FILE file);
+		bool IsLittleEndian() const;
 	};
 }

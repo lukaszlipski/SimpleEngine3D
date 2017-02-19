@@ -22,17 +22,17 @@ namespace SE3D
 		}
 		Assert(fileSize <= MAX_UINT32)
 
-		void* buffer = new BYTE[fileSize + 1];
+		int8* buffer = new int8[fileSize + 1];
 		DWORD bRead;
 		if (ReadFile(fileHandle, buffer, static_cast<uint32>(fileSize), &bRead, 0) && (bRead == fileSize))
 		{
 			CloseHandle(fileHandle);
-			return FILE{fileSize,buffer,static_cast<char*>(buffer)};
+			return FILE{fileSize,buffer,buffer};
 		}
 		else
 		{
 			CloseHandle(fileHandle);
-			delete buffer;
+			delete[] buffer;
 			return FILE{0,nullptr,nullptr};
 		}
 	}
@@ -42,7 +42,7 @@ namespace SE3D
 		FILE textFile = ReadSync(filePath);
 
 
-		char* tmp = static_cast<char*>(textFile.Content);
+		char* tmp = reinterpret_cast<char*>(textFile.Content);
 		for (int i = 0; i <= textFile.Size; i++)
 		{
 			if (*tmp == '\r') { *tmp = ' '; }

@@ -10,8 +10,8 @@ namespace SE3D
 		FILE vsFile = File::GetInstance().ReadTextSync(filePathVS);
 		FILE fsFile = File::GetInstance().ReadTextSync(filePathFS);
 
-		const GLchar* vsSource = static_cast<GLchar*>(vsFile.Content);
-		const GLchar* fsSource = static_cast<GLchar*>(fsFile.Content);
+		const GLchar* vsSource = reinterpret_cast<GLchar*>(vsFile.Content);
+		const GLchar* fsSource = reinterpret_cast<GLchar*>(fsFile.Content);
 
 		GLuint vShader, fShader;
 		GLint success;
