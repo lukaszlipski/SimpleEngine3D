@@ -194,6 +194,9 @@
     <ClInclude Include="core\system\texture_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="core\utilities\memory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="core\graphic\shaders\shader.vs" />

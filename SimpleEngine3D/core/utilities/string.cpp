@@ -1,4 +1,5 @@
 #include "string.h"
+#include "memory.h"
 
 namespace SE3D
 {
@@ -14,10 +15,8 @@ namespace SE3D
 		m_Length = string.Length();
 		char* newString = new char[m_Length + 1];
 
-		for (uint32 i = 0; i <= m_Length; i++)
-		{
-			newString[i] = string[i];
-		}
+		CopyMemory(newString, string.CString(), m_Length);
+
 		m_String = newString;
 	}
 
@@ -33,10 +32,8 @@ namespace SE3D
 
 		char* newString = new char[m_Length + 1];
 
-		for (uint32 i = 0; i <= m_Length; i++)
-		{
-			newString[i] = string[i];
-		}
+		CopyMemory(newString, string, m_Length);
+
 		m_String = newString;
 	}
 
@@ -52,15 +49,9 @@ namespace SE3D
 		uint32 newLength = left.Length() + right.Length();
 		char* newStringPtr = new char[newLength + 1];
 
-		for (uint32 i = 0; i < left.Length(); i++)
-		{
-			newStringPtr[i] = left[i];
-		}
+		CopyMemory(newStringPtr, left.CString(), left.Length());
+		CopyMemory(newStringPtr + left.Length(), right.CString(), right.Length());
 
-		for (uint32 i = 0; i <= right.Length(); i++)
-		{
-			newStringPtr[i + left.Length()] = right[i];
-		}
 		return String(newStringPtr);
 	}
 
@@ -69,15 +60,9 @@ namespace SE3D
 		uint32 newLength = Length() + right.Length();
 		char* newStringPtr = new char[newLength + 1];
 
-		for (uint32 i = 0; i < Length(); i++)
-		{
-			newStringPtr[i] = (*this)[i];
-		}
+		CopyMemory(newStringPtr, this, Length());
+		CopyMemory(newStringPtr + Length(), right.CString(), right.Length());
 
-		for (uint32 i = 0; i <= right.Length(); i++)
-		{
-			newStringPtr[i + Length()] = right[i];
-		}
 		delete[] m_String;
 		m_String = newStringPtr;
 		m_Length = newLength;

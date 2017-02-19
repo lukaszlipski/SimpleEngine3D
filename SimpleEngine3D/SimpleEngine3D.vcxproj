@@ -178,6 +178,7 @@
     <ClInclude Include="core\utilities\assertion.h" />
     <ClInclude Include="core\utilities\debug_msg.h" />
     <ClInclude Include="core\utilities\image.h" />
+    <ClInclude Include="core\utilities\memory.h" />
     <ClInclude Include="core\utilities\obj_loader.h" />
     <ClInclude Include="core\utilities\string.h" />
     <ClInclude Include="core\utilities\types.h" />
