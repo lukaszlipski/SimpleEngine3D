@@ -40,7 +40,24 @@ namespace SE3D
 
 		~DynamicArray()
 		{
-			delete[] m_Data;
+			if (m_Data != nullptr)
+				delete[] m_Data;
+		}
+
+		void Clear(bool deletePointers = false)
+		{
+			if (deletePointers)
+			{
+				for (uint32 i = 0; i < m_Size; i++)
+					DeleteIfPointer(m_Data[i]);
+			}
+			if (m_Data != nullptr)
+			{
+				delete[] m_Data;
+				m_Data = nullptr;
+			}
+			m_Size = 0;
+			m_Capacity = 0;
 		}
 
 		void Push(const T& element)
@@ -104,20 +121,24 @@ namespace SE3D
 			m_Capacity = newCap;
 		}
 
-		void Remove(uint32 index)
+		void Remove(uint32 index, bool deletePointer = false)
 		{
 			if (index < 0 || index >= m_Size) { return; }
 			m_Size -= 1;
 			if (m_Size > m_Capacity / 2)
 			{
-				//DeleteIfPointer(m_Data[index]);
+				if (deletePointer)
+					DeleteIfPointer(m_Data[index]);
+
 				for (uint32 i = index; i < m_Size; i++)
 				{
 					m_Data[i] = m_Data[i + 1];
 				}
 				return;
 			}
-			//DeleteIfPointer(m_Data[index]);
+			if (deletePointer)
+				DeleteIfPointer(m_Data[index]);
+
 			m_Capacity = ((m_Size * 3) / 2) + 1;
 			T* newData = new T[m_Capacity];
 
