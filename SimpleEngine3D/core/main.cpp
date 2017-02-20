@@ -22,10 +22,10 @@
 
 using namespace SE3D;
 
-int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int main()
 {
 	File::GetInstance().Startup();
-	Window::GetInstance().Startup("Lukasz Lipski : SimpleEngine3D", 1024, 720, hInstance);
+	Window::GetInstance().Startup();
 	Graphics::GetInstance().Startup();
 	Input::GetInstance().Startup();
 	GlobalTimer::GetInstance().Startup();

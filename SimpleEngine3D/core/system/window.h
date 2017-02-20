@@ -15,10 +15,10 @@ namespace SE3D
 
 		int32 m_Width;
 		int32 m_Height;
-		int16 m_VSync;
 		bool m_Cursor;
 		bool m_FullScreen;
 		static bool m_IsRunning;
+		const char* m_Title;
 
 		Window()
 		{
@@ -31,13 +31,17 @@ namespace SE3D
 			return *instance;
 		}
 
-		bool Startup(const char* title, int width, int height, HINSTANCE hInstance);
+		bool Startup();
 		void Shutdown() const;
 		void SetCursor(bool cursor);
+		bool GetCursor() const { return m_Cursor; }
 		void SetFullScreen(bool fs);
-		void SetWindowSize(int width, int height);
+		bool GetFullScreen() const { return m_FullScreen; }
+		void SetSize(int width, int height);
 		inline int32 GetSizeX() const { return m_Width; }
 		inline int32 GetSizeY() const { return m_Height; }
+		void SetTitle(const char* title);
+		inline const char* GetTitle() const { return m_Title; }
 		inline bool ShouldWindowClose() const { return !m_IsRunning; }
 		inline void CloseWindow() const { m_IsRunning = false; }
 

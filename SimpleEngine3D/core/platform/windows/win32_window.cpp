@@ -1,28 +1,31 @@
 #include "../system/window.h"
 #include "../system/graphics.h"
+#pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
 
 namespace SE3D
 {
 	LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	bool Window::m_IsRunning = true;
 
-	bool Window::Startup(const char* title, int width, int height, HINSTANCE hInstance)
+	bool Window::Startup()
 	{
+		// default settings
 		m_FullScreen = false;
-		m_VSync = 1;
-		m_Width = width;
-		m_Height = height;
+		m_Width = 1024;
+		m_Height = 720;
+		m_Title = "Lukasz Lipski : SimpleEngine3D";
+
 		WNDCLASSEX WindowClass = {};
 		WindowClass.cbSize = sizeof(WNDCLASSEX);
 		WindowClass.lpfnWndProc = WindowProc;
-		WindowClass.hInstance = hInstance;
+		WindowClass.hInstance = GetModuleHandle(0);
 		WindowClass.lpszClassName = "randomClassName";
 		WindowClass.hCursor = LoadCursor(0, IDC_ARROW);
 
 		if (!RegisterClassExA(&WindowClass))
 			return false;
 
-		m_WindowHandle = CreateWindowExA(0, WindowClass.lpszClassName, title, WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX | WS_VISIBLE, CW_USEDEFAULT, CW_USEDEFAULT, width, height, 0, 0, hInstance, 0);
+		m_WindowHandle = CreateWindowExA(0, WindowClass.lpszClassName, m_Title, WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX | WS_VISIBLE, CW_USEDEFAULT, CW_USEDEFAULT, m_Width, m_Height, 0, 0, GetModuleHandle(0), 0);
 
 		if (!m_WindowHandle)
 			return false;
@@ -61,7 +64,7 @@ namespace SE3D
 		}
 	}
 
-	void Window::SetWindowSize(int width, int height)
+	void Window::SetSize(int width, int height)
 	{
 		bool wasFS = false;
 		if (m_FullScreen)
@@ -76,6 +79,12 @@ namespace SE3D
 
 		if (wasFS)
 			SetFullScreen(true);
+	}
+
+	void Window::SetTitle(const char* title)
+	{
+		m_Title = title;
+		SetWindowText(m_WindowHandle, title);
 	}
 
 	void Window::SetCursor(bool cursor)
