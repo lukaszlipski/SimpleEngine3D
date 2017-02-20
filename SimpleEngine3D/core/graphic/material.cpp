@@ -16,6 +16,7 @@ namespace SE3D
 	Material::Material(const String& vertShader, const String& fragShader)
 	{
 		m_Shader = ShaderManager::GetInstance().GetShader(vertShader, fragShader);
+		m_TexturesCounter = 0;
 	}
 
 	Material::~Material()
@@ -173,7 +174,7 @@ namespace SE3D
 		int32 location;
 		if ((location = m_Shader->CheckParam(nameID, TEXTURE2D)) >= 0)
 		{
-			ParamTexture2D* param = new ParamTexture2D(TextureManager::GetInstance().Get(path)->GetTextureID(), nameID, location);
+			ParamTexture2D* param = new ParamTexture2D(TextureManager::GetInstance().Get(path)->GetTextureID(), nameID, location, m_TexturesCounter++);
 			m_Params.Push(param);
 			return true;
 		}

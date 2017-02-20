@@ -13,7 +13,8 @@ namespace SE3D
 	private:
 		Shader* m_Shader;
 		DynamicArray<ShaderParameter*> m_Params;
-		// TODO: Add textures
+		uint32 m_TexturesCounter;
+
 	public:
 		Material(const String& vertShader, const String& fragShader);
 		~Material();
