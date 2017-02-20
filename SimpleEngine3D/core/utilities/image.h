@@ -19,6 +19,7 @@ namespace SE3D
 		ImageFormat m_Format;
 		void* m_Pixels;
 		FILE m_File;
+		int32 m_Bytes;
 
 	public:
 		~Image();
@@ -32,6 +33,6 @@ namespace SE3D
 
 	private:
 		void LoadBMP();
-		void LoadBMP8();
+		void FlipX() const;
 	};
 }

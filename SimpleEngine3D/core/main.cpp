@@ -37,7 +37,8 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	FPSCamera TestCamera(Matrix4D::Perspective(45.0f, (float)Window::GetInstance().GetSizeX() / (float)Window::GetInstance().GetSizeY(), 0.1f, 100.0f), Vector3D(0, 0, -3));
 
 	Material mat("shader.vs", "shader.fs");
-	mat.SetTexture2D(String("u_texture").GetStringID(), "texTest.bmp");
+	mat.SetTexture2D(String("u_texture").GetStringID(), "gradTest.bmp");
+	mat.SetTexture2D(String("u_tex").GetStringID(), "texTest.bmp");
 
 	// ---------- TEST OPENGL INIT --------------
 	GLfloat vertices[] = {

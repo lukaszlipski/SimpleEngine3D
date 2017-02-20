@@ -18,14 +18,15 @@ namespace SE3D
 			int8 version = static_cast<int8*>(m_File.Content)[2];
 			if (version == '8')
 			{
-				LoadBMP8();
 				m_Format = RGBA;
+				m_Bytes = 4;
 			}
 			else
 			{
-				LoadBMP();
 				m_Format = RGB;
+				m_Bytes = 3;
 			}
+			LoadBMP();
 		}
 		else
 		{
@@ -43,30 +44,28 @@ namespace SE3D
 
 		if (File::GetInstance().IsLittleEndian())
 		{
-			for (uint32 i = 0; i < m_Width * m_Height * 3; i = i + 3)
+			for (uint32 i = 0; i < m_Width * m_Height * m_Bytes; i = i + m_Bytes)
 			{
 				int8 tmp = static_cast<int8*>(m_Pixels)[i];
 				static_cast<int8*>(m_Pixels)[i] = static_cast<int8*>(m_Pixels)[i + 2];
 				static_cast<int8*>(m_Pixels)[i + 2] = tmp;
 			}
+			FlipX();
 		}
 	}
 
-	void Image::LoadBMP8()
+	void Image::FlipX() const
 	{
-		m_Width = *reinterpret_cast<int32*>(static_cast<int8*>(m_File.Content) + 18);
-		m_Height = *reinterpret_cast<int32*>(static_cast<int8*>(m_File.Content) + 22);
-
-		int8 offset = *(static_cast<int8*>(m_File.Content) + 10);
-		m_Pixels = static_cast<int8*>(m_File.Content) + offset;
-
-		if (File::GetInstance().IsLittleEndian())
+		for (int32 y = 0; y < m_Height; y++)
 		{
-			for (uint32 i = 0; i < m_Width * m_Height * 4; i = i + 4)
+			for (int32 x = 0; x < static_cast<int32>(m_Width / 2); x++)
 			{
-				int8 tmp = static_cast<int8*>(m_Pixels)[i];
-				static_cast<int8*>(m_Pixels)[i] = static_cast<int8*>(m_Pixels)[i + 2];
-				static_cast<int8*>(m_Pixels)[i + 2] = tmp;
+				for (int32 i = 0; i < m_Bytes; i++)
+				{
+					int8 tmp = static_cast<int8*>(m_Pixels)[(x + y * m_Width) * m_Bytes + i];
+					static_cast<int8*>(m_Pixels)[(x + y * m_Width) * m_Bytes + i] = static_cast<int8*>(m_Pixels)[(m_Width - 1 - x + y * m_Width) * m_Bytes + i];
+					static_cast<int8*>(m_Pixels)[(m_Width - 1 - x + y * m_Width) * m_Bytes + i] = tmp;
+				}
 			}
 		}
 	}
