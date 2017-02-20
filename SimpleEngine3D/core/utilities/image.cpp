@@ -16,15 +16,15 @@ namespace SE3D
 		if (Signature == 0x4d42)
 		{
 			int8 version = static_cast<int8*>(m_File.Content)[2];
-			if (version == '6')
-			{
-				LoadBMP6();
-				m_Format = RGB;
-			}
 			if (version == '8')
 			{
 				LoadBMP8();
 				m_Format = RGBA;
+			}
+			else
+			{
+				LoadBMP();
+				m_Format = RGB;
 			}
 		}
 		else
@@ -33,7 +33,7 @@ namespace SE3D
 		}
 	}
 
-	void Image::LoadBMP6()
+	void Image::LoadBMP()
 	{
 		m_Width = *reinterpret_cast<int32*>(static_cast<int8*>(m_File.Content) + 18);
 		m_Height = *reinterpret_cast<int32*>(static_cast<int8*>(m_File.Content) + 22);

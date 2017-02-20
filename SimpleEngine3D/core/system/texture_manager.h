@@ -2,6 +2,8 @@
 #include "../containers/dynamic_array.h"
 #include "../graphic/texture2d.h"
 
+#define RES_TEXTURE_PATH "resources/textures/"
+
 namespace SE3D
 {
 	struct TEXTURE_RES

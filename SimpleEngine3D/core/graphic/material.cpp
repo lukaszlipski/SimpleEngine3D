@@ -15,7 +15,7 @@ namespace SE3D
 {
 	Material::Material(const String& vertShader, const String& fragShader)
 	{
-		m_Shader = ShaderManager::GetInstance().GetShader(vertShader, fragShader);
+		m_Shader = ShaderManager::GetInstance().Get(vertShader, fragShader);
 		m_TexturesCounter = 0;
 	}
 

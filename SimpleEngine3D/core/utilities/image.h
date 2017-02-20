@@ -31,7 +31,7 @@ namespace SE3D
 		void Delete() const;
 
 	private:
-		void LoadBMP6();
+		void LoadBMP();
 		void LoadBMP8();
 	};
 }

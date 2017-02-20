@@ -5,6 +5,8 @@
 
 namespace SE3D
 {
+	class String;
+
 	enum ParamType
 	{
 		FLOAT = GL_FLOAT,
@@ -34,7 +36,7 @@ namespace SE3D
 		bool m_IsValid;
 		DynamicArray<ShaderParam> m_Uniforms;
 	public:
-		Shader(const char* filePathVS, const char* filePathFS);
+		Shader(const String& filePathVS, const String& filePathFS);
 		~Shader();
 		void Bind() const;
 		void Unbind() const;

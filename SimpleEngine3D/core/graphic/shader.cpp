@@ -1,14 +1,14 @@
 #include "shader.h"
 #include "../system/file.h"
 #include "../utilities/string.h"
-#include <winerror.h>
+
 
 namespace SE3D
 {
-	Shader::Shader(const char* filePathVS, const char* filePathFS)
+	Shader::Shader(const String& filePathVS, const String& filePathFS)
 	{
-		FILE vsFile = File::GetInstance().ReadTextSync(filePathVS);
-		FILE fsFile = File::GetInstance().ReadTextSync(filePathFS);
+		FILE vsFile = File::GetInstance().ReadTextSync(filePathVS.CString());
+		FILE fsFile = File::GetInstance().ReadTextSync(filePathFS.CString());
 
 		const GLchar* vsSource = reinterpret_cast<GLchar*>(vsFile.Content);
 		const GLchar* fsSource = reinterpret_cast<GLchar*>(fsFile.Content);

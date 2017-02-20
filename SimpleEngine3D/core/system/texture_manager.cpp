@@ -12,7 +12,7 @@ namespace SE3D
 
 	Texture2D* TextureManager::Add(const String& textureFile)
 	{
-		Texture2D* texture = new Texture2D(textureFile.CString());
+		Texture2D* texture = new Texture2D(RES_TEXTURE_PATH + textureFile);
 		if (!texture->IsValid())
 		{
 			delete texture;

@@ -10,9 +10,9 @@ namespace SE3D
 		}
 	}
 
-	Shader* ShaderManager::AddShader(const String& vertexShaderFile, const String& fragmentShaderFile)
+	Shader* ShaderManager::Add(const String& vertexShaderFile, const String& fragmentShaderFile)
 	{
-		Shader* shader = new Shader(vertexShaderFile.CString(), fragmentShaderFile.CString());
+		Shader* shader = new Shader(RES_SHADER_PATH + vertexShaderFile, RES_SHADER_PATH + fragmentShaderFile);
 		if (!shader->IsValid())
 		{
 			delete shader;
@@ -23,7 +23,7 @@ namespace SE3D
 		return m_Shaders[m_Shaders.Size() - 1].m_Shader;
 	}
 
-	Shader* ShaderManager::GetShader(const String& vertexShaderFile, const String& fragmentShaderFile)
+	Shader* ShaderManager::Get(const String& vertexShaderFile, const String& fragmentShaderFile)
 	{
 		uint32 vertID = String(vertexShaderFile).GetStringID();
 		uint32 fragID = String(fragmentShaderFile).GetStringID();
@@ -32,6 +32,6 @@ namespace SE3D
 			if (m_Shaders[i].m_VertNameID == vertID && m_Shaders[i].m_FragNameID == fragID)
 				return m_Shaders[i].m_Shader;
 		}
-		return AddShader(vertexShaderFile, fragmentShaderFile);
+		return Add(vertexShaderFile, fragmentShaderFile);
 	}
 }

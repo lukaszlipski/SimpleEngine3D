@@ -3,6 +3,8 @@
 #include "../graphic/shader.h"
 #include "../utilities/string.h"
 
+#define RES_SHADER_PATH "resources/shaders/"
+
 namespace SE3D
 {
 	struct SHADER_RES
@@ -38,7 +40,7 @@ namespace SE3D
 		{
 		}
 
-		Shader* AddShader(const String& vertexShaderFile, const String& fragmentShaderFile);
-		Shader* GetShader(const String& vertexShaderFile, const String& fragmentShaderFile);
+		Shader* Add(const String& vertexShaderFile, const String& fragmentShaderFile);
+		Shader* Get(const String& vertexShaderFile, const String& fragmentShaderFile);
 	};
 }
