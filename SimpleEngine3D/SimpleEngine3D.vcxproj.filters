@@ -199,7 +199,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="core\resources\shaders\shader.fs" />
-    <None Include="core\resources\shaders\shader.vs" />
+    <None Include="resources\shaders\shader.fs" />
+    <None Include="resources\shaders\shader.vs" />
   </ItemGroup>
 </Project>
