@@ -32,36 +32,27 @@ int main()
 	ShaderManager::GetInstance().Startup();
 	TextureManager::GetInstance().Startup();
 
-	OBJLoader a("C:/Programowanie/CPP/boxy.obj");
+	OBJLoader a("resources/models/test.obj");
 
 	FPSCamera TestCamera(Matrix4D::Perspective(45.0f, (float)Window::GetInstance().GetSizeX() / (float)Window::GetInstance().GetSizeY(), 0.1f, 100.0f), Vector3D(0, 0, -3));
 
-	Material mat("shader.vs", "shader.fs");
+	Material mat("default.vs", "default.fs");
 	mat.SetTexture2D(String("u_texture").GetStringID(), "gradTest.bmp");
 	mat.SetTexture2D(String("u_tex").GetStringID(), "texTest.bmp");
 
 	// ---------- TEST OPENGL INIT --------------
-	GLfloat vertices[] = {
-		-0.5f, -0.5f, 0.0f, 0.0f,0.0f,
-		0.5f, -0.5f, 0.0f, 1.0f,0.0f,
-		0.0f, 0.5f, 0.0f, 0.5f,1.0f
-	};
-	
+
 	GLuint VBO, VAO, IBO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &IBO);
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	glBufferData(GL_ARRAY_BUFFER, a.GetMesh(0)->m_Vertices.Size() * sizeof(Vector3D), &a.GetMesh(0)->m_Vertices[0], GL_STATIC_DRAW);
-	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), static_cast<GLvoid*>(0));
+	glBufferData(GL_ARRAY_BUFFER, a.GetMesh(2)->m_Vertices.Size() * sizeof(Vector3D), &a.GetMesh(2)->m_Vertices[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), static_cast<GLvoid*>(0));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, a.GetMesh(0)->m_Indices.Size() * sizeof(GLuint), &a.GetMesh(0)->m_Indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, a.GetMesh(2)->m_Indices.Size() * sizeof(GLuint), &a.GetMesh(2)->m_Indices[0], GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0);
-	//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(3 * sizeof(GLfloat)));
-	//glEnableVertexAttribArray(1);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
@@ -89,9 +80,7 @@ int main()
 
 		glBindVertexArray(VAO);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
-		//glDrawArrays(GL_TRIANGLES, 0,a.GetAllMeshes().m_Vertices.Size());
-		glDrawElements(GL_TRIANGLES, a.GetMesh(0)->m_Indices.Size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, a.GetMesh(2)->m_Indices.Size(), GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 		mat.Unbind();
 		// -------------------------------------------

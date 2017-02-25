@@ -5,7 +5,7 @@
 namespace SE3D
 {
 	OBJLoader::OBJLoader(const char* path)
-		:m_VerticesOffset(0), m_TextCoordsOffset(0), m_NormalsOffset(0)
+		: m_VerticesOffset(0), m_TextCoordsOffset(0), m_NormalsOffset(0)
 	{
 		LoadMeshFromFile(path);
 	}
@@ -22,10 +22,10 @@ namespace SE3D
 		{
 			LINE line = File::GetInstance().GetLine(meshFile);
 
-			if(line.Content[0] == 'o' && line.Content[1] == ' ')
+			if (line.Content[0] == 'o' && line.Content[1] == ' ')
 			{
 				AddNewMesh(line.Content);
-			} 
+			}
 			else if (line.Content[0] == 'v' && line.Content[1] == ' ')
 			{
 				AddVertex(line.Content);
@@ -51,13 +51,13 @@ namespace SE3D
 
 	void OBJLoader::AddNewMesh(const char* line)
 	{
-		if(m_Meshes.Size() > 0)
+		if (m_Meshes.Size() > 0)
 		{
 			ConvertToInternalFormat();
 
-			m_VerticesOffset = m_Vertices.Size();
-			m_TextCoordsOffset = m_TextCoords.Size();
-			m_NormalsOffset = m_Normals.Size();
+			m_VerticesOffset += m_Vertices.Size();
+			m_TextCoordsOffset += m_TextCoords.Size();
+			m_NormalsOffset += m_Normals.Size();
 
 			m_Vertices.Clear();
 			m_Normals.Clear();
@@ -71,7 +71,6 @@ namespace SE3D
 		INTERNAL_MESH_FORMAT mesh;
 		mesh.m_Name = line + 2;
 		m_Meshes.Push(mesh);
-		
 	}
 
 	void OBJLoader::AddVertex(const char* line)
@@ -142,7 +141,7 @@ namespace SE3D
 				m_HasNormals = true;
 				normIndex--;
 			}
-			m_Indices.Push(OBJindex{ vertIndex,textIndex,normIndex });
+			m_Indices.Push(OBJindex{vertIndex,textIndex,normIndex});
 			if (i < 2)
 			{
 				while (*tmpInt++ != ' ')
@@ -154,8 +153,7 @@ namespace SE3D
 
 	void OBJLoader::ConvertToInternalFormat()
 	{
-
-		INTERNAL_MESH_FORMAT &mesh = m_Meshes[m_Meshes.Size() - 1];
+		INTERNAL_MESH_FORMAT& mesh = m_Meshes[m_Meshes.Size() - 1];
 
 		int32 currentIndex = 0;
 		for (int32 i = 0; i < m_Indices.Size(); i++)
@@ -172,13 +170,13 @@ namespace SE3D
 			for (int32 j = 0; j < mesh.m_Vertices.Size(); j++)
 			{
 				if (mesh.m_Vertices[j] == vert && mesh.m_Normals[j] == norm && mesh.m_TextCoords[j] == texCoord)
-				{		
+				{
 					mesh.m_Indices.Push(j);
 					isFaceAdded = true;
 					break;
 				}
 			}
-			
+
 			if (!isFaceAdded)
 			{
 				mesh.m_Vertices.Push(vert);
@@ -193,8 +191,6 @@ namespace SE3D
 
 				mesh.m_Indices.Push(currentIndex++);
 			}
-
 		}
-
 	}
 }
