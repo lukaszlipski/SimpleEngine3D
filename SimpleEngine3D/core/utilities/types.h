@@ -33,3 +33,12 @@ typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint32;
 typedef unsigned long long uint64;
+
+namespace SE3D
+{
+	template <class A, class B>
+	inline bool CompareTypes(A typeA, B typeB) { return false; }
+
+	template <class A>
+	inline bool CompareTypes(A typeA, A typeB) { return true; }
+}
