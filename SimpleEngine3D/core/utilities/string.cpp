@@ -70,6 +70,21 @@ namespace SE3D
 		return *this;
 	}
 
+	String& String::operator=(const String& right)
+	{
+		this->m_HasStringID = right.m_HasStringID;
+		this->m_StringID = right.m_StringID;
+
+		m_Length = right.m_Length;
+		char* newString = new char[m_Length + 1];
+
+		CopyMemory(newString, right.CString(), m_Length);
+
+		m_String = newString;
+
+		return *this;
+	}
+
 	float String::ToFloat() const
 	{
 		return String::ToFloat(this->CString());

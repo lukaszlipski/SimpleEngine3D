@@ -29,13 +29,7 @@ namespace SE3D
 
 		DynamicArray(const DynamicArray<T>& other)
 		{
-			m_Size = other.m_Size;
-			m_Capacity = other.m_Capacity;
-			m_Data = new T[m_Size];
-			for (uint32 i = 0; i < m_Size; i++)
-			{
-				m_Data[i] = other[i];
-			}
+			*this = other;
 		}
 
 		~DynamicArray()
@@ -109,6 +103,7 @@ namespace SE3D
 			{
 				newData[i] = m_Data[i];
 			}
+
 			newData[index] = element;
 			for (uint32 i = index; i < m_Size; i++)
 			{
@@ -157,6 +152,26 @@ namespace SE3D
 		}
 
 		inline uint32 Size() const { return m_Size; }
+
+		DynamicArray<T>& operator=(const DynamicArray<T>& right)
+		{
+			m_Size = right.m_Size;
+			m_Capacity = right.m_Capacity;
+			if (right.m_Data)
+			{
+				m_Data = new T[right.m_Size];
+
+				for (uint32 i = 0; i < right.m_Size; i++)
+				{
+					m_Data[i] = right[i];
+				}
+			}
+			else
+			{
+				m_Data = nullptr;
+			}
+			return *this;
+		}
 
 		T& operator[](uint32 index) const { return m_Data[index]; }
 
