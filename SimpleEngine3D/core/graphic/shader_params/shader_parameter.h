@@ -22,6 +22,7 @@ namespace SE3D
 
 		virtual void Bind() = 0;
 		virtual void SetLocation(int32 location) { m_Location = location; }
+		virtual int32 GetLocation() const { return m_Location; }
 		virtual uint32 GetNameID() const { return m_NameID; }
 		virtual ParamType GetParamType() const { return m_Type; }
 	};

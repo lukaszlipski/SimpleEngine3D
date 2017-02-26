@@ -10,6 +10,9 @@
 #include "../system/shader_manager.h"
 #include "shader_params/param_texture2d.h"
 #include "../system/texture_manager.h"
+#include "shader_params/param_vector2d.h"
+#include "shader_params/param_vector3d.h"
+#include "shader_params/param_vector4d.h"
 
 namespace SE3D
 {
@@ -19,12 +22,20 @@ namespace SE3D
 		m_TexturesCounter = 0;
 	}
 
+	Material::Material()
+	{
+		m_Shader = ShaderManager::GetInstance().Get(DEFAULT_VS_SHADER, DEFAULT_FS_SHADER);
+		m_TexturesCounter = 0;
+	}
+
+	Material::Material(const Material& material)
+	{
+		*this = material;
+	}
+
 	Material::~Material()
 	{
-		for (uint32 i = 0; i < m_Params.Size(); i++)
-		{
-			delete m_Params[i];
-		}
+		m_Params.Clear(true);
 	}
 
 	void Material::Bind() const
@@ -121,6 +132,66 @@ namespace SE3D
 		return false;
 	}
 
+	bool Material::SetParamVector2D(uint32 nameID, const Vector2D& value)
+	{
+		for (uint32 i = 0; i < m_Params.Size(); i++)
+		{
+			if (m_Params[i]->GetNameID() == nameID && m_Params[i]->GetParamType() == VECTOR2D)
+			{
+				static_cast<ParamVector2D*>(m_Params[i])->SetValue(value);
+				return true;
+			}
+		}
+		int32 location;
+		if ((location = m_Shader->CheckParam(nameID, VECTOR2D)) >= 0)
+		{
+			ParamVector2D* param = new ParamVector2D(value, nameID, location);
+			m_Params.Push(param);
+			return true;
+		}
+		return false;
+	}
+
+	bool Material::SetParamVector3D(uint32 nameID, const Vector3D& value)
+	{
+		for (uint32 i = 0; i < m_Params.Size(); i++)
+		{
+			if (m_Params[i]->GetNameID() == nameID && m_Params[i]->GetParamType() == VECTOR3D)
+			{
+				static_cast<ParamVector3D*>(m_Params[i])->SetValue(value);
+				return true;
+			}
+		}
+		int32 location;
+		if ((location = m_Shader->CheckParam(nameID, VECTOR3D)) >= 0)
+		{
+			ParamVector3D* param = new ParamVector3D(value, nameID, location);
+			m_Params.Push(param);
+			return true;
+		}
+		return false;
+	}
+
+	bool Material::SetParamVector4D(uint32 nameID, const Vector4D& value)
+	{
+		for (uint32 i = 0; i < m_Params.Size(); i++)
+		{
+			if (m_Params[i]->GetNameID() == nameID && m_Params[i]->GetParamType() == VECTOR4D)
+			{
+				static_cast<ParamVector4D*>(m_Params[i])->SetValue(value);
+				return true;
+			}
+		}
+		int32 location;
+		if ((location = m_Shader->CheckParam(nameID, VECTOR4D)) >= 0)
+		{
+			ParamVector4D* param = new ParamVector4D(value, nameID, location);
+			m_Params.Push(param);
+			return true;
+		}
+		return false;
+	}
+
 	bool Material::SetParamMatrix3D(uint32 nameID, const Matrix3D& value)
 	{
 		for (uint32 i = 0; i < m_Params.Size(); i++)
@@ -179,5 +250,36 @@ namespace SE3D
 			return true;
 		}
 		return false;
+	}
+
+	Material& Material::operator=(const Material& right)
+	{
+		m_Shader = right.m_Shader;
+		m_TexturesCounter = right.m_TexturesCounter;
+		for(uint32 i=0;i<right.m_Params.Size();i++)
+		{
+			ShaderParameter* param = right.m_Params[i];
+			if (param->GetParamType() == FLOAT)
+				m_Params.Push(new ParamFloat( static_cast<ParamFloat*>(param)->GetValue() , param->GetNameID(), param->GetLocation()));
+			else if (param->GetParamType() == VECTOR2D)
+				m_Params.Push(new ParamVector2D(static_cast<ParamVector2D*>(param)->GetValue(), param->GetNameID(), param->GetLocation()));
+			else if (param->GetParamType() == VECTOR3D)
+				m_Params.Push(new ParamVector3D(static_cast<ParamVector3D*>(param)->GetValue(), param->GetNameID(), param->GetLocation()));
+			else if (param->GetParamType() == VECTOR4D)
+				m_Params.Push(new ParamVector4D(static_cast<ParamVector4D*>(param)->GetValue(), param->GetNameID(), param->GetLocation()));
+			else if (param->GetParamType() == INT32)
+				m_Params.Push(new ParamInt32(static_cast<ParamInt32*>(param)->GetValue(), param->GetNameID(), param->GetLocation()));
+			else if (param->GetParamType() == UINT32)
+				m_Params.Push(new ParamUInt32(static_cast<ParamUInt32*>(param)->GetValue(), param->GetNameID(), param->GetLocation()));
+			else if (param->GetParamType() == BOOL)
+				m_Params.Push(new ParamBool(static_cast<ParamBool*>(param)->GetValue(), param->GetNameID(), param->GetLocation()));
+			else if (param->GetParamType() == MATRIX4D)
+				m_Params.Push(new ParamMatrix4D(static_cast<ParamMatrix4D*>(param)->GetValue(), param->GetNameID(), param->GetLocation()));
+			else if (param->GetParamType() == MATRIX3D)
+				m_Params.Push(new ParamMatrix3D(static_cast<ParamMatrix3D*>(param)->GetValue(), param->GetNameID(), param->GetLocation()));
+			else if (param->GetParamType() == TEXTURE2D)
+				m_Params.Push(new ParamTexture2D(static_cast<ParamTexture2D*>(param)->GetValue(), param->GetNameID(), param->GetLocation(), static_cast<ParamTexture2D*>(param)->GetTextureNumber()));
+		}
+		return *this;
 	}
 }

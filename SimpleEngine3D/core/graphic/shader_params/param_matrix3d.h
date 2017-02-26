@@ -20,5 +20,6 @@ namespace SE3D
 		}
 
 		void SetValue(Matrix3D value) { m_Value = value; }
+		inline Matrix3D GetValue() const { return m_Value; }
 	};
 }

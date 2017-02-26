@@ -23,6 +23,8 @@ namespace SE3D
 		}
 
 		inline void SetValue(uint32 value) { m_Value = value; }
+		inline uint32 GetValue() const { return m_Value; }
 		inline void SetTextureNumber(uint32 texNumber) { m_TextureNumber = texNumber; }
+		inline uint32 GetTextureNumber() const { return m_TextureNumber; }
 	};
 }

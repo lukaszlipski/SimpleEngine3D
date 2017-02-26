@@ -19,5 +19,6 @@ namespace SE3D
 		}
 
 		inline void SetValue(float value) { m_Value = value; }
+		inline float GetValue() const { return m_Value; }
 	};
 }

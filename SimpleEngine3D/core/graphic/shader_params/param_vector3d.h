@@ -20,5 +20,6 @@ namespace SE3D
 		}
 
 		inline void SetValue(Vector3D value) { m_Value = value; }
+		inline Vector3D GetValue() const { return m_Value; }
 	};
 }

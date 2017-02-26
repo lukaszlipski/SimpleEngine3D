@@ -19,5 +19,6 @@ namespace SE3D
 		}
 
 		inline void SetValue(uint32 value) { m_Value = value; }
+		inline uint32 GetValue() const { return m_Value; }
 	};
 }

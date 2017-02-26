@@ -29,6 +29,7 @@ namespace SE3D
 		DynamicArray<INTERNAL_MESH_FORMAT> m_Meshes;
 
 	public:
+		virtual ~ModelLoader() = default;
 		inline uint32 GetMeshesSize() const { return m_Meshes.Size(); }
 		INTERNAL_MESH_FORMAT* GetMesh(uint32 index) const;
 
