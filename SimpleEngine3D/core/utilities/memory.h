@@ -1,8 +1,11 @@
 #pragma once
 #include "types.h"
 
+#define OffsetOf(structure, member) (reinterpret_cast<int32>(&static_cast<structure*>(nullptr)->member))
+
 namespace SE3D
 {
+
 	inline void CopyMemory(void* dest, const void* src, uint32 size)
 	{
 		uint32 loops = static_cast<uint32>(size / sizeof(uint32));
@@ -15,4 +18,5 @@ namespace SE3D
 			static_cast<uint8*>(dest)[loops * 4 + i] = static_cast<const uint8*>(src)[loops * 4 + i];
 		}
 	}
+
 }
