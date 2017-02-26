@@ -19,13 +19,13 @@ namespace SE3D
 	Material::Material(const String& vertShader, const String& fragShader)
 	{
 		m_Shader = ShaderManager::GetInstance().Get(vertShader, fragShader);
-		m_TexturesCounter = 0;
+		SetDefaultParams();
 	}
 
 	Material::Material()
 	{
 		m_Shader = ShaderManager::GetInstance().Get(DEFAULT_VS_SHADER, DEFAULT_FS_SHADER);
-		m_TexturesCounter = 0;
+		SetDefaultParams();
 	}
 
 	Material::Material(const Material& material)
@@ -232,7 +232,7 @@ namespace SE3D
 		return false;
 	}
 
-	bool Material::SetTexture2D(uint32 nameID, const String& path)
+	bool Material::SetParamTexture2D(uint32 nameID, const String& path)
 	{
 		for (uint32 i = 0; i < m_Params.Size(); i++)
 		{
@@ -281,5 +281,38 @@ namespace SE3D
 				m_Params.Push(new ParamTexture2D(static_cast<ParamTexture2D*>(param)->GetValue(), param->GetNameID(), param->GetLocation(), static_cast<ParamTexture2D*>(param)->GetTextureNumber()));
 		}
 		return *this;
+	}
+
+	void Material::SetDefaultParams()
+	{
+		m_TexturesCounter = 0;
+		for (uint32 i=0;i < m_Shader->GetNumberOfParams(); i++)
+		{
+			uint32 nameID = m_Shader->GetParamID(i);
+			ParamType type = m_Shader->GetParamType(i);
+			if (type == FLOAT)
+				SetParamFloat(nameID, 0.0f);
+			else if (type == VECTOR2D)
+				SetParamVector2D(nameID, Vector2D());
+			else if (type == VECTOR3D)
+				SetParamVector3D(nameID, Vector3D());
+			else if (type == VECTOR4D)
+				SetParamVector4D(nameID, Vector4D());
+			else if (type == INT32)
+				SetParamInt32(nameID, 0);
+			else if (type == UINT32)
+				SetParamUInt32(nameID, 0);
+			else if (type == BOOL)
+				SetParamBool(nameID, false);
+			else if (type == MATRIX4D)
+				SetParamMatrix4D(nameID, Matrix4D::Identity());
+			else if (type == MATRIX3D)
+				SetParamMatrix3D(nameID, Matrix3D::Identity());
+			else if (type == TEXTURE2D)
+			{
+				SetParamTexture2D(nameID, "placeHolder.bmp");
+				m_TexturesCounter++;
+			}
+		}
 	}
 }

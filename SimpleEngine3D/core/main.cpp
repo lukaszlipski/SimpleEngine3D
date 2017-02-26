@@ -35,6 +35,10 @@ int main()
 	TextureManager::GetInstance().Startup();
 
 	Model model("resources/models/test.obj");
+	model.GetModel(0)->GetMaterial().SetParamVector3D(String("u_color").GetStringID(), Vector3D(1, 0, 0));
+	model.GetModel(1)->GetMaterial().SetParamVector3D(String("u_color").GetStringID(), Vector3D(0, 1, 0));
+	model.GetModel(2)->GetMaterial().SetParamVector3D(String("u_color").GetStringID(), Vector3D(0, 0, 1));
+
 	float time = 0.0f;
 
 	FPSCamera TestCamera(Matrix4D::Perspective(45.0f, (float)Window::GetInstance().GetSizeX() / (float)Window::GetInstance().GetSizeY(), 0.1f, 100.0f), Vector3D(0, 0, -3));
@@ -50,6 +54,7 @@ int main()
 		TestCamera.Update();
 
 		time += GlobalTimer::GetInstance().DeltaTime();
+
 		Matrix4D transform = Matrix4D::Identity();
 		transform = transform.Rotate(time * 10,Vector3D(0,1,0)).Scale(Vector3D(0.5f, 0.5f, 0.5f));
 

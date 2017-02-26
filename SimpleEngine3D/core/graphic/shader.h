@@ -45,6 +45,8 @@ namespace SE3D
 		int32 CheckParam(uint32 paramID, ParamType type) const;
 
 		inline uint32 GetNumberOfParams() const { return m_Uniforms.Size(); }
+		inline uint32 GetParamID(uint32 index) const { return m_Uniforms[index].m_ParamID; }
+		inline ParamType GetParamType(uint32 index) const { return m_Uniforms[index].m_Type; }
 		inline bool IsValid() const { return m_IsValid; }
 	private:
 		void GetAllUniforms();

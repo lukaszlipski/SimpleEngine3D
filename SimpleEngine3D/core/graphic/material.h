@@ -19,8 +19,8 @@ namespace SE3D
 	{
 	private:
 		Shader* m_Shader;
-		DynamicArray<ShaderParameter*> m_Params;
 		uint32 m_TexturesCounter;
+		DynamicArray<ShaderParameter*> m_Params;
 
 	public:
 		Material();
@@ -40,8 +40,12 @@ namespace SE3D
 		bool SetParamVector4D(uint32 nameID, const Vector4D& value);
 		bool SetParamMatrix3D(uint32 nameID, const Matrix3D& value);
 		bool SetParamMatrix4D(uint32 nameID, const Matrix4D& value);
-		bool SetTexture2D(uint32 nameID, const String& path);
+		bool SetParamTexture2D(uint32 nameID, const String& path);
 
 		Material& operator=(const Material& right);
+
+	private:
+		void SetDefaultParams();
+
 	};
 }
