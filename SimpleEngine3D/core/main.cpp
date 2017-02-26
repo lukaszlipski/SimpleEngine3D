@@ -20,6 +20,7 @@
 #include "utilities/debug_msg.h"
 #include "system/texture_manager.h"
 #include "graphic/mesh.h"
+#include "graphic/model.h"
 
 using namespace SE3D;
 
@@ -33,14 +34,10 @@ int main()
 	ShaderManager::GetInstance().Startup();
 	TextureManager::GetInstance().Startup();
 
-	OBJLoader a("resources/models/test.obj");
-	Mesh mesh = Mesh(*a.GetMesh(1));
+	Model model("resources/models/test.obj");
 	float time = 0.0f;
 
 	FPSCamera TestCamera(Matrix4D::Perspective(45.0f, (float)Window::GetInstance().GetSizeX() / (float)Window::GetInstance().GetSizeY(), 0.1f, 100.0f), Vector3D(0, 0, -3));
-
-	mesh.GetMaterial().SetTexture2D(String("u_texture1").GetStringID(), "gradTest.bmp");
-	mesh.GetMaterial().SetTexture2D(String("u_texture2").GetStringID(), "texTest.bmp");
 
 	GlobalTimer::GetInstance().Reset();
 	while (!Window::GetInstance().ShouldWindowClose())
@@ -53,15 +50,18 @@ int main()
 		TestCamera.Update();
 
 		time += GlobalTimer::GetInstance().DeltaTime();
-		Matrix4D model = Matrix4D::Identity();
-		model = model.Rotate(time * 10,Vector3D(0,1,0)).Scale(Vector3D(0.5f, 0.5f, 0.5f));
+		Matrix4D transform = Matrix4D::Identity();
+		transform = transform.Rotate(time * 10,Vector3D(0,1,0)).Scale(Vector3D(0.5f, 0.5f, 0.5f));
 
-		mesh.GetMaterial().SetParamMatrix4D(String("u_model").GetStringID(), model);
-		mesh.GetMaterial().SetParamMatrix4D(String("u_view").GetStringID(), TestCamera.GetView());
-		mesh.GetMaterial().SetParamMatrix4D(String("u_projection").GetStringID(), TestCamera.GetProjection());
+		model.SetTransformation(transform);
+		for (uint32 i = 0; i < model.GetMeshesSize(); i++)
+		{
+			model.GetModel(i)->GetMaterial().SetParamMatrix4D(String("u_view").GetStringID(), TestCamera.GetView());
+			model.GetModel(i)->GetMaterial().SetParamMatrix4D(String("u_projection").GetStringID(), TestCamera.GetProjection());
+		}
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		mesh.Draw();
+		model.Draw();
 
 		Graphics::GetInstance().Update();
 		GlobalTimer::GetInstance().Update();

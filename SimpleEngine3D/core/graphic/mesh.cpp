@@ -35,6 +35,14 @@ namespace SE3D
 		glBindVertexArray(0);
 	}
 
+	Mesh::Mesh()
+	{
+		glGenVertexArrays(1, &m_VAO);
+		glGenBuffers(1, &m_VBO);
+		glGenBuffers(1, &m_IBO);
+		
+	}
+
 	Mesh::~Mesh()
 	{
 		glDeleteBuffers(1, &m_VBO);

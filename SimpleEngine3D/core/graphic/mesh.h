@@ -25,6 +25,7 @@ namespace SE3D
 
 	public:
 		Mesh(const INTERNAL_MESH_FORMAT& mesh);
+		Mesh();
 		~Mesh();
 
 		void Draw() const;
