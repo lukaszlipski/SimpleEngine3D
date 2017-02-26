@@ -85,6 +85,18 @@ namespace SE3D
 		return *this;
 	}
 
+	bool String::operator==(const String& right) const
+	{
+		if (m_Length != right.Length())
+			return false;
+		for(uint32 i=0;i<m_Length;i++)
+		{
+			if (m_String[i] != right.m_String[i])
+				return false;
+		}
+		return true;
+	}
+
 	float String::ToFloat() const
 	{
 		return String::ToFloat(this->CString());

@@ -24,6 +24,7 @@ namespace SE3D
 		friend String operator+(String left, const String& right);
 		String& operator+=(const String& right);
 		String& operator=(const String& right);
+		bool operator==(const String& right) const;
 
 		float ToFloat() const;
 		int32 ToInt32() const;
