@@ -84,6 +84,15 @@
     <ClCompile Include="core\system\texture_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\graphic\model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="core\graphic\mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="core\utilities\model_loader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\system\window.h">
@@ -197,9 +206,20 @@
     <ClInclude Include="core\utilities\memory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="core\graphic\model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\graphic\mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\utilities\model_loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\shader.fs" />
     <None Include="resources\shaders\shader.vs" />
+    <None Include="resources\shaders\default.fs" />
+    <None Include="resources\shaders\default.vs" />
   </ItemGroup>
 </Project>

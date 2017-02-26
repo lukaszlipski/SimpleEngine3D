@@ -19,6 +19,7 @@
 #include "system/shader_manager.h"
 #include "utilities/debug_msg.h"
 #include "system/texture_manager.h"
+#include "graphic/mesh.h"
 
 using namespace SE3D;
 
@@ -33,30 +34,13 @@ int main()
 	TextureManager::GetInstance().Startup();
 
 	OBJLoader a("resources/models/test.obj");
+	Mesh mesh = Mesh(*a.GetMesh(1));
+	float time = 0.0f;
 
 	FPSCamera TestCamera(Matrix4D::Perspective(45.0f, (float)Window::GetInstance().GetSizeX() / (float)Window::GetInstance().GetSizeY(), 0.1f, 100.0f), Vector3D(0, 0, -3));
 
-	Material mat("default.vs", "default.fs");
-	mat.SetTexture2D(String("u_texture").GetStringID(), "gradTest.bmp");
-	mat.SetTexture2D(String("u_tex").GetStringID(), "texTest.bmp");
-
-	// ---------- TEST OPENGL INIT --------------
-
-	GLuint VBO, VAO, IBO;
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
-	glGenBuffers(1, &IBO);
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, a.GetMesh(2)->m_Vertices.Size() * sizeof(Vector3D), &a.GetMesh(2)->m_Vertices[0], GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), static_cast<GLvoid*>(0));
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, a.GetMesh(2)->m_Indices.Size() * sizeof(GLuint), &a.GetMesh(2)->m_Indices[0], GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
-
-	// -------------------------------------------
+	mesh.GetMaterial().SetTexture2D(String("u_texture1").GetStringID(), "gradTest.bmp");
+	mesh.GetMaterial().SetTexture2D(String("u_texture2").GetStringID(), "texTest.bmp");
 
 	GlobalTimer::GetInstance().Reset();
 	while (!Window::GetInstance().ShouldWindowClose())
@@ -68,22 +52,16 @@ int main()
 
 		TestCamera.Update();
 
-		// ---------- TEST OPENGL UPDATE --------------
-		mat.Bind();
-
+		time += GlobalTimer::GetInstance().DeltaTime();
 		Matrix4D model = Matrix4D::Identity();
-		model = model.Scale(Vector3D(0.2f, 0.2f, 0.2f));
+		model = model.Rotate(time * 10,Vector3D(0,1,0)).Scale(Vector3D(0.5f, 0.5f, 0.5f));
 
-		mat.SetParamMatrix4D(String("u_model").GetStringID(), model);
-		mat.SetParamMatrix4D(String("u_view").GetStringID(), TestCamera.GetView());
-		mat.SetParamMatrix4D(String("u_projection").GetStringID(), TestCamera.GetProjection());
+		mesh.GetMaterial().SetParamMatrix4D(String("u_model").GetStringID(), model);
+		mesh.GetMaterial().SetParamMatrix4D(String("u_view").GetStringID(), TestCamera.GetView());
+		mesh.GetMaterial().SetParamMatrix4D(String("u_projection").GetStringID(), TestCamera.GetProjection());
 
-		glBindVertexArray(VAO);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glDrawElements(GL_TRIANGLES, a.GetMesh(2)->m_Indices.Size(), GL_UNSIGNED_INT, 0);
-		glBindVertexArray(0);
-		mat.Unbind();
-		// -------------------------------------------
+		mesh.Draw();
 
 		Graphics::GetInstance().Update();
 		GlobalTimer::GetInstance().Update();

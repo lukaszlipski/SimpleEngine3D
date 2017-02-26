@@ -122,6 +122,8 @@
   <ItemGroup>
     <ClCompile Include="core\graphic\camera\fps_camera.cpp" />
     <ClCompile Include="core\graphic\material.cpp" />
+    <ClCompile Include="core\graphic\mesh.cpp" />
+    <ClCompile Include="core\graphic\model.cpp" />
     <ClCompile Include="core\graphic\shader.cpp" />
     <ClCompile Include="core\graphic\texture2d.cpp" />
     <ClCompile Include="core\math\matrix3d.cpp" />
@@ -141,6 +143,7 @@
     <ClCompile Include="core\system\shader_manager.cpp" />
     <ClCompile Include="core\system\texture_manager.cpp" />
     <ClCompile Include="core\utilities\image.cpp" />
+    <ClCompile Include="core\utilities\model_loader.cpp" />
     <ClCompile Include="core\utilities\obj_loader.cpp" />
     <ClCompile Include="core\utilities\string.cpp" />
   </ItemGroup>
@@ -149,6 +152,8 @@
     <ClInclude Include="core\graphic\camera\camera.h" />
     <ClInclude Include="core\graphic\camera\fps_camera.h" />
     <ClInclude Include="core\graphic\material.h" />
+    <ClInclude Include="core\graphic\mesh.h" />
+    <ClInclude Include="core\graphic\model.h" />
     <ClInclude Include="core\graphic\shader.h" />
     <ClInclude Include="core\graphic\shader_params\param_bool.h" />
     <ClInclude Include="core\graphic\shader_params\param_float.h" />
@@ -179,11 +184,14 @@
     <ClInclude Include="core\utilities\debug_msg.h" />
     <ClInclude Include="core\utilities\image.h" />
     <ClInclude Include="core\utilities\memory.h" />
+    <ClInclude Include="core\utilities\model_loader.h" />
     <ClInclude Include="core\utilities\obj_loader.h" />
     <ClInclude Include="core\utilities\string.h" />
     <ClInclude Include="core\utilities\types.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="resources\shaders\default.fs" />
+    <None Include="resources\shaders\default.vs" />
     <None Include="resources\shaders\shader.fs" />
     <None Include="resources\shaders\shader.vs" />
   </ItemGroup>
