@@ -12,11 +12,7 @@ namespace SE3D
 		GLubyte m_MajorVersion;
 		GLubyte m_MinorVersion;
 
-		Graphics()
-		{
-			m_MajorVersion = 3;
-			m_MinorVersion = 3;
-		}
+		Graphics();
 
 	public:
 		static Graphics& GetInstance()
@@ -28,20 +24,12 @@ namespace SE3D
 		bool Startup();
 		void Shutdown() const;
 		void Update();
+
 		void SetOpenGLVersion(GLubyte major, GLubyte minor);
 		void SetDepthBuffer(bool db);
-
-		inline void SetVSync(short vsync)
-		{
-			wglSwapIntervalEXT(vsync);
-		}
-
-		inline void Resize(int width, int height) { glViewport(0, 0, width, height); }
-
-		inline void Clear()
-		{
-			glClearColor(0.4f, 0.7f, 1.0f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		}
+		void SetClearColor(float r, float g, float b, float a) const;
+		void SetVSync(short vsync) const;
+		void Resize(int width, int height);
+		void Clear() const;
 	};
 }

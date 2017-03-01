@@ -9,8 +9,7 @@ namespace SE3D
 	class Window
 	{
 	private:
-		//if Windows
-		WINDOWPLACEMENT m_WindowPreviousPosition = {sizeof(m_WindowPreviousPosition)};
+		// if Windows
 		HWND m_WindowHandle;
 
 		int32 m_Width;
@@ -46,7 +45,7 @@ namespace SE3D
 		inline void CloseWindow() const { m_IsRunning = false; }
 
 		// if Windows
-		inline HWND GetWindowHandle() const { return m_WindowHandle; }
+		inline HWND GetWindowHandle() const { return m_WindowHandle; };
 
 	private:
 		friend LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);

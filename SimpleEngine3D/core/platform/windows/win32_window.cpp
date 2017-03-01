@@ -6,6 +6,7 @@ namespace SE3D
 {
 	LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	bool Window::m_IsRunning = true;
+	static WINDOWPLACEMENT m_WindowPreviousPosition = {sizeof(m_WindowPreviousPosition)};
 
 	bool Window::Startup()
 	{

@@ -3,6 +3,11 @@
 
 namespace SE3D
 {
+	Graphics::Graphics()
+		: m_MajorVersion(3), m_MinorVersion(3)
+	{
+	}
+
 	bool Graphics::Startup()
 	{
 		PIXELFORMATDESCRIPTOR DesiredPixelFormat = {};
@@ -54,8 +59,9 @@ namespace SE3D
 			return false;
 
 		SetVSync(1);
-		glViewport(0, 0, Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
-		glEnable(GL_DEPTH_TEST);
+		SetClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		Resize(Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
+		SetDepthBuffer(true);
 
 		ReleaseDC(Window::GetInstance().GetWindowHandle(), WindowDC);
 
@@ -83,5 +89,25 @@ namespace SE3D
 			glEnable(GL_DEPTH_TEST);
 		else
 			glDisable(GL_DEPTH_TEST);
+	}
+
+	void Graphics::SetClearColor(float r, float g, float b, float a) const
+	{
+		glClearColor(r, g, b, a);
+	}
+
+	void Graphics::SetVSync(short vsync) const
+	{
+		wglSwapIntervalEXT(vsync);
+	}
+
+	void Graphics::Resize(int width, int height)
+	{
+		glViewport(0, 0, width, height);
+	}
+
+	void Graphics::Clear() const
+	{
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 }
