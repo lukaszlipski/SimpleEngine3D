@@ -1,6 +1,16 @@
 #include "../system/graphics.h"
 #include "../system/window.h"
 
+extern "C"
+{
+	__declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001;
+}
+
+extern "C"
+{
+	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;
+}
+
 namespace SE3D
 {
 	Graphics::Graphics()
@@ -58,7 +68,7 @@ namespace SE3D
 		else
 			return false;
 
-		SetVSync(1);
+		SetVSync(-1);
 		SetClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		Resize(Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
 		SetDepthBuffer(true);

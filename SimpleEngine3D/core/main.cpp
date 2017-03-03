@@ -49,7 +49,7 @@ int main()
 		Graphics::GetInstance().Clear();
 		Input::GetInstance().Update();
 
-		DebugOutputMSG("TimeElapsed: %fs\n", static_cast<float>(GlobalTimer::GetInstance().TimeSEC()));
+		DebugOutputMSG("TimeElapsed: %fs\n", static_cast<float>(GlobalTimer::GetInstance().DeltaTime()));
 
 		TestCamera.Update();
 
@@ -65,7 +65,7 @@ int main()
 			model.GetModel(i)->GetMaterial().SetParamMatrix4D(String("u_projection").GetStringID(), TestCamera.GetProjection());
 		}
 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		model.Draw();
 
 		Graphics::GetInstance().Update();

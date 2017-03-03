@@ -34,6 +34,7 @@ namespace SE3D
 		fShader = glCreateShader(GL_FRAGMENT_SHADER);
 		glShaderSource(fShader, 1, &fsSource, 0);
 		glCompileShader(fShader);
+		glGetShaderiv(fShader, GL_COMPILE_STATUS, &success);
 		if (!success)
 		{
 			glGetShaderInfoLog(fShader, 512, 0, infoLog);
@@ -49,6 +50,7 @@ namespace SE3D
 		glAttachShader(m_Program, vShader);
 		glAttachShader(m_Program, fShader);
 		glLinkProgram(m_Program);
+		glGetShaderiv(m_Program, GL_LINK_STATUS, &success);
 		if (!success)
 		{
 			glGetProgramInfoLog(m_Program, 512, 0, infoLog);
@@ -58,10 +60,13 @@ namespace SE3D
 			File::GetInstance().Delete(fsFile);
 			return;
 		}
+		glGetProgramInfoLog(m_Program, 512, 0, infoLog);
 
 		GetAllUniforms();
 
 		m_IsValid = true;
+		//glDetachShader(m_Program, vShader);
+		//glDetachShader(m_Program, fShader);
 		glDeleteShader(vShader);
 		glDeleteShader(fShader);
 		File::GetInstance().Delete(vsFile);
@@ -98,10 +103,12 @@ namespace SE3D
 		GLint count;
 		GLchar name[256];
 		GLenum type;
+		GLsizei length;
+		GLint size;
 		glGetProgramiv(m_Program, GL_ACTIVE_UNIFORMS, &count);
 		for (int32 i = 0; i < count; i++)
 		{
-			glGetActiveUniform(m_Program, i, 256, nullptr, nullptr, &type, name);
+			glGetActiveUniform(m_Program, i, 256, &length, &size, &type, name);
 			String strName(name);
 			m_Uniforms.Push(ShaderParam{strName.GetStringID(),ParamType(type), glGetUniformLocation(m_Program, name)});
 		}
