@@ -130,6 +130,9 @@ int main()
 		// ---------------------------------------------------------
 		//model.Draw();
 
+		if (Input::GetInstance().GetKey(SE3D_ESCAPE))
+			Window::GetInstance().CloseWindow();
+
 		Graphics::GetInstance().Update();
 		GlobalTimer::GetInstance().Update();
 	}
@@ -142,5 +145,5 @@ int main()
 	Window::GetInstance().Shutdown();
 	File::GetInstance().Shutdown();
 
-	return EXIT_SUCCESS;
+	return 0;
 }

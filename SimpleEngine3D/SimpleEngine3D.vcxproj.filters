@@ -215,6 +215,9 @@
     <ClInclude Include="core\utilities\model_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="core\platform\windows\win32_keys_defines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="resources\shaders\shader.fs" />

@@ -2,6 +2,9 @@
 #include "../utilities/types.h"
 #include "../math/vector2d.h"
 
+// if Windows
+#include "../platform/windows/win32_keys_defines.h"
+
 #define SE3D_KEYBOARD_KEYS 1024
 #define SE3D_MOUSE_BUTTONS 3
 
