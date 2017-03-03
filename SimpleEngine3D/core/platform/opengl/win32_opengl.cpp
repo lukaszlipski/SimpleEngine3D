@@ -46,7 +46,6 @@ namespace SE3D
 		if (glewInit() != GLEW_OK)
 			return false;
 
-
 		int attrib[] = {
 			WGL_CONTEXT_MAJOR_VERSION_ARB, m_MajorVersion,
 			WGL_CONTEXT_MINOR_VERSION_ARB, m_MinorVersion,
@@ -68,7 +67,7 @@ namespace SE3D
 		else
 			return false;
 
-		SetVSync(-1);
+		SetVSync(1);
 		SetClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		Resize(Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
 		SetDepthBuffer(true);

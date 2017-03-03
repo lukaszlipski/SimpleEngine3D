@@ -13,6 +13,7 @@ namespace SE3D
 
 	public:
 		Texture2D(const String& path);
+		Texture2D(int width, int height);
 		~Texture2D();
 		inline bool IsValid() const { return m_IsValid; }
 		inline uint32 GetTextureID() const { return m_TextureID; }

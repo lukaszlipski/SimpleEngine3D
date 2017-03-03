@@ -65,8 +65,6 @@ namespace SE3D
 		GetAllUniforms();
 
 		m_IsValid = true;
-		//glDetachShader(m_Program, vShader);
-		//glDetachShader(m_Program, fShader);
 		glDeleteShader(vShader);
 		glDeleteShader(fShader);
 		File::GetInstance().Delete(vsFile);

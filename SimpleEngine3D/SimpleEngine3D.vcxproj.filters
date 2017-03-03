@@ -221,5 +221,7 @@
     <None Include="resources\shaders\shader.vs" />
     <None Include="resources\shaders\default.fs" />
     <None Include="resources\shaders\default.vs" />
+    <None Include="resources\shaders\screen.vs" />
+    <None Include="resources\shaders\screen.fs" />
   </ItemGroup>
 </Project>
