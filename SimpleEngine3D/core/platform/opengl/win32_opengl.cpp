@@ -20,6 +20,9 @@ namespace SE3D
 
 	bool Graphics::Startup()
 	{
+		m_ResolutionX = 1024;
+		m_ResolutionY = 720;
+
 		PIXELFORMATDESCRIPTOR DesiredPixelFormat = {};
 		DesiredPixelFormat.nSize = sizeof(DesiredPixelFormat);
 		DesiredPixelFormat.nVersion = 1;

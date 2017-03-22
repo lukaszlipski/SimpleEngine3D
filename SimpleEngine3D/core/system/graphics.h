@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <Gl/glew.h>
 #include <GL/wglew.h>
+#include "../utilities/types.h"
 
 namespace SE3D
 {
@@ -11,6 +12,8 @@ namespace SE3D
 		HGLRC m_OpenGLRC;
 		GLubyte m_MajorVersion;
 		GLubyte m_MinorVersion;
+		int32 m_ResolutionX;
+		int32 m_ResolutionY;
 
 		Graphics();
 
@@ -31,5 +34,10 @@ namespace SE3D
 		void SetVSync(short vsync) const;
 		void Resize(int width, int height);
 		void Clear() const;
+
+		void SetResolution(int32 X, int32 Y);
+		inline int32 GetResolutionX() const { return m_ResolutionX; }
+		inline int32 GetResolutionY() const { return m_ResolutionY; }
+
 	};
 }

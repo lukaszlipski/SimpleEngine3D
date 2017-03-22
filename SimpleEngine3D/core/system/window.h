@@ -36,7 +36,7 @@ namespace SE3D
 		bool GetCursor() const { return m_Cursor; }
 		void SetFullScreen(bool fs);
 		bool GetFullScreen() const { return m_FullScreen; }
-		void SetSize(int width, int height);
+		void SetSize(int32 width, int32 height);
 		inline int32 GetSizeX() const { return m_Width; }
 		inline int32 GetSizeY() const { return m_Height; }
 		void SetTitle(const char* title);

@@ -54,10 +54,14 @@ namespace SE3D
 				SetWindowLong(m_WindowHandle, GWL_STYLE, dwStyle & ~WS_OVERLAPPEDWINDOW);
 				SetWindowPos(m_WindowHandle, HWND_TOP, mi.rcMonitor.left, mi.rcMonitor.top, mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top, SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
 			}
-			Graphics::GetInstance().Resize(mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top);
+			m_Width = mi.rcMonitor.right - mi.rcMonitor.left;
+			m_Height = mi.rcMonitor.bottom - mi.rcMonitor.top;
+			Graphics::GetInstance().Resize(m_Width, m_Height);
 		}
 		else
 		{
+			m_Width = m_WindowPreviousPosition.rcNormalPosition.right - m_WindowPreviousPosition.rcNormalPosition.left;
+			m_Height = m_WindowPreviousPosition.rcNormalPosition.bottom - m_WindowPreviousPosition.rcNormalPosition.top;
 			SetWindowLong(m_WindowHandle, GWL_STYLE, dwStyle | WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX);
 			SetWindowPlacement(m_WindowHandle, &m_WindowPreviousPosition);
 			SetWindowPos(m_WindowHandle, NULL, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
@@ -65,21 +69,30 @@ namespace SE3D
 		}
 	}
 
-	void Window::SetSize(int width, int height)
+	void Window::SetSize(int32 width, int32 height)
 	{
-		bool wasFS = false;
+		/*bool wasFS = false;
 		if (m_FullScreen)
 		{
 			SetFullScreen(false);
 			wasFS = true;
 		}
-
+		m_Width = width;
+		m_Height = height;
 		SetWindowPos(m_WindowHandle, NULL, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
 		GetWindowPlacement(m_WindowHandle, &m_WindowPreviousPosition);
 		Graphics::GetInstance().Resize(width, height);
 
 		if (wasFS)
-			SetFullScreen(true);
+			SetFullScreen(true);*/
+		if(!m_FullScreen)
+		{
+			m_Width = width;
+			m_Height = height;
+			SetWindowPos(m_WindowHandle, NULL, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+			GetWindowPlacement(m_WindowHandle, &m_WindowPreviousPosition);
+			Graphics::GetInstance().Resize(width, height);
+		}
 	}
 
 	void Window::SetTitle(const char* title)
@@ -102,13 +115,11 @@ namespace SE3D
 		{
 		case WM_DESTROY:
 			{
-				//PostQuitMessage(0);
 				Window::m_IsRunning = false;
 				break;
 			}
 		case WM_CLOSE:
 			{
-				//DestroyWindow(hwnd);
 				Window::m_IsRunning = false;
 				break;
 			}
