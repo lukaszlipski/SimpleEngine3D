@@ -71,10 +71,15 @@ namespace SE3D
 
 	Quaternion& Quaternion::operator*=(const Quaternion& right) 
 	{
-		this->w = this->w * right.w - this->x * right.x - this->y * right.y - this->z * right.z;
-		this->x = this->x * right.w + this->w * right.x + this->y * right.z - this->z * right.y;
-		this->y = this->y * right.w + this->w * right.y + this->z * right.x - this->x * right.z;
-		this->z = this->z * right.w + this->w * right.z + this->x * right.y - this->y * right.x;
+		float w = this->w * right.w - this->x * right.x - this->y * right.y - this->z * right.z;
+		float x = this->x * right.w + this->w * right.x + this->y * right.z - this->z * right.y;
+		float y = this->y * right.w + this->w * right.y + this->z * right.x - this->x * right.z;
+		float z = this->z * right.w + this->w * right.z + this->x * right.y - this->y * right.x;
+
+		this->x = x;
+		this->y = y;
+		this->z = z;
+		this->w = w;
 
 		return *this;
 	}
