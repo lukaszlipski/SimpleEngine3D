@@ -112,6 +112,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>core\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -122,6 +123,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="core\graphic\camera\fps_camera.cpp" />
+    <ClCompile Include="core\graphic\components\model_component.cpp" />
+    <ClCompile Include="core\graphic\game_object.cpp" />
     <ClCompile Include="core\graphic\material.cpp" />
     <ClCompile Include="core\graphic\mesh.cpp" />
     <ClCompile Include="core\graphic\model.cpp" />
@@ -129,6 +132,7 @@
     <ClCompile Include="core\graphic\texture2d.cpp" />
     <ClCompile Include="core\math\matrix3d.cpp" />
     <ClCompile Include="core\math\matrix4d.cpp" />
+    <ClCompile Include="core\math\quaternion.cpp" />
     <ClCompile Include="core\math\vector2d.cpp" />
     <ClCompile Include="core\math\vector3d.cpp" />
     <ClCompile Include="core\math\vector4d.cpp" />
@@ -152,6 +156,9 @@
     <ClInclude Include="core\containers\dynamic_array.h" />
     <ClInclude Include="core\graphic\camera\camera.h" />
     <ClInclude Include="core\graphic\camera\fps_camera.h" />
+    <ClInclude Include="core\graphic\components\component.h" />
+    <ClInclude Include="core\graphic\components\model_component.h" />
+    <ClInclude Include="core\graphic\game_object.h" />
     <ClInclude Include="core\graphic\material.h" />
     <ClInclude Include="core\graphic\mesh.h" />
     <ClInclude Include="core\graphic\model.h" />
@@ -171,6 +178,7 @@
     <ClInclude Include="core\math\math.h" />
     <ClInclude Include="core\math\matrix3d.h" />
     <ClInclude Include="core\math\matrix4d.h" />
+    <ClInclude Include="core\math\quaternion.h" />
     <ClInclude Include="core\math\vector2d.h" />
     <ClInclude Include="core\math\vector3d.h" />
     <ClInclude Include="core\math\vector4d.h" />

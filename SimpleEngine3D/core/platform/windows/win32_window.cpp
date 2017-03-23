@@ -71,20 +71,6 @@ namespace SE3D
 
 	void Window::SetSize(int32 width, int32 height)
 	{
-		/*bool wasFS = false;
-		if (m_FullScreen)
-		{
-			SetFullScreen(false);
-			wasFS = true;
-		}
-		m_Width = width;
-		m_Height = height;
-		SetWindowPos(m_WindowHandle, NULL, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
-		GetWindowPlacement(m_WindowHandle, &m_WindowPreviousPosition);
-		Graphics::GetInstance().Resize(width, height);
-
-		if (wasFS)
-			SetFullScreen(true);*/
 		if(!m_FullScreen)
 		{
 			m_Width = width;
