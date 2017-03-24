@@ -7,7 +7,7 @@ namespace SE3D
 	GameObject::GameObject()
 		: m_Parent(nullptr), m_DirtyFlag(false)
 	{
-		m_MatrixTransform = m_LocalTransform.GetMatrix();
+		m_WorldTransformM = m_LocalTransform.GetMatrix();
 	}
 
 	void GameObject::Init()
@@ -90,15 +90,13 @@ namespace SE3D
 
 		if(!m_Parent)
 		{
-			m_WorldTransform = m_LocalTransform;
-			m_MatrixTransform = m_WorldTransform.GetMatrix();
+			m_WorldTransformM = m_LocalTransform.GetMatrix();
 			m_DirtyFlag = false;
 			return;
 		}
 
 		m_DirtyFlag = false;
-		m_WorldTransform = m_LocalTransform.Combine(m_Parent->m_WorldTransform);
-		m_MatrixTransform = m_WorldTransform.GetMatrix();
+		m_WorldTransformM = m_LocalTransform.GetMatrix() * m_Parent->m_WorldTransformM;
 
 	}
 

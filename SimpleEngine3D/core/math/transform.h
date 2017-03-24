@@ -16,7 +16,6 @@ namespace SE3D
 		Transform(const Vector3D& position, const Quaternion& rotation, const Vector3D& scale);
 
 		Matrix4D GetMatrix() const;
-		Transform Combine(const Transform& transform) const;
 
 	};
 }

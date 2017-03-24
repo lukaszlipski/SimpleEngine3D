@@ -49,9 +49,10 @@ int main()
 	GameObject child;
 	ModelComponent modelComp2(model);
 	child.AddComponent(modelComp2);
-	child.SetPosition(Vector3D(1, 1, 1));
+	child.SetPosition(Vector3D(2, 2, 2));
 	child.SetScale(Vector3D(0.5f, 0.5f, 0.5f));
 	root.AddChild(child);
+	root.SetPosition(Vector3D(-0.5f, 0, 0));
 
 	float time = 0.0f;
 
@@ -113,7 +114,8 @@ int main()
 
 		time += GlobalTimer::GetInstance().DeltaTime();
 
-		root.SetRotation(Quaternion(Vector3D(0, 1, 0), time*10));
+		root.SetRotation(Quaternion(Vector3D(0, 1, 0), time * 10));
+		child.SetRotation(Quaternion(Vector3D(0, 0, 1), time * 5));
 		for (uint32 i = 0; i < model.GetMeshesSize(); i++)
 		{
 			model.GetModel(i)->GetMaterial().SetParamMatrix4D(String("u_view").GetStringID(), TestCamera.GetView());

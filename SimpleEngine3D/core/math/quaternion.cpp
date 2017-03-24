@@ -40,13 +40,14 @@ namespace SE3D
 	Matrix4D Quaternion::ToRotationMatrix() const
 	{
 		Quaternion n = this->Normalize();
+		Matrix4D rotation;
 
-		Vector4D row1(1 - 2 * n.y*n.y - 2 * n.z*n.z, 2 * n.x*n.y + 2 * n.z*n.w, 2 * n.x*n.z - 2 * n.y*n.w, 0);
-		Vector4D row2(2 * n.x*n.y - 2 * n.z*n.w, 1 - 2 * n.x*n.x - 2 * n.z*n.z, 2 * n.y*n.z + 2 * n.x*n.w, 0);
-		Vector4D row3(2 * n.x*n.z + 2 * n.y*n.w, 2 * n.y*n.z - 2 * n.x*n.w, 1 - 2 * n.x*n.x - 2 * n.y*n.y,0);
-		Vector4D row4(0.0f, 0.0f, 0.0f, 1.0f);
+		rotation.SetColumn(0,Vector4D(1 - 2 * n.y*n.y - 2 * n.z*n.z, 2 * n.x*n.y + 2 * n.z*n.w, 2 * n.x*n.z - 2 * n.y*n.w, 0));
+		rotation.SetColumn(1, Vector4D(2 * n.x*n.y - 2 * n.z*n.w, 1 - 2 * n.x*n.x - 2 * n.z*n.z, 2 * n.y*n.z + 2 * n.x*n.w, 0));
+		rotation.SetColumn(2, Vector4D(2 * n.x*n.z + 2 * n.y*n.w, 2 * n.y*n.z - 2 * n.x*n.w, 1 - 2 * n.x*n.x - 2 * n.y*n.y, 0));
+		rotation.SetColumn(3, Vector4D(0.0f, 0.0f, 0.0f, 1.0f));
 
-		return Matrix4D(row1, row2, row3, row4);
+		return rotation;
 	}
 
 	Quaternion& Quaternion::operator+=(const Quaternion& right) 

@@ -25,17 +25,7 @@ namespace SE3D
 
 	Matrix4D Transform::GetMatrix() const
 	{
-		return Matrix4D::Identity().Translate(Position) * Rotation.ToRotationMatrix().Scale(Scale);
+		return Matrix4D::ScaleMatrix(Scale) * Rotation.ToRotationMatrix() * Matrix4D::TranslateMatrix(Position);
 	}
 
-	Transform Transform::Combine(const Transform& transform) const
-	{
-		Transform result = *this;
-		result.Position += transform.Position;
-		result.Rotation *= transform.Rotation;
-		result.Scale.x *= transform.Scale.x;
-		result.Scale.y *= transform.Scale.y;
-		result.Scale.z *= transform.Scale.z;
-		return result;
-	}
 }
