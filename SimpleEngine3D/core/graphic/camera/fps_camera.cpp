@@ -30,8 +30,8 @@ namespace SE3D
 			m_FirstMouseUsage = false;
 		}
 		Input::GetInstance().SetMousePosition(centerX, centerY);
-		x = (x - centerX);
-		y = (centerY - y);
+		x = x - centerX;
+		y = centerY - y;
 
 		if (x * x != 1)
 			m_Yaw += x * this->m_MouseSensitivity;

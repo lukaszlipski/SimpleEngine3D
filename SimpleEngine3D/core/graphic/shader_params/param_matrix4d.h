@@ -16,7 +16,7 @@ namespace SE3D
 
 		void Bind() override
 		{
-			glUniformMatrix4fv(m_Location, 1, GL_TRUE, (GLfloat*)m_Value.GetPtr());
+			glUniformMatrix4fv(m_Location, 1, GL_FALSE, (GLfloat*)m_Value.GetPtr());
 		}
 
 		void SetValue(Matrix4D value) { m_Value = value; }

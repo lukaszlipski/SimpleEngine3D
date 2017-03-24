@@ -15,7 +15,7 @@ namespace SE3D
 
 	public:
 
-		Camera(const Matrix4D& projection, const Vector3D& position = Vector3D(0, 0, 0), const Vector3D& front = Vector3D(0, 0, 1), const Vector3D& worldUp = Vector3D(0, 1, 0))
+		Camera(const Matrix4D& projection, const Vector3D& position = Vector3D(0, 0, 0), const Vector3D& front = Vector3D(0, 0, -1), const Vector3D& worldUp = Vector3D(0, 1, 0))
 			: m_Projection(projection), m_Position(position), m_Front(front), m_WorldUp(worldUp)
 		{
 			m_Right = front.Cross(worldUp).Normalize();

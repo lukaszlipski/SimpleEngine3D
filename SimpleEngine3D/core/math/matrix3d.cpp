@@ -16,11 +16,11 @@ namespace SE3D
 		this->elements[3 * 2 + 2] = 1;
 	}
 
-	Matrix3D::Matrix3D(const Vector3D& row1, const Vector3D& row2, const Vector3D& row3)
+	Matrix3D::Matrix3D(const Vector3D& column0, const Vector3D& column1, const Vector3D& column2)
 	{
-		this->rows[0] = row1;
-		this->rows[1] = row2;
-		this->rows[2] = row3;
+		this->columns[0] = column0;
+		this->columns[1] = column1;
+		this->columns[2] = column2;
 	}
 
 	Matrix3D Matrix3D::Identity()
@@ -34,32 +34,32 @@ namespace SE3D
 
 	Matrix3D Matrix3D::Transpose(const Matrix3D& matrix)
 	{
-		return Matrix3D(Vector3D(matrix.rows[0].x, matrix.rows[1].x, matrix.rows[2].x),
-		                Vector3D(matrix.rows[0].y, matrix.rows[1].y, matrix.rows[2].y),
-		                Vector3D(matrix.rows[0].z, matrix.rows[1].z, matrix.rows[2].z));
+		return Matrix3D(Vector3D(matrix.columns[0].x, matrix.columns[1].x, matrix.columns[2].x),
+		                Vector3D(matrix.columns[0].y, matrix.columns[1].y, matrix.columns[2].y),
+		                Vector3D(matrix.columns[0].z, matrix.columns[1].z, matrix.columns[2].z));
 	}
 
 	Matrix3D Matrix3D::Invert(const Matrix3D& matrix)
 	{
 		Matrix3D invert;
 
-		invert.elements[0] = matrix.rows[1].y * matrix.rows[2].z - matrix.rows[1].z * matrix.rows[2].y;
-		invert.elements[1] = -(matrix.rows[1].x * matrix.rows[2].z - matrix.rows[1].z * matrix.rows[2].x);
-		invert.elements[2] = matrix.rows[1].x * matrix.rows[2].y - matrix.rows[1].y * matrix.rows[2].x;
-		invert.elements[3] = -(matrix.rows[0].y * matrix.rows[2].z - matrix.rows[0].z * matrix.rows[2].y);
-		invert.elements[4] = matrix.rows[0].x * matrix.rows[2].z - matrix.rows[0].z * matrix.rows[2].x;
-		invert.elements[5] = -(matrix.rows[0].x * matrix.rows[2].y - matrix.rows[0].y * matrix.rows[2].x);
-		invert.elements[6] = matrix.rows[0].y * matrix.rows[1].z - matrix.rows[0].z * matrix.rows[1].y;
-		invert.elements[7] = -(matrix.rows[0].x * matrix.rows[1].z - matrix.rows[0].z * matrix.rows[1].x);
-		invert.elements[8] = matrix.rows[0].x * matrix.rows[1].y - matrix.rows[0].y * matrix.rows[1].x;
+		invert.elements[0] = matrix.columns[1].y * matrix.columns[2].z - matrix.columns[1].z * matrix.columns[2].y;
+		invert.elements[1] = -(matrix.columns[1].x * matrix.columns[2].z - matrix.columns[1].z * matrix.columns[2].x);
+		invert.elements[2] = matrix.columns[1].x * matrix.columns[2].y - matrix.columns[1].y * matrix.columns[2].x;
+		invert.elements[3] = -(matrix.columns[0].y * matrix.columns[2].z - matrix.columns[0].z * matrix.columns[2].y);
+		invert.elements[4] = matrix.columns[0].x * matrix.columns[2].z - matrix.columns[0].z * matrix.columns[2].x;
+		invert.elements[5] = -(matrix.columns[0].x * matrix.columns[2].y - matrix.columns[0].y * matrix.columns[2].x);
+		invert.elements[6] = matrix.columns[0].y * matrix.columns[1].z - matrix.columns[0].z * matrix.columns[1].y;
+		invert.elements[7] = -(matrix.columns[0].x * matrix.columns[1].z - matrix.columns[0].z * matrix.columns[1].x);
+		invert.elements[8] = matrix.columns[0].x * matrix.columns[1].y - matrix.columns[0].y * matrix.columns[1].x;
 
-		float det = matrix.rows[0].x * invert.elements[0] + matrix.rows[0].y * invert.elements[1] + matrix.rows[0].z * invert.elements[2];
+		float det = matrix.columns[0].x * invert.elements[0] + matrix.columns[0].y * invert.elements[1] + matrix.columns[0].z * invert.elements[2];
 		Assert(det != 0);
 
 		return Matrix3D::Transpose(invert) * (1 / det);
 	}
 
-	Matrix3D Matrix3D::RotateMatrix(float angle, const Vector3D& axis)
+	Matrix3D Matrix3D::RotateMatrix(const Vector3D& axis, float angle)
 	{
 		Matrix3D rotate;
 
@@ -126,9 +126,9 @@ namespace SE3D
 		return *this;
 	}
 
-	Matrix3D Matrix3D::Rotate(float angle, const Vector3D& axis) const
+	Matrix3D Matrix3D::Rotate(const Vector3D& axis, float angle) const
 	{
-		return *this * RotateMatrix(angle, axis);
+		return *this * RotateMatrix(axis, angle);
 	}
 
 	Matrix3D Matrix3D::Scale(const Vector3D& scale) const
@@ -142,7 +142,7 @@ namespace SE3D
 
 		for (int32 row = 0; row < 3; row++)
 		{
-			result.rows[row] = this->rows[row] + right.rows[row];
+			result.columns[row] = this->columns[row] + right.columns[row];
 		}
 
 		return result;
@@ -154,7 +154,7 @@ namespace SE3D
 
 		for (int32 row = 0; row < 3; row++)
 		{
-			result.rows[row] = this->rows[row] - right.rows[row];
+			result.columns[row] = this->columns[row] - right.columns[row];
 		}
 
 		return result;
@@ -229,7 +229,7 @@ namespace SE3D
 	{
 		for (int32 row = 0; row < 3; row++)
 		{
-			this->rows[row] += right.rows[row];
+			this->columns[row] += right.columns[row];
 		}
 		return *this;
 	}
@@ -238,7 +238,7 @@ namespace SE3D
 	{
 		for (int32 row = 0; row < 3; row++)
 		{
-			this->rows[row] -= right.rows[row];
+			this->columns[row] -= right.columns[row];
 		}
 		return *this;
 	}
@@ -302,7 +302,7 @@ namespace SE3D
 	{
 		for (int32 row = 0; row < 3; row++)
 		{
-			if (!(this->rows[row] == right.rows[row]))
+			if (!(this->columns[row] == right.columns[row]))
 			{
 				return false;
 			}

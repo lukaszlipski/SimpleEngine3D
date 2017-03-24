@@ -13,7 +13,7 @@ namespace SE3D
 		bool m_FirstMouseUsage;
 
 	public:
-		FPSCamera(const Matrix4D& projection, const Vector3D& position = Vector3D(0, 0, 0), const Vector3D& front = Vector3D(0, 0, 1), const Vector3D& worldIp = Vector3D(0, 1, 0));
+		FPSCamera(const Matrix4D& projection, const Vector3D& position = Vector3D(0, 0, 0), const Vector3D& front = Vector3D(0, 0, -1), const Vector3D& worldIp = Vector3D(0, 1, 0));
 
 		void Update() override;
 

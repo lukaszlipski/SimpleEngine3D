@@ -17,30 +17,32 @@ namespace SE3D
 		this->elements[4 * 3 + 3] = 1;
 	}
 
-	Matrix4D::Matrix4D(const Vector4D& row1, const Vector4D& row2, const Vector4D& row3, const Vector4D& row4)
+	Matrix4D::Matrix4D(const Vector4D& column0, const Vector4D& column1, const Vector4D& column2, const Vector4D& column3)
 	{
-		this->rows[0] = row1;
-		this->rows[1] = row2;
-		this->rows[2] = row3;
-		this->rows[3] = row4;
+		this->columns[0] = column0;
+		this->columns[1] = column1;
+		this->columns[2] = column2;
+		this->columns[3] = column3;
 	}
 
 	Matrix4D::Matrix4D(const Matrix3D& mat)
 	{
-		this->rows[0] = Vector4D(mat.GetRow(0), 0);
-		this->rows[1] = Vector4D(mat.GetRow(1), 0);
-		this->rows[2] = Vector4D(mat.GetRow(2), 0);
-		this->rows[3] = Vector4D(0, 0, 0, 1);
+		this->columns[0] = Vector4D(mat.GetColumn(0),0);
+		this->columns[1] = Vector4D(mat.GetColumn(1),0);
+		this->columns[2] = Vector4D(mat.GetColumn(2),0);
+		this->columns[3] = Vector4D(mat.GetColumn(3),1);
 	}
 
 	Matrix4D Matrix4D::Orthographic(float left, float right, float bottom, float top, float nearPlane, float farPlane)
 	{
 		Matrix4D ortho = Matrix4D::Identity();
 
-		ortho.SetColumn(0, Vector4D(2.0f / (right - left), 0, 0, 0));
-		ortho.SetColumn(1, Vector4D(0, 2.0f / (top - bottom), 0, 0));
-		ortho.SetColumn(2, Vector4D(0, 0, -2.0f / (farPlane - nearPlane), 0));
-		ortho.SetColumn(3, Vector4D(-(left + right) / (right - left), -(bottom + top) / (top - bottom), -(farPlane + nearPlane) / (farPlane - nearPlane), 1));
+		ortho.elements[0] = 2.0f / (right - left);
+		ortho.elements[5] = 2.0f / (top - bottom);
+		ortho.elements[12] = -(right + left) / (right - left);
+		ortho.elements[13] = -(top + bottom) / (top - bottom);
+		ortho.elements[10] = 2.0f / (farPlane - nearPlane);
+		ortho.elements[14] = -(farPlane + nearPlane) / (farPlane - nearPlane);
 
 		return ortho;
 	}
@@ -49,12 +51,13 @@ namespace SE3D
 	{
 		Matrix4D persp = {};
 
-		float tanHalfFov = static_cast<float>(tan(fov / 2.0f));
+		float thv = tan(fov / 2.0f);
 
-		persp.SetColumn(0, Vector4D(1.0f / (aspectRatio * tanHalfFov), 0, 0, 0));
-		persp.SetColumn(1, Vector4D(0, 1.0f / tanHalfFov, 0, 0));
-		persp.SetColumn(2, Vector4D(0, 0, -(farPlane + nearPlane) / (farPlane - nearPlane), -1));
-		persp.SetColumn(3, Vector4D(0, 0, (-2.0f * farPlane * nearPlane) / (farPlane - nearPlane), 0));
+		persp.elements[0] = 1.0f / (aspectRatio * thv);
+		persp.elements[5] = 1.0f / thv;
+		persp.elements[11] = -1.0f;
+		persp.elements[10] = -(farPlane + nearPlane) / (farPlane - nearPlane);
+		persp.elements[14] = -(2.0f * farPlane * nearPlane) / (farPlane - nearPlane);
 
 		return persp;
 	}
@@ -62,14 +65,22 @@ namespace SE3D
 	Matrix4D Matrix4D::LookAt(const Vector3D& position, const Vector3D& target, const Vector3D& up)
 	{
 		Matrix4D lookAt = Matrix4D::Identity();
-		Vector3D f = (target - position).Normalize();
-		Vector3D s = f.Cross(up.Normalize());
-		Vector3D u = s.Cross(f);
-
-		lookAt.SetRow(0, Vector4D(s.x, s.y, s.z, -s.Dot(position)));
-		lookAt.SetRow(1, Vector4D(u.x, u.y, u.z, -u.Dot(position)));
-		lookAt.SetRow(2, Vector4D(-f.x, -f.y, -f.z, f.Dot(position)));
-		lookAt.SetRow(3, Vector4D(0, 0, 0, 1));
+		Vector3D f((target - position).Normalize());
+		Vector3D s(f.Cross(up).Normalize());
+		Vector3D u(s.Cross(f));
+		
+		lookAt.elements[0] = s.x;
+		lookAt.elements[4] = s.y;
+		lookAt.elements[8] = s.z;
+		lookAt.elements[1] = u.x;
+		lookAt.elements[5] = u.y;
+		lookAt.elements[9] = u.z;
+		lookAt.elements[2] = -f.x;
+		lookAt.elements[6] = -f.y;
+		lookAt.elements[10] = -f.z;
+		lookAt.elements[12] = s.Dot(position) * -1;
+		lookAt.elements[13] = u.Dot(position) * -1;
+		lookAt.elements[14] = f.Dot(position);
 
 		return lookAt;
 	}
@@ -86,24 +97,24 @@ namespace SE3D
 
 	Matrix4D Matrix4D::Transpose(const Matrix4D& matrix)
 	{
-		return Matrix4D(Vector4D(matrix.rows[0].x, matrix.rows[1].x, matrix.rows[2].x, matrix.rows[3].x),
-		                Vector4D(matrix.rows[0].y, matrix.rows[1].y, matrix.rows[2].y, matrix.rows[3].y),
-		                Vector4D(matrix.rows[0].z, matrix.rows[1].z, matrix.rows[2].z, matrix.rows[3].z),
-		                Vector4D(matrix.rows[0].w, matrix.rows[1].w, matrix.rows[2].w, matrix.rows[3].w));
+		return Matrix4D(Vector4D(matrix.columns[0].x, matrix.columns[1].x, matrix.columns[2].x, matrix.columns[3].x),
+		                Vector4D(matrix.columns[0].y, matrix.columns[1].y, matrix.columns[2].y, matrix.columns[3].y),
+		                Vector4D(matrix.columns[0].z, matrix.columns[1].z, matrix.columns[2].z, matrix.columns[3].z),
+		                Vector4D(matrix.columns[0].w, matrix.columns[1].w, matrix.columns[2].w, matrix.columns[3].w));
 	}
 
 	Matrix4D Matrix4D::TranslateMatrix(const Vector3D& translation)
 	{
 		Matrix4D translate = Matrix4D::Identity();
 
-		translate.elements[3] = translation.x;
-		translate.elements[3 + 4] = translation.y;
-		translate.elements[3 + 8] = translation.z;
+		translate.elements[12] = translation.x;
+		translate.elements[13] = translation.y;
+		translate.elements[14] = translation.z;
 
 		return translate;
 	}
 
-	Matrix4D Matrix4D::RotateMatrix(float angle, const Vector3D& axis)
+	Matrix4D Matrix4D::RotateMatrix(const Vector3D& axis, float angle)
 	{
 		Matrix4D rotate = Matrix4D::Identity();
 
@@ -163,9 +174,9 @@ namespace SE3D
 		return *this * TranslateMatrix(translation);
 	}
 
-	Matrix4D Matrix4D::Rotate(float angle, const Vector3D& axis) const
+	Matrix4D Matrix4D::Rotate(const Vector3D& axis, float angle) const
 	{
-		return *this * RotateMatrix(angle, axis);
+		return *this * RotateMatrix(axis, angle);
 	}
 
 	Matrix4D Matrix4D::Scale(const Vector3D& scale) const
@@ -233,10 +244,10 @@ namespace SE3D
 
 	Vector4D Matrix4D::operator*(const Vector4D& right) const
 	{
-		return Vector4D(this->GetRow(0).x * right.x + this->GetRow(0).y * right.y + this->GetRow(0).z * right.z + this->GetRow(0).w * right.w,
-		                this->GetRow(1).x * right.x + this->GetRow(1).y * right.y + this->GetRow(1).z * right.z + this->GetRow(1).w * right.w,
-		                this->GetRow(2).x * right.x + this->GetRow(2).y * right.y + this->GetRow(2).z * right.z + this->GetRow(2).w * right.w,
-		                this->GetRow(3).x * right.x + this->GetRow(3).y * right.y + this->GetRow(3).z * right.z + this->GetRow(3).w * right.w);
+		return Vector4D(this->GetColumn(0).x * right.x + this->GetColumn(0).y * right.y + this->GetColumn(0).z * right.z + this->GetColumn(0).w * right.w,
+		                this->GetColumn(1).x * right.x + this->GetColumn(1).y * right.y + this->GetColumn(1).z * right.z + this->GetColumn(1).w * right.w,
+		                this->GetColumn(2).x * right.x + this->GetColumn(2).y * right.y + this->GetColumn(2).z * right.z + this->GetColumn(2).w * right.w,
+		                this->GetColumn(3).x * right.x + this->GetColumn(3).y * right.y + this->GetColumn(3).z * right.z + this->GetColumn(3).w * right.w);
 	}
 
 	Matrix4D Matrix4D::operator+(const Matrix4D& right) const
@@ -245,7 +256,7 @@ namespace SE3D
 
 		for (int32 row = 0; row < 4; row++)
 		{
-			result.rows[row] = this->rows[row] + right.rows[row];
+			result.columns[row] = this->columns[row] + right.columns[row];
 		}
 
 		return result;
@@ -257,7 +268,7 @@ namespace SE3D
 
 		for (int32 row = 0; row < 4; row++)
 		{
-			result.rows[row] = this->rows[row] - right.rows[row];
+			result.columns[row] = this->columns[row] - right.columns[row];
 		}
 
 		return result;
@@ -322,7 +333,7 @@ namespace SE3D
 	{
 		for (int32 row = 0; row < 4; row++)
 		{
-			this->rows[row] += right.rows[row];
+			this->columns[row] += right.columns[row];
 		}
 		return *this;
 	}
@@ -331,7 +342,7 @@ namespace SE3D
 	{
 		for (int32 row = 0; row < 4; row++)
 		{
-			this->rows[row] -= right.rows[row];
+			this->columns[row] -= right.columns[row];
 		}
 		return *this;
 	}
@@ -340,7 +351,7 @@ namespace SE3D
 	{
 		for (int32 row = 0; row < 4; row++)
 		{
-			if (!(this->rows[row] == right.rows[row]))
+			if (!(this->columns[row] == right.columns[row]))
 			{
 				return false;
 			}
