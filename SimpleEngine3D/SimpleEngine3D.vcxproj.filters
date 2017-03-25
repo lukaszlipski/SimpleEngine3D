@@ -108,6 +108,9 @@
     <ClCompile Include="core\graphic\framebuffer2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\graphic\components\camera_component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\system\window.h">
@@ -249,6 +252,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\graphic\framebuffer2d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\graphic\components\camera_component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

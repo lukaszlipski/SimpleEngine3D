@@ -25,6 +25,7 @@
 #include "graphic/components/model_component.h"
 #include "math/quaternion.h"
 #include "graphic/framebuffer2d.h"
+#include "graphic/components/camera_component.h"
 
 using namespace SE3D;
 
@@ -46,7 +47,7 @@ int main()
 	GameObject root;
 	ModelComponent modelComp(model);
 	root.AddComponent(modelComp);
-	root.SetScale(Vector3D(0.5, 0.5, 0.5));
+	//root.SetScale(Vector3D(0.5, 0.5, 0.5));
 	GameObject child;
 	ModelComponent modelComp2(model);
 	child.AddComponent(modelComp2);
@@ -54,6 +55,13 @@ int main()
 	child.SetScale(Vector3D(0.5f, 0.5f, 0.5f));
 	root.AddChild(child);
 	root.SetPosition(Vector3D(-0.5f, 0, 0));
+
+	CameraComponent cameraComp(Matrix4D::Perspective(45.0f, static_cast<float>(Graphics::GetInstance().GetResolutionX()) / static_cast<float>(Graphics::GetInstance().GetResolutionY()), 0.1f, 100.0f));
+	GameObject cameraChild;
+	cameraChild.AddComponent(cameraComp);
+	cameraChild.SetPosition(Vector3D(0, 0, 5));
+	cameraChild.SetRotation(Quaternion(Vector3D(0, 1, 0), 10));
+	root.AddChild(cameraChild);
 
 	float time = 0.0f;
 
@@ -84,8 +92,6 @@ int main()
 	Framebuffer2D screenFb(Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY());
 	Shader screenShr("resources/shaders/screen.vs", "resources/shaders/screen.fs");
 
-	FPSCamera TestCamera(Matrix4D::Perspective(45.0f, static_cast<float>(Graphics::GetInstance().GetResolutionX()) / static_cast<float>(Graphics::GetInstance().GetResolutionY()), 0.1f, 100.0f), Vector3D(0, 0, -3));
-
 	GlobalTimer::GetInstance().Reset();
 	while (!Window::GetInstance().ShouldWindowClose())
 	{
@@ -94,16 +100,13 @@ int main()
 
 		DebugOutputMSG("TimeElapsed: %fs\n", static_cast<float>(GlobalTimer::GetInstance().DeltaTime()));
 
-		TestCamera.Update();
-
 		time += GlobalTimer::GetInstance().DeltaTime();
 
-		root.SetRotation(Quaternion(Vector3D(0, 1, 0), time * 10));
 		child.SetRotation(Quaternion(Vector3D(0, 0, 1), time * 5));
 		for (uint32 i = 0; i < model.GetMeshesSize(); i++)
 		{
-			model.GetModel(i)->GetMaterial().SetParamMatrix4D(String("u_view").GetStringID(), TestCamera.GetView());
-			model.GetModel(i)->GetMaterial().SetParamMatrix4D(String("u_projection").GetStringID(), TestCamera.GetProjection());
+			model.GetModel(i)->GetMaterial().SetParamMatrix4D(String("u_view").GetStringID(), cameraComp.GetView());
+			model.GetModel(i)->GetMaterial().SetParamMatrix4D(String("u_projection").GetStringID(), cameraComp.GetProjection());
 		}
 			
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
