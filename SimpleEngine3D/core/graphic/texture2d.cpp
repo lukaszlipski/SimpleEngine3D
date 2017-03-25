@@ -4,17 +4,17 @@
 
 namespace SE3D
 {
-	Texture2D::Texture2D(const String& path)
+	Texture2D::Texture2D(const String& path, bool srgb)
 	{
 		m_IsValid = true;
-		Image img(path.CString());
+		Image img(path.CString(),srgb);
 		if (img.GetPixels() == nullptr)
 			m_IsValid = false;
 		m_Width = img.GetWidth();
 		m_Height = img.GetHeight();
 		glGenTextures(1, &m_TextureID);
 		glBindTexture(GL_TEXTURE_2D, m_TextureID);
-		glTexImage2D(GL_TEXTURE_2D, 0, img.GetFormat(), img.GetWidth(), img.GetHeight(), 0, img.GetFormat(), GL_UNSIGNED_BYTE, img.GetPixels());
+		glTexImage2D(GL_TEXTURE_2D, 0, static_cast<int32>(img.GetColorSpaceFormat()), img.GetWidth(), img.GetHeight(), 0, static_cast<int32>(img.GetFormat()), GL_UNSIGNED_BYTE, img.GetPixels());
 		glGenerateMipmap(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}

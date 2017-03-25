@@ -38,7 +38,7 @@ namespace SE3D
 		{
 		}
 
-		Texture2D* Add(const String& textureFile);
-		Texture2D* Get(const String& textureFile);
+		Texture2D* Add(const String& textureFile, bool srgb = false);
+		Texture2D* Get(const String& textureFile, bool srgb = false);
 	};
 }

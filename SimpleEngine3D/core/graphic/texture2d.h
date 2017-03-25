@@ -12,7 +12,7 @@ namespace SE3D
 		uint32 m_Width;
 
 	public:
-		Texture2D(const String& path);
+		Texture2D(const String& path, bool srgb = false);
 		Texture2D(int width, int height);
 		~Texture2D();
 

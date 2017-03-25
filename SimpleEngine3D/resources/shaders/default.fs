@@ -10,5 +10,9 @@ out vec4 color;
 
 void main()
 {
-    color = texture(u_texture1,fs_texCoord) * vec4(u_color,1);
+	float gamma = 2.2;
+
+	vec4 texel = texture(u_texture1,fs_texCoord);
+	vec3 pixelColor = pow(texel.rgb * u_color,vec3(1/gamma));
+    color = vec4(pixelColor,texel.a);
 }

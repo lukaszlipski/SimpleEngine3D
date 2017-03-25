@@ -7,7 +7,7 @@ namespace SE3D
 		Delete();
 	}
 
-	Image::Image(const char* filePath)
+	Image::Image(const char* filePath, bool srgb)
 	{
 		m_File = File::GetInstance().ReadSync(filePath);
 		if (m_File.Size == 0) { File::GetInstance().Delete(m_File); }
@@ -18,12 +18,22 @@ namespace SE3D
 			int8 version = static_cast<int8*>(m_File.Content)[2];
 			if (version == '8')
 			{
-				m_Format = RGBA;
+				if (srgb)
+					m_ColorSpaceFormat = ColorSpaceFormat::sRGBA;
+				else
+					m_ColorSpaceFormat = ColorSpaceFormat::RGBA;
+
+				m_Format = ImageFormat::RGBA;
 				m_Bytes = 4;
 			}
 			else
 			{
-				m_Format = RGB;
+				if (srgb)
+					m_ColorSpaceFormat = ColorSpaceFormat::sRGB;
+				else
+					m_ColorSpaceFormat = ColorSpaceFormat::RGB;
+
+				m_Format = ImageFormat::RGB;
 				m_Bytes = 3;
 			}
 			LoadBMP();

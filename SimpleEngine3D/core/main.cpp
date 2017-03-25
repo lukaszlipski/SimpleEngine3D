@@ -106,7 +106,7 @@ int main()
 			model.GetModel(i)->GetMaterial().SetParamMatrix4D(String("u_projection").GetStringID(), TestCamera.GetProjection());
 		}
 			
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		screenFb.Bind();
 		screenFb.Clear();
 		Graphics::GetInstance().SetDepthBuffer(true);
@@ -117,7 +117,7 @@ int main()
 		Graphics::GetInstance().Clear();
 		Graphics::GetInstance().Resize(Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		screenShr.Bind();
 		glBindVertexArray(quadVAO);
 		Graphics::GetInstance().SetDepthBuffer(false);
