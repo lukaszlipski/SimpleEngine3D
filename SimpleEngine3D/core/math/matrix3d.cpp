@@ -66,21 +66,16 @@ namespace SE3D
 		float r = ToRadians(angle);
 		float c = static_cast<float>(cos(r));
 		float s = static_cast<float>(sin(r));
-		float omc = 1.0f - c;
 
-		float x = axis.x;
-		float y = axis.y;
-		float z = axis.z;
-
-		rotate.elements[0] = x * x * omc + c;
-		rotate.elements[3] = y * x * omc + z * s;
-		rotate.elements[6] = x * z * omc - y * s;
-		rotate.elements[1] = x * y * omc - z * s;
-		rotate.elements[4] = y * y * omc + c;
-		rotate.elements[7] = y * z * omc + x * s;
-		rotate.elements[2] = x * z * omc + y * s;
-		rotate.elements[5] = y * z * omc - x * s;
-		rotate.elements[8] = z * z * omc + c;
+		rotate.elements[0] = axis.x * axis.x * 1.0f - c + c;
+		rotate.elements[1] = axis.y * axis.x * 1.0f - c + axis.z * s;
+		rotate.elements[2] = axis.x * axis.z * 1.0f - c - axis.y * s;
+		rotate.elements[3] = axis.x * axis.y * 1.0f - c - axis.z * s;
+		rotate.elements[4] = axis.y * axis.y * 1.0f - c + c;
+		rotate.elements[5] = axis.y * axis.z * 1.0f - c + axis.x * s;
+		rotate.elements[6] = axis.x * axis.z * 1.0f - c + axis.y * s;
+		rotate.elements[7] = axis.y * axis.z * 1.0f - c - axis.x * s;
+		rotate.elements[8] = axis.z * axis.z * 1.0f - c + c;
 
 		return rotate;
 	}

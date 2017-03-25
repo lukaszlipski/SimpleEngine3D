@@ -1,7 +1,6 @@
 #include "matrix4d.h"
 #include "math.h"
 #include <math.h>
-#include <winerror.h>
 
 namespace SE3D
 {
@@ -121,15 +120,16 @@ namespace SE3D
 		float r = ToRadians(angle);
 		float c = static_cast<float>(cos(r));
 		float s = static_cast<float>(sin(r));
-		float omc = 1.0f - c;
 
-		float x = axis.x;
-		float y = axis.y;
-		float z = axis.z;
-
-		rotate.SetRow(0, Vector4D(x * x * omc + c, y * x * omc + z * s, x * z * omc - y * s, 0));
-		rotate.SetRow(1, Vector4D(x * y * omc - z * s, y * y * omc + c, y * z * omc + x * s, 0));
-		rotate.SetRow(2, Vector4D(x * z * omc + y * s, y * z * omc - x * s, z * z * omc + c, 0));
+		rotate.elements[0] = axis.x * axis.x * 1.0f - c + c;
+		rotate.elements[1] = axis.y * axis.x * 1.0f - c + axis.z * s;
+		rotate.elements[2] = axis.x * axis.z * 1.0f - c - axis.y * s;
+		rotate.elements[4] = axis.x * axis.y * 1.0f - c - axis.z * s;
+		rotate.elements[5] = axis.y * axis.y * 1.0f - c + c;
+		rotate.elements[6] = axis.y * axis.z * 1.0f - c + axis.x * s;
+		rotate.elements[8] = axis.x * axis.z * 1.0f - c + axis.y * s;
+		rotate.elements[9] = axis.y * axis.z * 1.0f - c - axis.x * s;
+		rotate.elements[10] = axis.z * axis.z * 1.0f - c + c;
 
 		return rotate;
 	}

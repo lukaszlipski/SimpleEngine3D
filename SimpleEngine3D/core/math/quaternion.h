@@ -1,5 +1,4 @@
 #pragma once
-#include "vector4d.h"
 #include "matrix4d.h"
 
 namespace SE3D
