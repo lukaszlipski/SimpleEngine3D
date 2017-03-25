@@ -124,6 +124,7 @@
   <ItemGroup>
     <ClCompile Include="core\graphic\camera\fps_camera.cpp" />
     <ClCompile Include="core\graphic\components\model_component.cpp" />
+    <ClCompile Include="core\graphic\framebuffer2d.cpp" />
     <ClCompile Include="core\graphic\game_object.cpp" />
     <ClCompile Include="core\graphic\material.cpp" />
     <ClCompile Include="core\graphic\mesh.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="core\graphic\camera\fps_camera.h" />
     <ClInclude Include="core\graphic\components\component.h" />
     <ClInclude Include="core\graphic\components\model_component.h" />
+    <ClInclude Include="core\graphic\framebuffer2d.h" />
     <ClInclude Include="core\graphic\game_object.h" />
     <ClInclude Include="core\graphic\material.h" />
     <ClInclude Include="core\graphic\mesh.h" />

@@ -24,6 +24,7 @@
 #include "graphic/game_object.h"
 #include "graphic/components/model_component.h"
 #include "math/quaternion.h"
+#include "graphic/framebuffer2d.h"
 
 using namespace SE3D;
 
@@ -78,27 +79,10 @@ int main()
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(2 * sizeof(GLfloat)));
 	glBindVertexArray(0);
-
-	GLuint framebuffer;
-	glGenFramebuffers(1, &framebuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-
-	Texture2D screenTexture(Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY());
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, screenTexture.GetTextureID(), 0);
-	
-	GLuint rbo;
-	glGenRenderbuffers(1, &rbo);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY());
-	glBindRenderbuffer(GL_RENDERBUFFER, 0);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
-
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		return -1;
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	Shader screenShr("resources/shaders/screen.vs", "resources/shaders/screen.fs");
 	// ---------------------------------------------------------
+
+	Framebuffer2D screenFb(Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY());
+	Shader screenShr("resources/shaders/screen.vs", "resources/shaders/screen.fs");
 
 	FPSCamera TestCamera(Matrix4D::Perspective(45.0f, static_cast<float>(Graphics::GetInstance().GetResolutionX()) / static_cast<float>(Graphics::GetInstance().GetResolutionY()), 0.1f, 100.0f), Vector3D(0, 0, -3));
 
@@ -121,30 +105,28 @@ int main()
 			model.GetModel(i)->GetMaterial().SetParamMatrix4D(String("u_view").GetStringID(), TestCamera.GetView());
 			model.GetModel(i)->GetMaterial().SetParamMatrix4D(String("u_projection").GetStringID(), TestCamera.GetProjection());
 		}
-		
-		// --------------------- TEST OPENGL ---------------------
-		glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-		Graphics::GetInstance().Clear();
+			
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		screenFb.Bind();
+		screenFb.Clear();
 		Graphics::GetInstance().SetDepthBuffer(true);
 		Graphics::GetInstance().Resize(Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY());
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		root.Render();
 
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glClearColor(0, 0, 0, 1);
+		screenFb.Unbind();
+		Graphics::GetInstance().Clear();
 		Graphics::GetInstance().Resize(Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
 
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		screenShr.Bind();
 		glBindVertexArray(quadVAO);
 		Graphics::GetInstance().SetDepthBuffer(false);
 		
-		glBindTexture(GL_TEXTURE_2D, screenTexture.GetTextureID());
+		glBindTexture(GL_TEXTURE_2D, screenFb.GetTexture().GetTextureID());
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindVertexArray(0);
 		screenShr.Unbind();
-		// ---------------------------------------------------------
-		//model.Draw();
-		
+
 		if (Input::GetInstance().GetKey(SE3D_ESCAPE))
 			Window::GetInstance().CloseWindow();
 
