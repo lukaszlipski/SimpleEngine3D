@@ -15,6 +15,10 @@ namespace SE3D
 		Texture2D(const String& path);
 		Texture2D(int width, int height);
 		~Texture2D();
+
+		void Bind(uint32 index = 0) const;
+		void Unbind() const;
+
 		inline bool IsValid() const { return m_IsValid; }
 		inline uint32 GetTextureID() const { return m_TextureID; }
 		inline uint32 GetWidth() const { return m_Width; }

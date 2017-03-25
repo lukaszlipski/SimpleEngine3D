@@ -43,4 +43,15 @@ namespace SE3D
 	{
 		glDeleteTextures(1, &m_TextureID);
 	}
+
+	void Texture2D::Bind(uint32 index) const
+	{
+		glActiveTexture(GL_TEXTURE0 + index);
+		glBindTexture(GL_TEXTURE_2D, m_TextureID);
+	}
+
+	void Texture2D::Unbind() const 
+	{
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
 }

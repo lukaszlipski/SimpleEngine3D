@@ -122,7 +122,7 @@ int main()
 		glBindVertexArray(quadVAO);
 		Graphics::GetInstance().SetDepthBuffer(false);
 		
-		glBindTexture(GL_TEXTURE_2D, screenFb.GetTexture().GetTextureID());
+		screenFb.GetTexture().Bind();
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindVertexArray(0);
 		screenShr.Unbind();
