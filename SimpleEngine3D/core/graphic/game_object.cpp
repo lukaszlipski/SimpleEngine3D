@@ -20,6 +20,16 @@ namespace SE3D
 			m_Children[i]->Init();
 	}
 
+	void GameObject::Input(float DeltaTime)
+	{
+		UpdateWorldTransform();
+		for (int32 i = 0; i < m_Components.Size(); i++)
+			m_Components[i]->Input(DeltaTime);
+
+		for (int32 i = 0; i < m_Children.Size(); i++)
+			m_Children[i]->Input(DeltaTime);
+	}
+
 	void GameObject::Update(float DeltaTime)
 	{
 		UpdateWorldTransform();

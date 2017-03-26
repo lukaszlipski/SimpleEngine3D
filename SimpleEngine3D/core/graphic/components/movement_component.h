@@ -1,16 +1,19 @@
 #pragma once
 #include "component.h"
-#include "../model.h"
 
 namespace SE3D
 {
-	class ModelComponent : public Component
+	class MovementComponent : public Component
 	{
 	private:
-		Model *m_Model;
+		bool m_FirstMouseUsage;
+		float m_Sensitivity;
+		float m_Speed;
+		Vector3D m_Up;
 
 	public:
-		ModelComponent(Model& model);
+		MovementComponent(float speed=2.0f, float sensitivity=5.0f);
+
 		void Init() override;
 		void Input(float DeltaTime) override;
 		void Update(float DeltaTime) override;

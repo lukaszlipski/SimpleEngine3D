@@ -66,9 +66,6 @@
     <ClCompile Include="core\system\graphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="core\graphic\camera\fps_camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="core\platform\windows\win32_global_timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -109,6 +106,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="core\graphic\components\camera_component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="core\graphic\components\movement_component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -162,12 +162,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\math\matrix3d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="core\graphic\camera\camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="core\graphic\camera\fps_camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\system\global_timer.h">
@@ -255,6 +249,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\graphic\components\camera_component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\graphic\components\movement_component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

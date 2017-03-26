@@ -20,6 +20,7 @@ namespace SE3D
 		GameObject();
 
 		void Init();
+		void Input(float DeltaTime);
 		void Update(float DeltaTime);
 		void Render();
 

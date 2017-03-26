@@ -15,6 +15,7 @@ namespace SE3D
 		inline Matrix4D GetProjection() const { return m_Projection; }
 
 		void Init() override;
+		void Input(float DeltaTime) override;
 		void Update(float DeltaTime) override;
 		void Render() override;
 

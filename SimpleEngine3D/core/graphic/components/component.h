@@ -16,6 +16,7 @@ namespace SE3D
 
 		virtual ~Component() = default;
 		virtual void Init() = 0;
+		virtual void Input(float DeltaTime) = 0;
 		virtual void Update(float DeltaTime) = 0;
 		virtual void Render() = 0;
 	};

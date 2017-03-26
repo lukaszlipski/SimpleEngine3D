@@ -20,15 +20,20 @@ namespace SE3D
 		Quaternion Conjugate() const;
 		Matrix4D ToRotationMatrix() const;
 
+		Vector3D GetRight() const;
+		Vector3D GetForward() const;
+
 		friend Quaternion operator+(Quaternion left, const Quaternion& right);
 		friend Quaternion operator-(Quaternion left, const Quaternion& right);
 		friend Quaternion operator*(Quaternion left, const Quaternion& right);
+		friend Quaternion operator*(Quaternion left, const Vector3D& right);
 		friend Quaternion operator*(Quaternion left, float s);
 		friend Quaternion operator/(Quaternion left, float s);
 
 		Quaternion& operator+=(const Quaternion& right);
 		Quaternion& operator-=(const Quaternion& right);
 		Quaternion& operator*=(const Quaternion& right);
+		Quaternion& operator*=(const Vector3D& right);
 		Quaternion& operator*=(float s);
 		Quaternion& operator/=(float s);
 

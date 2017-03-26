@@ -9,7 +9,7 @@ namespace SE3D
 	}
 
 	void ModelComponent::Init() {}
-
+	void ModelComponent::Input(float DeltaTime) {}
 	void ModelComponent::Update(float DeltaTime) {}
 
 	void ModelComponent::Render()

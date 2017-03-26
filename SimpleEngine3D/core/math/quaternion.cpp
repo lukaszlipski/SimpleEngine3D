@@ -50,6 +50,18 @@ namespace SE3D
 		return rotation;
 	}
 
+	Vector3D Quaternion::GetRight() const
+	{
+		Quaternion right = *this * Vector3D(1, 0, 0) * this->Conjugate();
+		return Vector3D(right.x,right.y,right.z);
+	}
+
+	Vector3D Quaternion::GetForward() const
+	{
+		Quaternion right = *this * Vector3D(0, 0, -1) * this->Conjugate();
+		return Vector3D(right.x, right.y, right.z);
+	}
+
 	Quaternion& Quaternion::operator+=(const Quaternion& right) 
 	{
 		this->x += right.x;
@@ -81,6 +93,21 @@ namespace SE3D
 		this->y = y;
 		this->z = z;
 		this->w = w;
+
+		return *this;
+	}
+
+	Quaternion& Quaternion::operator*=(const Vector3D& right) 
+	{
+		float w = -this->x * right.x - this->y * right.y - this->z * right.z;
+		float x = this->w * right.x + this->y * right.z - this->z * right.y;
+		float y = this->w * right.y + this->z * right.x - this->x * right.z;
+		float z = this->w * right.z + this->x * right.y - this->y * right.x;
+
+		this->w = w;
+		this->x = x;
+		this->y = y;
+		this->z = z;
 
 		return *this;
 	}
@@ -139,6 +166,12 @@ namespace SE3D
 		float z = left.z * right.w + left.w * right.z + left.x * right.y - left.y * right.x;
 
 		return Quaternion(x, y, z, w);
+	}
+
+	Quaternion operator*(Quaternion left, const Vector3D& right) 
+	{
+		left *= right;
+		return left;
 	}
 
 	Quaternion operator*(Quaternion left, float s) 

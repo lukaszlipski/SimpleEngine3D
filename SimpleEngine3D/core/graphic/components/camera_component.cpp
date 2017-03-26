@@ -13,6 +13,7 @@ namespace SE3D
 	}
 
 	void CameraComponent::Init() {}
+	void CameraComponent::Input(float DeltaTime) {}
 	void CameraComponent::Update(float DeltaTime) {}
 	void CameraComponent::Render() {}
 

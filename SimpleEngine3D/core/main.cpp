@@ -14,7 +14,6 @@
 #include "containers/dynamic_array.h"
 #include "utilities/obj_loader.h"
 #include "utilities/string.h"
-#include "graphic/camera/fps_camera.h"
 #include "graphic/material.h"
 #include "system/shader_manager.h"
 #include "utilities/debug_msg.h"
@@ -26,6 +25,7 @@
 #include "math/quaternion.h"
 #include "graphic/framebuffer2d.h"
 #include "graphic/components/camera_component.h"
+#include "graphic/components/movement_component.h"
 
 using namespace SE3D;
 
@@ -57,11 +57,15 @@ int main()
 	root.SetPosition(Vector3D(-0.5f, 0, 0));
 
 	CameraComponent cameraComp(Matrix4D::Perspective(45.0f, static_cast<float>(Graphics::GetInstance().GetResolutionX()) / static_cast<float>(Graphics::GetInstance().GetResolutionY()), 0.1f, 100.0f));
+	MovementComponent movementComp(2.0f,5.0f);
 	GameObject cameraChild;
 	cameraChild.AddComponent(cameraComp);
+	cameraChild.AddComponent(movementComp);
 	cameraChild.SetPosition(Vector3D(0, 0, 5));
 	cameraChild.SetRotation(Quaternion(Vector3D(0, 1, 0), 10));
 	root.AddChild(cameraChild);
+
+	root.Init();
 
 	float time = 0.0f;
 
@@ -114,6 +118,7 @@ int main()
 		screenFb.Clear();
 		Graphics::GetInstance().SetDepthBuffer(true);
 		Graphics::GetInstance().Resize(Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY());
+		root.Input(GlobalTimer::GetInstance().DeltaTime());
 		root.Render();
 
 		screenFb.Unbind();
