@@ -56,8 +56,8 @@ int main()
 	root.AddChild(child);
 	root.SetPosition(Vector3D(-0.5f, 0, 0));
 
-	CameraComponent cameraComp(Matrix4D::Perspective(45.0f, static_cast<float>(Graphics::GetInstance().GetResolutionX()) / static_cast<float>(Graphics::GetInstance().GetResolutionY()), 0.1f, 100.0f));
-	MovementComponent movementComp(2.0f,5.0f);
+	CameraComponent cameraComp(Matrix4D::Perspective(45.0f, static_cast<float>(Graphics::GetInstance().GetResolutionX()) / static_cast<float>(Graphics::GetInstance().GetResolutionY()), 0.01f, 100.0f));
+	MovementComponent movementComp(3.0f,5.0f);
 	GameObject cameraChild;
 	cameraChild.AddComponent(cameraComp);
 	cameraChild.AddComponent(movementComp);

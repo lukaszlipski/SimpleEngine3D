@@ -41,11 +41,11 @@ namespace SE3D
 		Quaternion rotY;
 		if (abs(x) > 1)
 		{
-			rotX = Quaternion(m_Up, ToRadians(x * m_Sensitivity));
+			rotX = Quaternion(m_Up, x * m_Sensitivity * DeltaTime);
 		}
 		if(abs(y) > 1)
 		{
-			rotY = Quaternion(ownerRot.GetRight(), ToRadians(y * m_Sensitivity));
+			rotY = Quaternion(ownerRot.GetForward().Cross(m_Up), y * m_Sensitivity * DeltaTime);
 		}
 		m_Owner->SetRotation(rotY * rotX * m_Owner->GetRotation());
 
