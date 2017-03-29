@@ -24,6 +24,8 @@ namespace SE3D
 		void Clear() const;
 		inline void SetClearColor(Vector4D color) { m_ClearColor = color; }
 		inline Texture2D& GetTexture() { return m_Texture; }
+		inline uint32 GetWidth() const { return m_Width; }
+		inline uint32 GetHeight() const { return m_Height; }
 
 	};
 }

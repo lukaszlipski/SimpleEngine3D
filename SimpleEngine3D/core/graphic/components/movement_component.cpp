@@ -64,5 +64,5 @@ namespace SE3D
 
 	}
 	void MovementComponent::Update(float DeltaTime) {}
-	void MovementComponent::Render() {}
+	void MovementComponent::Render(DeferredRenderer *renderer) {}
 }

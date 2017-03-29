@@ -11,6 +11,7 @@ namespace SE3D
 		Vector3D m_Position;
 		Vector3D m_Normal;
 		Vector2D m_UV;
+		Vector3D m_Tangent;
 	};
 
 	class Mesh

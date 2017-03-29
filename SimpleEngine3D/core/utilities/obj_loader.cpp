@@ -151,6 +151,16 @@ namespace SE3D
 		}
 	}
 
+	void OBJLoader::CalculateTangents()
+	{
+		// TODO : implement calculating tangets for mesh
+		INTERNAL_MESH_FORMAT& mesh = m_Meshes[m_Meshes.Size() - 1];
+		for(int32 i=0;i<mesh.m_Vertices.Size();i++)
+		{
+			mesh.m_Tangents.Push(Vector3D(0, 0, 0));
+		}
+	}
+
 	void OBJLoader::ConvertToInternalFormat()
 	{
 		INTERNAL_MESH_FORMAT& mesh = m_Meshes[m_Meshes.Size() - 1];
@@ -192,5 +202,7 @@ namespace SE3D
 				mesh.m_Indices.Push(currentIndex++);
 			}
 		}
+		CalculateTangents();
+
 	}
 }

@@ -26,6 +26,8 @@
 #include "graphic/framebuffer2d.h"
 #include "graphic/components/camera_component.h"
 #include "graphic/components/movement_component.h"
+#include "graphic/gbuffer.h"
+#include "graphic/deferred_renderer.h"
 
 using namespace SE3D;
 
@@ -43,97 +45,46 @@ int main()
 	model.GetModel(0)->GetMaterial().SetParamVector3D(String("u_color").GetStringID(), Vector3D(1, 0, 0));
 	model.GetModel(1)->GetMaterial().SetParamVector3D(String("u_color").GetStringID(), Vector3D(0, 1, 0));
 	model.GetModel(2)->GetMaterial().SetParamVector3D(String("u_color").GetStringID(), Vector3D(0, 0, 1));
-
+	
 	GameObject root;
 	ModelComponent modelComp(model);
 	root.AddComponent(modelComp);
-	//root.SetScale(Vector3D(0.5, 0.5, 0.5));
+
 	GameObject child;
 	ModelComponent modelComp2(model);
 	child.AddComponent(modelComp2);
 	child.SetPosition(Vector3D(2, 2, 2));
 	child.SetScale(Vector3D(0.5f, 0.5f, 0.5f));
 	root.AddChild(child);
-	root.SetPosition(Vector3D(-0.5f, 0, 0));
-
+	
+	GameObject cameraChild;
 	CameraComponent cameraComp(Matrix4D::Perspective(45.0f, static_cast<float>(Graphics::GetInstance().GetResolutionX()) / static_cast<float>(Graphics::GetInstance().GetResolutionY()), 0.01f, 100.0f));
 	MovementComponent movementComp(3.0f,5.0f);
-	GameObject cameraChild;
 	cameraChild.AddComponent(cameraComp);
 	cameraChild.AddComponent(movementComp);
 	cameraChild.SetPosition(Vector3D(0, 0, 5));
 	cameraChild.SetRotation(Quaternion(Vector3D(0, 1, 0), 10));
 	root.AddChild(cameraChild);
-
+	
 	root.Init();
 
+	DeferredRenderer renderer;
+
 	float time = 0.0f;
-
-	// --------------------- TEST OPENGL ---------------------
-	GLfloat quad[] = {  
-		-1.0f,  1.0f,  0.0f, 1.0f,
-		-1.0f, -1.0f,  0.0f, 0.0f,
-		1.0f, -1.0f,  1.0f, 0.0f,
-
-		-1.0f,  1.0f,  0.0f, 1.0f,
-		1.0f, -1.0f,  1.0f, 0.0f,
-		1.0f,  1.0f,  1.0f, 1.0f
-	};
-
-	GLuint quadVAO, quadVBO;
-	glGenVertexArrays(1, &quadVAO);
-	glGenBuffers(1, &quadVBO);
-	glBindVertexArray(quadVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(quad), &quad, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), static_cast<GLvoid*>(0));
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(2 * sizeof(GLfloat)));
-	glBindVertexArray(0);
-	// ---------------------------------------------------------
-
-	Framebuffer2D screenFb(Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY());
-	Shader screenShr("resources/shaders/screen.vs", "resources/shaders/screen.fs");
 
 	GlobalTimer::GetInstance().Reset();
 	while (!Window::GetInstance().ShouldWindowClose())
 	{
-		//Graphics::GetInstance().Clear();
 		Input::GetInstance().Update();
+		root.Input(GlobalTimer::GetInstance().DeltaTime());
 
 		DebugOutputMSG("TimeElapsed: %fs\n", static_cast<float>(GlobalTimer::GetInstance().DeltaTime()));
 
 		time += GlobalTimer::GetInstance().DeltaTime();
 
 		child.SetRotation(Quaternion(Vector3D(0, 0, 1), time * 5));
-		for (uint32 i = 0; i < model.GetMeshesSize(); i++)
-		{
-			model.GetModel(i)->GetMaterial().SetParamMatrix4D(String("u_view").GetStringID(), cameraComp.GetView());
-			model.GetModel(i)->GetMaterial().SetParamMatrix4D(String("u_projection").GetStringID(), cameraComp.GetProjection());
-		}
-			
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		screenFb.Bind();
-		screenFb.Clear();
-		Graphics::GetInstance().SetDepthBuffer(true);
-		Graphics::GetInstance().Resize(Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY());
-		root.Input(GlobalTimer::GetInstance().DeltaTime());
-		root.Render();
-
-		screenFb.Unbind();
-		Graphics::GetInstance().Clear();
-		Graphics::GetInstance().Resize(Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
-
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		screenShr.Bind();
-		glBindVertexArray(quadVAO);
-		Graphics::GetInstance().SetDepthBuffer(false);
 		
-		screenFb.GetTexture().Bind();
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-		glBindVertexArray(0);
-		screenShr.Unbind();
+		renderer.Render(&root,&cameraComp);
 
 		if (Input::GetInstance().GetKey(SE3D_ESCAPE))
 			Window::GetInstance().CloseWindow();

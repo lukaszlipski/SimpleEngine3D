@@ -1,8 +1,20 @@
 #pragma once
 #include "../utilities/string.h"
+#include "../utilities/image.h"
 
 namespace SE3D
 {
+	enum class ImageType
+	{
+		FLOAT = GL_FLOAT,
+		UBYTE = GL_UNSIGNED_BYTE
+	};
+	enum class ImageFilter
+	{
+		LINEAR = GL_LINEAR,
+		NEAREST = GL_NEAREST
+	};
+
 	class Texture2D
 	{
 	private:
@@ -13,7 +25,7 @@ namespace SE3D
 
 	public:
 		Texture2D(const String& path, bool srgb = false);
-		Texture2D(int width, int height);
+		Texture2D(int width, int height, ImageFormat format = ImageFormat::RGB, ImageType it=ImageType::UBYTE, ImageFilter imgF = ImageFilter::LINEAR);
 		~Texture2D();
 
 		void Bind(uint32 index = 0) const;

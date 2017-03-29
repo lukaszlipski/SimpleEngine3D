@@ -40,14 +40,14 @@ namespace SE3D
 			m_Children[i]->Update(DeltaTime);
 	}
 
-	void GameObject::Render()
+	void GameObject::Render(DeferredRenderer *renderer)
 	{
 		UpdateWorldTransform();
 		for (int32 i = 0; i < m_Components.Size(); i++)
-			m_Components[i]->Render();
+			m_Components[i]->Render(renderer);
 
 		for (int32 i = 0; i < m_Children.Size(); i++)
-			m_Children[i]->Render();
+			m_Children[i]->Render(renderer);
 	}
 
 	void GameObject::AddChild(GameObject& go)

@@ -14,7 +14,7 @@ namespace SE3D
 		void Init() override;
 		void Input(float DeltaTime) override;
 		void Update(float DeltaTime) override;
-		void Render() override;
+		void Render(DeferredRenderer *renderer) override;
 
 	};
 }

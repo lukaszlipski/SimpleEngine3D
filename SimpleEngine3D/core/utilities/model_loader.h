@@ -10,6 +10,7 @@ namespace SE3D
 		DynamicArray<Vector3D> m_Vertices;
 		DynamicArray<Vector2D> m_TextCoords;
 		DynamicArray<Vector3D> m_Normals;
+		DynamicArray<Vector3D> m_Tangents;
 		DynamicArray<uint32> m_Indices;
 
 		INTERNAL_MESH_FORMAT& operator=(const INTERNAL_MESH_FORMAT& right)
@@ -18,6 +19,7 @@ namespace SE3D
 			m_Vertices = right.m_Vertices;
 			m_TextCoords = right.m_TextCoords;
 			m_Normals = right.m_Normals;
+			m_Tangents = right.m_Tangents;
 			m_Indices = right.m_Indices;
 			return *this;
 		}

@@ -4,6 +4,7 @@
 
 namespace SE3D
 {
+	class DeferredRenderer;
 	class Component;
 
 	class GameObject
@@ -15,14 +16,14 @@ namespace SE3D
 		Transform m_LocalTransform;
 		Matrix4D m_WorldTransformM;
 		bool m_DirtyFlag;
-
+			
 	public:
 		GameObject();
 
 		void Init();
 		void Input(float DeltaTime);
 		void Update(float DeltaTime);
-		void Render();
+		void Render(DeferredRenderer *renderer);
 
 		void AddChild(GameObject& go);
 		void AddComponent(Component& component);

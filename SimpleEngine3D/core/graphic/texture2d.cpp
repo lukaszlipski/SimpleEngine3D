@@ -19,7 +19,7 @@ namespace SE3D
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	Texture2D::Texture2D(int width, int height)
+	Texture2D::Texture2D(int width, int height, ImageFormat format, ImageType it, ImageFilter imgF)
 	{
 		m_IsValid = true;
 		if (width > 0)
@@ -33,9 +33,9 @@ namespace SE3D
 
 		glGenTextures(1, &m_TextureID);
 		glBindTexture(GL_TEXTURE_2D, m_TextureID);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, static_cast<int32>(format), static_cast<int32>(it), 0);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, static_cast<int32>(imgF));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<int32>(imgF));
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 

@@ -15,6 +15,7 @@ namespace SE3D
 			vert.m_Position = mesh.m_Vertices[i];
 			vert.m_Normal = mesh.m_Normals[i];
 			vert.m_UV = mesh.m_TextCoords[i];
+			vert.m_Tangent = mesh.m_Tangents[i];
 			m_VertexArray.Push(vert);
 		}
 
@@ -30,6 +31,8 @@ namespace SE3D
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VERTEX), reinterpret_cast<void*>(OffsetOf(VERTEX, m_Normal)));
 		glEnableVertexAttribArray(2);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(VERTEX), reinterpret_cast<void*>(OffsetOf(VERTEX, m_UV)));
+		glEnableVertexAttribArray(3);
+		glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(VERTEX), reinterpret_cast<void*>(OffsetOf(VERTEX, m_Tangent)));
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.m_Indices.Size() * sizeof(uint32), &mesh.m_Indices[0], GL_STATIC_DRAW);
 		glBindVertexArray(0);

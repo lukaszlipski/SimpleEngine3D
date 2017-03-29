@@ -37,6 +37,7 @@ namespace SE3D
 		void AddTextCoord(const char* line);
 		void AddNormal(const char* line);
 		void AddFace(const char* line);
+		void CalculateTangents();
 		void ConvertToInternalFormat() override;
 	};
 }
