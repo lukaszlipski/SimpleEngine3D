@@ -34,6 +34,8 @@ namespace SE3D
 		void SetVSync(short vsync) const;
 		void Resize(int width, int height);
 		void Clear() const;
+		void SetFaceCulling(byte value=0) const;
+		void SetFrontFace(bool value=0) const;
 
 		void SetResolution(int32 X, int32 Y);
 		inline int32 GetResolutionX() const { return m_ResolutionX; }

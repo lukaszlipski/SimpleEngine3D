@@ -76,6 +76,7 @@ namespace SE3D
 		SetDepthBuffer(true);
 
 		ReleaseDC(Window::GetInstance().GetWindowHandle(), WindowDC);
+		glEnable(GL_CULL_FACE);
 
 		return true;
 	}
@@ -121,5 +122,23 @@ namespace SE3D
 	void Graphics::Clear() const
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
+
+	void Graphics::SetFaceCulling(byte value) const
+	{
+		if(value == 0)
+			glCullFace(GL_FRONT);
+		else if(value == 1)
+			glCullFace(GL_BACK);
+		else if(value == 2)
+			glCullFace(GL_FRONT_AND_BACK);
+	}
+
+	void Graphics::SetFrontFace(bool value) const
+	{
+		if (value == false)
+			glFrontFace(GL_CCW);
+		else if (value == true)
+			glFrontFace(GL_CW);
 	}
 }
