@@ -17,7 +17,7 @@ out vec4 color;
 void main()
 {
 	gb_Position = fs_position;
-	gb_Normal = normalize(fs_normal);
+	gb_Normal = normalize(fs_normal) * 0.5f + 0.5f;
 	gb_AlbedoSpec.rgb = texture(u_albedo,fs_texCoord).rgb;
 	//gb_AlbedoSpec.a = texture(u_specular, TexCoords).r
 }

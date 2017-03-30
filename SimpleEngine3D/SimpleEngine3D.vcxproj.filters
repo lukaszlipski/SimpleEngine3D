@@ -120,6 +120,9 @@
     <ClCompile Include="core\graphic\components\directional_light_component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\graphic\components\point_light_component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\system\window.h">
@@ -273,6 +276,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\graphic\components\directional_light_component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\graphic\components\point_light_component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

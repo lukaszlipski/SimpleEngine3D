@@ -4,7 +4,10 @@
 namespace SE3D
 {
 	GBuffer::GBuffer()
-		:m_Width(Graphics::GetInstance().GetResolutionX()), m_Height(Graphics::GetInstance().GetResolutionY()), m_Position(Texture2D(m_Width, m_Height, ImageFormat::RGB, ImageType::FLOAT, ImageFilter::NEAREST)),m_Normal(Texture2D(m_Width, m_Height, ImageFormat::RGB, ImageType::FLOAT, ImageFilter::NEAREST)),m_AlbedoSpecular(Texture2D(m_Width, m_Height, ImageFormat::RGBA, ImageType::UBYTE, ImageFilter::NEAREST))
+		:	m_Width(Graphics::GetInstance().GetResolutionX()), m_Height(Graphics::GetInstance().GetResolutionY()), 
+			m_Position(Texture2D(m_Width, m_Height, TextureSettings{ ImageFormat::RGB,InternalFormat::RGB32F, ImageType::FLOAT, TextureFilter::NEAREST })), 
+			m_Normal(Texture2D(m_Width, m_Height, TextureSettings{ ImageFormat::RGB, InternalFormat::RGB32F, ImageType::FLOAT, TextureFilter::NEAREST })), 
+			m_AlbedoSpecular(Texture2D(m_Width, m_Height, TextureSettings{ ImageFormat::RGBA, InternalFormat::RGBA, ImageType::UBYTE, TextureFilter::NEAREST }))
 	{
 
 		glGenFramebuffers(1, &m_GBuffer);
@@ -23,6 +26,12 @@ namespace SE3D
 		glDrawBuffers(3, attachments);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+	}
+
+	GBuffer::~GBuffer()
+	{
+		glDeleteRenderbuffers(1, &m_DepthStencil);
+		glDeleteFramebuffers(1, &m_GBuffer);
 	}
 
 	void GBuffer::Bind() const

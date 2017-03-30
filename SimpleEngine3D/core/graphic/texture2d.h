@@ -4,15 +4,21 @@
 
 namespace SE3D
 {
-	enum class ImageType
-	{
-		FLOAT = GL_FLOAT,
-		UBYTE = GL_UNSIGNED_BYTE
-	};
-	enum class ImageFilter
+	enum class TextureFilter : int32
 	{
 		LINEAR = GL_LINEAR,
 		NEAREST = GL_NEAREST
+	};
+
+	struct TextureSettings
+	{
+		ImageFormat m_Format = ImageFormat::RGB;;
+		InternalFormat m_InternalFormat = InternalFormat::RGB;
+		ImageType m_ImageType = ImageType::UBYTE;
+		TextureFilter m_TextureFilter = TextureFilter::LINEAR;
+		TextureSettings(ImageFormat format = ImageFormat::RGB, InternalFormat internalFormat = InternalFormat::RGB, ImageType imgType = ImageType::UBYTE, TextureFilter texFilter = TextureFilter::LINEAR)
+			: m_Format(format), m_InternalFormat(internalFormat), m_ImageType(imgType) ,m_TextureFilter(texFilter)
+		{}
 	};
 
 	class Texture2D
@@ -25,7 +31,7 @@ namespace SE3D
 
 	public:
 		Texture2D(const String& path, bool srgb = false);
-		Texture2D(int width, int height, ImageFormat format = ImageFormat::RGB, ImageType it=ImageType::UBYTE, ImageFilter imgF = ImageFilter::LINEAR);
+		Texture2D(int width, int height, TextureSettings texSettings = TextureSettings());
 		~Texture2D();
 
 		void Bind(uint32 index = 0) const;

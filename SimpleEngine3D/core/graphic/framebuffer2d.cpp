@@ -18,7 +18,7 @@ namespace SE3D
 		glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_RenderbufferID);
-		glBindFramebuffer(GL_FRAMEBUFFER, m_FramebufferID);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	}
 

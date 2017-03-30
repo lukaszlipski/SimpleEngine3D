@@ -19,9 +19,9 @@ namespace SE3D
 			if (version == '8')
 			{
 				if (srgb)
-					m_ColorSpaceFormat = ColorSpaceFormat::sRGBA;
+					m_ColorSpaceFormat = InternalFormat::sRGBA;
 				else
-					m_ColorSpaceFormat = ColorSpaceFormat::RGBA;
+					m_ColorSpaceFormat = InternalFormat::RGBA;
 
 				m_Format = ImageFormat::RGBA;
 				m_Bytes = 4;
@@ -29,9 +29,9 @@ namespace SE3D
 			else
 			{
 				if (srgb)
-					m_ColorSpaceFormat = ColorSpaceFormat::sRGB;
+					m_ColorSpaceFormat = InternalFormat::sRGB;
 				else
-					m_ColorSpaceFormat = ColorSpaceFormat::RGB;
+					m_ColorSpaceFormat = InternalFormat::RGB;
 
 				m_Format = ImageFormat::RGB;
 				m_Bytes = 3;

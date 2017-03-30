@@ -14,12 +14,12 @@ namespace SE3D
 		m_Height = img.GetHeight();
 		glGenTextures(1, &m_TextureID);
 		glBindTexture(GL_TEXTURE_2D, m_TextureID);
-		glTexImage2D(GL_TEXTURE_2D, 0, static_cast<int32>(img.GetColorSpaceFormat()), img.GetWidth(), img.GetHeight(), 0, static_cast<int32>(img.GetFormat()), GL_UNSIGNED_BYTE, img.GetPixels());
+		glTexImage2D(GL_TEXTURE_2D, 0, static_cast<int32>(img.GetInternalFormat()), img.GetWidth(), img.GetHeight(), 0, static_cast<int32>(img.GetFormat()), GL_UNSIGNED_BYTE, img.GetPixels());
 		glGenerateMipmap(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	Texture2D::Texture2D(int width, int height, ImageFormat format, ImageType it, ImageFilter imgF)
+	Texture2D::Texture2D(int width, int height, TextureSettings texSettings)
 	{
 		m_IsValid = true;
 		if (width > 0)
@@ -33,10 +33,11 @@ namespace SE3D
 
 		glGenTextures(1, &m_TextureID);
 		glBindTexture(GL_TEXTURE_2D, m_TextureID);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, static_cast<int32>(format), static_cast<int32>(it), 0);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, static_cast<int32>(imgF));
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<int32>(imgF));
+		glTexImage2D(GL_TEXTURE_2D, 0, static_cast<int32>(texSettings.m_InternalFormat) ,m_Width, m_Height, 0, static_cast<int32>(texSettings.m_Format), static_cast<int32>(texSettings.m_ImageType), 0);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, static_cast<int32>(texSettings.m_TextureFilter));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<int32>(texSettings.m_TextureFilter));
 		glBindTexture(GL_TEXTURE_2D, 0);
+
 	}
 
 	Texture2D::~Texture2D()

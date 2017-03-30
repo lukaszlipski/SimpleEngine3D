@@ -11,9 +11,9 @@ namespace SE3D
 	class DeferredRenderer
 	{
 	private:
-		GBuffer m_GBuffer;
+		GBuffer *m_GBuffer;
 		uint32 m_ScreenVAO;
-		Framebuffer2D m_ScreenBuffer;
+		Framebuffer2D *m_ScreenBuffer;
 		Material m_ScreenMaterial;
 		CameraComponent *m_MainCamera;
 		GameObject *m_Scene;

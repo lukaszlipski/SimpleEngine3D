@@ -5,7 +5,7 @@
 namespace SE3D
 {
 	DeferredRenderer::DeferredRenderer()
-		: m_ScreenBuffer(Framebuffer2D(Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY())), m_ScreenMaterial("screen.vs", "screen.fs"), m_MainCamera(nullptr)
+		: m_GBuffer(new GBuffer()), m_ScreenBuffer(new Framebuffer2D(Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY())), m_ScreenMaterial("screen.vs", "screen.fs"), m_MainCamera(nullptr)
 	{
 		m_CameraPositionNameID = String("u_cameraPosition").GetStringID();
 		m_PositionBufferNameID = String("u_positionTexture").GetStringID();
@@ -51,69 +51,69 @@ namespace SE3D
 		Graphics::GetInstance().Resize(Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
 
 		m_ScreenMaterial.Bind();
-		// --------------------- RAW OPENGL ---------------------
 		glBindVertexArray(m_ScreenVAO);
-		// ---------------------------------------------------------
 		Graphics::GetInstance().SetDepthBuffer(false);
 
-		m_ScreenBuffer.GetTexture().Bind(0);
-		// --------------------- RAW OPENGL ---------------------
+		//m_GBuffer.GetPositionBuffer().Bind();
+		m_ScreenBuffer->GetTexture().Bind(0);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindVertexArray(0);
-		// ---------------------------------------------------------
 		m_ScreenMaterial.Unbind();
 
-		
 	}
 
 	void DeferredRenderer::GBufferPhase()
 	{
-		if (Graphics::GetInstance().GetResolutionY() != m_GBuffer.GetHeight() || Graphics::GetInstance().GetResolutionX() != m_ScreenBuffer.GetWidth())
-			m_GBuffer = GBuffer();
+		if (Graphics::GetInstance().GetResolutionY() != m_GBuffer->GetHeight() || Graphics::GetInstance().GetResolutionX() != m_GBuffer->GetWidth())
+			m_GBuffer = new GBuffer();
 
-		m_GBuffer.Bind();
-		m_GBuffer.Clear();
+		m_GBuffer->Bind();
+		m_GBuffer->Clear();
 		Graphics::GetInstance().SetDepthBuffer(true);
 		Graphics::GetInstance().Resize(Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY());
 
 		m_Scene->Render(this);
 
-		m_GBuffer.Unbind();
+		m_GBuffer->Unbind();
 	}
 
 	void DeferredRenderer::LightPhase()
 	{
-		if (Window::GetInstance().GetSizeX() != m_ScreenBuffer.GetWidth() || Window::GetInstance().GetSizeY() != m_ScreenBuffer.GetHeight())
-			m_ScreenBuffer = Framebuffer2D(Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
+		if (Window::GetInstance().GetSizeX() != m_ScreenBuffer->GetWidth() || Window::GetInstance().GetSizeY() != m_ScreenBuffer->GetHeight())
+		{
+			delete m_ScreenBuffer;
+			m_ScreenBuffer = new Framebuffer2D(Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
+		}
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_ONE, GL_ONE);
 		glDepthMask(false);
 		glDepthFunc(GL_EQUAL);
 
-		m_ScreenBuffer.Bind();
-		m_ScreenBuffer.Clear();
+		m_ScreenBuffer->Bind();
+		m_ScreenBuffer->Clear();
+
+		Graphics::GetInstance().Resize(Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
 
 		for(int32 i=0;i<m_Lights.Size();i++)
 		{
 
-			m_Lights[i]->GetMaterial().SetParamTexture2D(m_PositionBufferNameID, m_GBuffer.GetPositionBuffer());
-			m_Lights[i]->GetMaterial().SetParamTexture2D(m_NormalBufferNameID, m_GBuffer.GetNormalBuffer());
-			m_Lights[i]->GetMaterial().SetParamTexture2D(m_AlbedoSpecularNameID, m_GBuffer.GetAlbedoAndSpecularBuffer());
+			m_Lights[i]->GetMaterial().SetParamTexture2D(m_PositionBufferNameID, m_GBuffer->GetPositionBuffer());
+			m_Lights[i]->GetMaterial().SetParamTexture2D(m_NormalBufferNameID, m_GBuffer->GetNormalBuffer());
+			m_Lights[i]->GetMaterial().SetParamTexture2D(m_AlbedoSpecularNameID, m_GBuffer->GetAlbedoAndSpecularBuffer());
 			m_Lights[i]->GetMaterial().Bind();
 
 			glBindVertexArray(m_ScreenVAO);
 			Graphics::GetInstance().SetDepthBuffer(false);
-
+			
 			m_Lights[i]->GetMaterial().SetParamVector3D(m_CameraPositionNameID, m_MainCamera->GetPosition());
-
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 			glBindVertexArray(0);
 
 			m_Lights[i]->GetMaterial().Unbind();
 		}
 
-		m_ScreenBuffer.Unbind();
+		m_ScreenBuffer->Unbind();
 
 		glDepthFunc(GL_LESS);
 		glDepthMask(true);

@@ -11,13 +11,21 @@ namespace SE3D
 		RGBA = GL_RGBA
 	};
 
-	enum class ColorSpaceFormat : int32
+	enum class InternalFormat : int32
 	{
 		RGB = GL_RGB,
 		RGBA = GL_RGBA,
 		sRGB = GL_SRGB,
-		sRGBA = GL_SRGB_ALPHA
+		sRGBA = GL_SRGB_ALPHA,
+		RGB32F = GL_RGB32F
 	};
+
+	enum class ImageType : int32
+	{
+		FLOAT = GL_FLOAT,
+		UBYTE = GL_UNSIGNED_BYTE
+	};
+
 
 	class Image
 	{
@@ -25,7 +33,7 @@ namespace SE3D
 		int32 m_Width;
 		int32 m_Height;
 		ImageFormat m_Format;
-		ColorSpaceFormat m_ColorSpaceFormat;
+		InternalFormat m_ColorSpaceFormat;
 		void* m_Pixels;
 		FILE m_File;
 		int32 m_Bytes;
@@ -38,7 +46,7 @@ namespace SE3D
 		inline int32 GetHeight() const { return m_Height; }
 		inline void* GetPixels() const { return m_Pixels; }
 		inline ImageFormat GetFormat() const { return m_Format; }
-		inline ColorSpaceFormat GetColorSpaceFormat() const { return m_ColorSpaceFormat; }
+		inline InternalFormat GetInternalFormat() const { return m_ColorSpaceFormat; }
 		void Delete() const;
 
 	private:

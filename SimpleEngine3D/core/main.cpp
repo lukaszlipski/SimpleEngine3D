@@ -7,14 +7,7 @@
 #include "system/input.h"
 #include "system/global_timer.h"
 #include "system/file.h"
-#include "utilities/image.h"
-#include "graphic/shader.h"
-#include "utilities/assertion.h"
 #include "math/math.h"
-#include "containers/dynamic_array.h"
-#include "utilities/obj_loader.h"
-#include "utilities/string.h"
-#include "graphic/material.h"
 #include "system/shader_manager.h"
 #include "utilities/debug_msg.h"
 #include "system/texture_manager.h"
@@ -23,12 +16,11 @@
 #include "graphic/game_object.h"
 #include "graphic/components/model_component.h"
 #include "math/quaternion.h"
-#include "graphic/framebuffer2d.h"
 #include "graphic/components/camera_component.h"
 #include "graphic/components/movement_component.h"
-#include "graphic/gbuffer.h"
 #include "graphic/deferred_renderer.h"
 #include "graphic/components/directional_light_component.h"
+#include "graphic/components/point_light_component.h"
 
 using namespace SE3D;
 
@@ -43,19 +35,16 @@ int main()
 	TextureManager::GetInstance().Startup();
 
 	Model model("resources/models/test.obj");
-	model.GetModel(0)->GetMaterial().SetParamVector3D(String("u_color").GetStringID(), Vector3D(1, 0, 0));
-	model.GetModel(1)->GetMaterial().SetParamVector3D(String("u_color").GetStringID(), Vector3D(0, 1, 0));
-	model.GetModel(2)->GetMaterial().SetParamVector3D(String("u_color").GetStringID(), Vector3D(0, 0, 1));
 	
 	GameObject root;
 	ModelComponent modelComp(model);
 	root.AddComponent(modelComp);
-
+	
 	GameObject child;
 	ModelComponent modelComp2(model);
-	DirectionalLightComponent dirLComp(Vector3D(-1,-1,-1));
+	PointLightComponent pointLComp(Vector3D(-2, 0, 0));
+	child.AddComponent(pointLComp);
 	child.AddComponent(modelComp2);
-	child.AddComponent(dirLComp);
 	child.SetPosition(Vector3D(2, 2, 2));
 	child.SetScale(Vector3D(0.5f, 0.5f, 0.5f));
 	root.AddChild(child);

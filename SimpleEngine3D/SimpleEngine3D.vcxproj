@@ -126,6 +126,7 @@
     <ClCompile Include="core\graphic\components\directional_light_component.cpp" />
     <ClCompile Include="core\graphic\components\model_component.cpp" />
     <ClCompile Include="core\graphic\components\movement_component.cpp" />
+    <ClCompile Include="core\graphic\components\point_light_component.cpp" />
     <ClCompile Include="core\graphic\deferred_renderer.cpp" />
     <ClCompile Include="core\graphic\framebuffer2d.cpp" />
     <ClCompile Include="core\graphic\game_object.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="core\graphic\components\directional_light_component.h" />
     <ClInclude Include="core\graphic\components\model_component.h" />
     <ClInclude Include="core\graphic\components\movement_component.h" />
+    <ClInclude Include="core\graphic\components\point_light_component.h" />
     <ClInclude Include="core\graphic\deferred_renderer.h" />
     <ClInclude Include="core\graphic\framebuffer2d.h" />
     <ClInclude Include="core\graphic\game_object.h" />

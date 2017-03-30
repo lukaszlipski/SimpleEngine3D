@@ -19,6 +19,7 @@ namespace SE3D
 
 	public:
 		GBuffer();
+		~GBuffer();
 		void Bind() const;
 		void Unbind() const;
 		void Clear();
