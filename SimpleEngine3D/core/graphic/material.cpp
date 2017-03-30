@@ -252,6 +252,26 @@ namespace SE3D
 		return false;
 	}
 
+	bool Material::SetParamTexture2D(uint32 nameID, const Texture2D& texture)
+	{
+		for (uint32 i = 0; i < m_Params.Size(); i++)
+		{
+			if (m_Params[i]->GetNameID() == nameID && m_Params[i]->GetParamType() == TEXTURE2D)
+			{
+				static_cast<ParamTexture2D*>(m_Params[i])->SetValue(texture.GetTextureID());
+				return true;
+			}
+		}
+		int32 location;
+		if ((location = m_Shader->CheckParam(nameID, TEXTURE2D)) >= 0)
+		{
+			ParamTexture2D* param = new ParamTexture2D(texture.GetTextureID(), nameID, location, m_TexturesCounter++);
+			m_Params.Push(param);
+			return true;
+		}
+		return false;
+	}
+
 	Material& Material::operator=(const Material& right)
 	{
 		m_Shader = right.m_Shader;

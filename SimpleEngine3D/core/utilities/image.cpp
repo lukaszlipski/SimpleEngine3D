@@ -60,7 +60,7 @@ namespace SE3D
 				static_cast<int8*>(m_Pixels)[i] = static_cast<int8*>(m_Pixels)[i + 2];
 				static_cast<int8*>(m_Pixels)[i + 2] = tmp;
 			}
-			FlipX();
+			//FlipX();
 		}
 	}
 

@@ -123,6 +123,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="core\graphic\components\camera_component.cpp" />
+    <ClCompile Include="core\graphic\components\directional_light_component.cpp" />
     <ClCompile Include="core\graphic\components\model_component.cpp" />
     <ClCompile Include="core\graphic\components\movement_component.cpp" />
     <ClCompile Include="core\graphic\deferred_renderer.cpp" />
@@ -159,8 +160,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\containers\dynamic_array.h" />
+    <ClInclude Include="core\graphic\components\base_light.h" />
     <ClInclude Include="core\graphic\components\camera_component.h" />
     <ClInclude Include="core\graphic\components\component.h" />
+    <ClInclude Include="core\graphic\components\directional_light_component.h" />
     <ClInclude Include="core\graphic\components\model_component.h" />
     <ClInclude Include="core\graphic\components\movement_component.h" />
     <ClInclude Include="core\graphic\deferred_renderer.h" />

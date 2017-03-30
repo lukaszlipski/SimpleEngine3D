@@ -13,6 +13,7 @@ namespace SE3D
 		CameraComponent(Matrix4D projection);
 		Matrix4D GetView() const;
 		inline Matrix4D GetProjection() const { return m_Projection; }
+		Vector3D GetPosition() const { return m_Owner->GetPosition(); }
 
 		void Init() override;
 		void Input(float DeltaTime) override;

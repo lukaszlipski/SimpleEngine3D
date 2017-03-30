@@ -28,6 +28,7 @@
 #include "graphic/components/movement_component.h"
 #include "graphic/gbuffer.h"
 #include "graphic/deferred_renderer.h"
+#include "graphic/components/directional_light_component.h"
 
 using namespace SE3D;
 
@@ -52,7 +53,9 @@ int main()
 
 	GameObject child;
 	ModelComponent modelComp2(model);
+	DirectionalLightComponent dirLComp(Vector3D(-1,-1,-1));
 	child.AddComponent(modelComp2);
+	child.AddComponent(dirLComp);
 	child.SetPosition(Vector3D(2, 2, 2));
 	child.SetScale(Vector3D(0.5f, 0.5f, 0.5f));
 	root.AddChild(child);
@@ -76,6 +79,7 @@ int main()
 	while (!Window::GetInstance().ShouldWindowClose())
 	{
 		Input::GetInstance().Update();
+
 		root.Input(GlobalTimer::GetInstance().DeltaTime());
 
 		DebugOutputMSG("TimeElapsed: %fs\n", static_cast<float>(GlobalTimer::GetInstance().DeltaTime()));
@@ -84,7 +88,7 @@ int main()
 
 		child.SetRotation(Quaternion(Vector3D(0, 0, 1), time * 5));
 		
-		renderer.Render(&root,&cameraComp);
+		renderer.Render(root,cameraComp);
 
 		if (Input::GetInstance().GetKey(SE3D_ESCAPE))
 			Window::GetInstance().CloseWindow();
