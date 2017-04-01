@@ -17,7 +17,8 @@ namespace SE3D
 		RGBA = GL_RGBA,
 		sRGB = GL_SRGB,
 		sRGBA = GL_SRGB_ALPHA,
-		RGB32F = GL_RGB32F
+		RGB32F = GL_RGB32F,
+		RGBA32F = GL_RGBA32F
 	};
 
 	enum class ImageType : int32

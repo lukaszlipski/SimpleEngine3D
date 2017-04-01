@@ -8,9 +8,13 @@ out vec4 color;
 
 void main()
 { 
-    float gamma = 2.2;
+    float gamma = 2.2f;
+    float exposure = 1.0f;
 
-	vec4 texel = texture(u_screenTexture,fs_texCoord);
-	vec3 pixelColor = pow(texel.rgb,vec3(1/gamma));
-    color = vec4(pixelColor,texel.a);
+	vec3 texel = texture(u_screenTexture,fs_texCoord).rgb;
+
+    texel = vec3(1.0) - exp(-texel * exposure);
+
+	vec3 pixelColor = pow(texel,vec3(1/gamma));
+    color = vec4(pixelColor,1.0f);
 }

@@ -4,8 +4,8 @@
 namespace SE3D
 {
 
-	Framebuffer2D::Framebuffer2D(uint32 width, uint32 height)
-		: m_Width(width), m_Height(height), m_Texture(Texture2D(width,height)), m_ClearColor(Vector4D(0.0f,0.0f,0.0f,1.0f))
+	Framebuffer2D::Framebuffer2D(uint32 width, uint32 height, TextureSettings texSettings)
+		: m_Width(width), m_Height(height), m_Texture(Texture2D(width,height,texSettings)), m_ClearColor(Vector4D(0.0f,0.0f,0.0f,1.0f))
 	{
 		glGenFramebuffers(1, &m_FramebufferID);
 		glGenRenderbuffers(1, &m_RenderbufferID);

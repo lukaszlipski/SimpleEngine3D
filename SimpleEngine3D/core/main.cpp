@@ -39,7 +39,7 @@ int main()
 	GameObject root;
 	ModelComponent modelComp(model);
 	root.AddComponent(modelComp);
-	
+
 	GameObject child;
 	ModelComponent modelComp2(model);
 	PointLightComponent pointLComp(Vector3D(-2, 0, 0));

@@ -5,8 +5,17 @@
 namespace SE3D
 {
 	DeferredRenderer::DeferredRenderer()
-		: m_GBuffer(new GBuffer()), m_ScreenBuffer(new Framebuffer2D(Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY())), m_ScreenMaterial("screen.vs", "screen.fs"), m_MainCamera(nullptr)
+		: m_GBuffer(new GBuffer()), m_ScreenMaterial("screen.vs", "screen.fs"), m_MainCamera(nullptr), m_Scene(nullptr)
 	{
+
+		TextureSettings texSettings;
+		texSettings.m_Format = ImageFormat::RGBA;
+		texSettings.m_InternalFormat = InternalFormat::RGBA32F;
+		texSettings.m_ImageType = ImageType::FLOAT;
+		texSettings.m_TextureFilter = TextureFilter::LINEAR;
+
+		m_ScreenBuffer = new Framebuffer2D(Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY(),texSettings);
+
 		m_CameraPositionNameID = String("u_cameraPosition").GetStringID();
 		m_PositionBufferNameID = String("u_positionTexture").GetStringID();
 		m_NormalBufferNameID = String("u_normalTexture").GetStringID();
@@ -54,7 +63,6 @@ namespace SE3D
 		glBindVertexArray(m_ScreenVAO);
 		Graphics::GetInstance().SetDepthBuffer(false);
 
-		//m_GBuffer.GetPositionBuffer().Bind();
 		m_ScreenBuffer->GetTexture().Bind(0);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindVertexArray(0);
@@ -65,7 +73,10 @@ namespace SE3D
 	void DeferredRenderer::GBufferPhase()
 	{
 		if (Graphics::GetInstance().GetResolutionY() != m_GBuffer->GetHeight() || Graphics::GetInstance().GetResolutionX() != m_GBuffer->GetWidth())
+		{
+			delete m_GBuffer;
 			m_GBuffer = new GBuffer();
+		}
 
 		m_GBuffer->Bind();
 		m_GBuffer->Clear();

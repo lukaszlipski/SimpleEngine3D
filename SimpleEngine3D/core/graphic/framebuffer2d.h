@@ -16,7 +16,7 @@ namespace SE3D
 		Vector4D m_ClearColor;
 
 	public:
-		Framebuffer2D(uint32 width, uint32 height);
+		Framebuffer2D(uint32 width, uint32 height , TextureSettings texSettings = TextureSettings());
 		~Framebuffer2D();
 
 		void Bind() const;
