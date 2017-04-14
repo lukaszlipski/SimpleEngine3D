@@ -18,7 +18,10 @@ namespace SE3D
 
 
 	public:
-		PointLightComponent(const Vector3D& position);
+		PointLightComponent(const Vector3D& position = Vector3D(0,0,0));
+
+		inline void SetPosition(const Vector3D& pos) { m_Position = pos; }
+		inline Vector3D GetPosition() const { return m_Position; }
 
 		void Init() override;
 		void Input(float DeltaTime) override;

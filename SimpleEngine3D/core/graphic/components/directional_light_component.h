@@ -11,7 +11,7 @@ namespace SE3D
 		uint32 m_DirectionNameID;
 
 	public:
-		DirectionalLightComponent(const Vector3D& direction);
+		DirectionalLightComponent(const Vector3D& direction = Vector3D(0,-1,0));
 
 		inline void SetDirection(const Vector3D& direction) { m_Direction = direction; }
 		inline Vector3D GetDirection() const { return m_Direction; }

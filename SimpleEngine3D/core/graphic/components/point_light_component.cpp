@@ -4,7 +4,7 @@
 namespace SE3D
 {
 	PointLightComponent::PointLightComponent(const Vector3D& position)
-		: BaseLight(Material("point.vs", "point.fs")), m_Position(position), m_Constant(1), m_Linear(0.09f), m_Quadratic(0.032)
+		: BaseLight(Material("point.vs", "point.fs")), m_Position(position), m_Constant(1), m_Linear(0.09f), m_Quadratic(0.032f)
 	{
 		m_PositionNameID = String("u_position").GetStringID();
 		m_LinearID = String("u_linear").GetStringID();
