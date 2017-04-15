@@ -35,7 +35,7 @@ int main()
 	ShaderManager::GetInstance().Startup();
 	TextureManager::GetInstance().Startup();
 
-	Model model("resources/models/test.obj");
+	Model model("resources/models/cube.obj");
 	
 	GameObject root;
 	ModelComponent modelComp(model);
@@ -49,10 +49,10 @@ int main()
 	child.SetScale(Vector3D(0.5f, 0.5f, 0.5f));
 	root.AddChild(child);
 
-	//PointLightComponent pointLComp(Vector3D(-2, 0, 0));
-	//child.AddComponent(pointLComp);
-	SpotLightComponent spotLComp(Vector3D(-2, 0, 3), Vector3D(0, 0, -1),12.0f,17.0f);
-	child.AddComponent(spotLComp);
+	PointLightComponent pointLComp(Vector3D(-2, 0, 0));
+	child.AddComponent(pointLComp);
+	//SpotLightComponent spotLComp(Vector3D(-2, 0, 3), Vector3D(0, 0, -1),12.0f,17.0f);
+	//child.AddComponent(spotLComp);
 	
 	GameObject cameraChild;
 	CameraComponent cameraComp(Matrix4D::Perspective(45.0f, static_cast<float>(Graphics::GetInstance().GetResolutionX()) / static_cast<float>(Graphics::GetInstance().GetResolutionY()), 0.01f, 100.0f));

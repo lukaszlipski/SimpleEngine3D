@@ -15,8 +15,8 @@ namespace SE3D
 		int16 Signature = reinterpret_cast<int16*>(m_File.Content)[0];
 		if (Signature == 0x4d42)
 		{
-			int8 version = static_cast<int8*>(m_File.Content)[2];
-			if (version == '8')
+			int8 depth = static_cast<int8*>(m_File.Content)[28];
+			if (depth == 32)
 			{
 				if (srgb)
 					m_ColorSpaceFormat = InternalFormat::sRGBA;

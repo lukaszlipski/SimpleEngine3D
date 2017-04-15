@@ -331,7 +331,7 @@ namespace SE3D
 			else if (type == TEXTURE2D)
 			{
 				SetParamTexture2D(nameID, "placeHolder.bmp");
-				m_TexturesCounter++;
+				//m_TexturesCounter++;
 			}
 		}
 	}
