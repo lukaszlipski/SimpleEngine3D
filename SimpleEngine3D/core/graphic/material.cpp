@@ -305,6 +305,9 @@ namespace SE3D
 
 	void Material::SetDefaultParams()
 	{
+		m_AlbedoNameID = String(DEFAULT_ALBEDO_NAME).GetStringID();
+		m_NormalNameID = String(DEFAULT_NORMAL_NAME).GetStringID();
+
 		m_TexturesCounter = 0;
 		for (uint32 i=0;i < m_Shader->GetNumberOfParams(); i++)
 		{
@@ -330,8 +333,10 @@ namespace SE3D
 				SetParamMatrix3D(nameID, Matrix3D::Identity());
 			else if (type == TEXTURE2D)
 			{
-				SetParamTexture2D(nameID, "placeHolder.bmp");
-				//m_TexturesCounter++;
+				if(nameID == m_AlbedoNameID)
+					SetParamTexture2D(nameID, "placeHolder.bmp");
+				else if(nameID == m_NormalNameID)
+					SetParamTexture2D(nameID, "defaultNormal.bmp");
 			}
 		}
 	}

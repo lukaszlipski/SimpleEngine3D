@@ -36,6 +36,7 @@ int main()
 	TextureManager::GetInstance().Startup();
 
 	Model model("resources/models/cube.obj");
+	model.GetModel(0)->GetMaterial().SetParamTexture2D(String("u_normal").GetStringID(), "brickNormal.bmp");
 	
 	GameObject root;
 	ModelComponent modelComp(model);
@@ -49,8 +50,8 @@ int main()
 	child.SetScale(Vector3D(0.5f, 0.5f, 0.5f));
 	root.AddChild(child);
 
-	PointLightComponent pointLComp(Vector3D(-2, 0, 0));
-	child.AddComponent(pointLComp);
+	PointLightComponent pointLComp(Vector3D(0, 1, 3));
+	root.AddComponent(pointLComp);
 	//SpotLightComponent spotLComp(Vector3D(-2, 0, 3), Vector3D(0, 0, -1),12.0f,17.0f);
 	//child.AddComponent(spotLComp);
 	

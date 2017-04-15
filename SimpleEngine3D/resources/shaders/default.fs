@@ -9,15 +9,18 @@ uniform sampler2D u_specular;
 uniform vec3 u_color;
 
 in vec3 fs_position;
-in vec3 fs_normal;
 in vec2 fs_texCoord;
+in mat3 fs_tbn;
 
 out vec4 color;
 
 void main()
 {
 	gb_Position = fs_position;
-	gb_Normal = normalize(fs_normal) * 0.5f + 0.5f;
+
+	vec3 normal = normalize( texture(u_normal,fs_texCoord).rgb * 2.0f - 1.0f );
+	gb_Normal = normalize( fs_tbn * normal );
+
 	gb_AlbedoSpec.rgb = texture(u_albedo,fs_texCoord).rgb;
 	//gb_AlbedoSpec.a = texture(u_specular, TexCoords).r
 }

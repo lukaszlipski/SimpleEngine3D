@@ -155,9 +155,41 @@ namespace SE3D
 	{
 		// TODO : implement calculating tangets for mesh
 		INTERNAL_MESH_FORMAT& mesh = m_Meshes[m_Meshes.Size() - 1];
-		for(int32 i=0;i<mesh.m_Vertices.Size();i++)
+		for(int32 i=0;i<mesh.m_Indices.Size();i+=3)
 		{
-			mesh.m_Tangents.Push(Vector3D(0, 0, 0));
+			uint32 index0 = mesh.m_Indices[i];
+			uint32 index1 = mesh.m_Indices[i+1];
+			uint32 index2 = mesh.m_Indices[i+2];
+
+			Vector3D edge1 = mesh.m_Vertices[index1] - mesh.m_Vertices[index0];
+			Vector3D edge2 = mesh.m_Vertices[index2] - mesh.m_Vertices[index0];
+
+			Vector2D uv1 = mesh.m_TextCoords[index1] - mesh.m_TextCoords[index0];
+			Vector2D uv2 = mesh.m_TextCoords[index2] - mesh.m_TextCoords[index0];
+
+			float f = 1.0f / (uv1.x * uv2.y - uv2.x * uv1.y);
+
+			Vector3D tangent;
+			tangent.x = (uv2.y * edge1.x - uv1.y * edge2.x) * f;
+			tangent.y = (uv2.y * edge1.y - uv1.y * edge2.y) * f;
+			tangent.z = (uv2.y * edge1.z - uv1.y * edge2.z) * f;
+
+			Vector3D biTangent;
+			biTangent.x = (-uv2.x * edge1.x + uv1.x * edge2.x) * f;
+			biTangent.y = (-uv2.x * edge1.y + uv1.x * edge2.y) * f;
+			biTangent.z = (-uv2.x * edge1.z + uv1.x * edge2.z) * f;
+
+			if (mesh.m_Normals[index0].Cross(tangent).Dot(biTangent) < 0.0f)
+				tangent *= -1.0f;
+
+			mesh.m_Tangents[index0] += tangent;
+			mesh.m_Tangents[index1] += tangent;
+			mesh.m_Tangents[index2] += tangent;
+		}
+
+		for (int32 i = 0; i < mesh.m_Tangents.Size(); i++)
+		{
+			mesh.m_Tangents[i] = mesh.m_Tangents[i].Normalize();
 		}
 	}
 
@@ -199,6 +231,7 @@ namespace SE3D
 				else
 					mesh.m_TextCoords.Push(Vector2D(0.0f, 0.0f));
 
+				mesh.m_Tangents.Push(Vector3D(0, 0, 0));
 				mesh.m_Indices.Push(currentIndex++);
 			}
 		}

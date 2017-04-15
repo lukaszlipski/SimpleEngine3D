@@ -20,7 +20,7 @@ out vec4 color;
 void main()
 { 
     vec3 position = texture(u_positionTexture, fs_texCoord).rgb;
-    vec3 normal = normalize(texture(u_normalTexture, fs_texCoord).rgb * 2.0f - 1.0f);
+    vec3 normal = normalize(texture(u_normalTexture, fs_texCoord).rgb);
     vec3 albedo = texture(u_albedoSpecularTexture, fs_texCoord).rgb;
     float specular = texture(u_albedoSpecularTexture, fs_texCoord).a;
 

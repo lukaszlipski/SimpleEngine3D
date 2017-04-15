@@ -7,6 +7,9 @@
 #define DEFAULT_VS_SHADER "default.vs"
 #define DEFAULT_FS_SHADER "default.fs"
 
+#define DEFAULT_ALBEDO_NAME "u_albedo"
+#define DEFAULT_NORMAL_NAME "u_normal"
+
 namespace SE3D
 {
 	class Mesh;
@@ -22,6 +25,8 @@ namespace SE3D
 		Shader* m_Shader;
 		uint32 m_TexturesCounter;
 		DynamicArray<ShaderParameter*> m_Params;
+		uint32 m_AlbedoNameID;
+		uint32 m_NormalNameID;
 
 	public:
 		Material();

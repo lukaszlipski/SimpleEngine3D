@@ -2,15 +2,15 @@
 layout (location = 0) in vec3 a_position;
 layout (location = 1) in vec3 a_normal;
 layout (location = 2) in vec2 a_texCoord;
-layout (location = 3) in vec2 a_tangent;
+layout (location = 3) in vec3 a_tangent;
 
 uniform mat4 u_model;
 uniform mat4 u_view;
 uniform mat4 u_projection;
 
 out vec3 fs_position;
-out vec3 fs_normal;
 out vec2 fs_texCoord;
+out mat3 fs_tbn;
 
 void main()
 {
@@ -20,7 +20,12 @@ void main()
 	fs_position = globalPosition.xyz;
 
 	mat3 normalMatrix = transpose(inverse(mat3(u_model)));
-	fs_normal = normalMatrix * a_normal;
+	vec3 normal = normalize(normalMatrix * a_normal);
+	vec3 tangent = normalize(normalMatrix * a_tangent);
+	tangent = normalize(tangent - dot(tangent,normal) * normal);
+
+	vec3 biTangent = cross(tangent,normal);
+	fs_tbn = mat3(tangent,biTangent,normal);
 
 	fs_texCoord = a_texCoord;
 }
