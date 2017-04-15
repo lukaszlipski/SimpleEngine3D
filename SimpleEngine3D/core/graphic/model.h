@@ -17,8 +17,8 @@ namespace SE3D
 		~Model();
 
 		void Draw() const;
-		Mesh* GetModel(const String& name) const;
-		Mesh* GetModel(uint32 index) const;
+		Mesh* GetMesh(const String& name) const;
+		Mesh* GetMesh(uint32 index) const;
 		void SetTransformation(const Matrix4D& transformation) { m_Transformation = transformation; }
 
 		inline uint32 GetMeshesSize() const { return m_Meshes.Size(); }

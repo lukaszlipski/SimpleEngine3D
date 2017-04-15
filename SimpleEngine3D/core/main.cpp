@@ -36,7 +36,7 @@ int main()
 	TextureManager::GetInstance().Startup();
 
 	Model model("resources/models/cube.obj");
-	model.GetModel(0)->GetMaterial().SetParamTexture2D(String("u_normal").GetStringID(), "brickNormal.bmp");
+	model.GetMesh("Cube")->GetMaterial().SetParamTexture2D(String("u_normal").GetStringID(), "brickNormal.bmp");
 	
 	GameObject root;
 	ModelComponent modelComp(model);

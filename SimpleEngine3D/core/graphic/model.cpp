@@ -28,7 +28,7 @@ namespace SE3D
 		}
 	}
 
-	Mesh* Model::GetModel(const String& name) const
+	Mesh* Model::GetMesh(const String& name) const
 	{
 		for (uint32 i = 0; i < m_Meshes.Size(); i++)
 		{
@@ -40,7 +40,7 @@ namespace SE3D
 		return nullptr;
 	}
 
-	Mesh* Model::GetModel(uint32 index) const
+	Mesh* Model::GetMesh(uint32 index) const
 	{
 		if (index >= 0 && index < m_Meshes.Size())
 			return m_Meshes[index];
