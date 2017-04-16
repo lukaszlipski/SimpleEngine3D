@@ -37,17 +37,6 @@ namespace SE3D
 		y = centerY - y;
 
 		Quaternion ownerRot = m_Owner->GetRotation();
-		Quaternion rotX;
-		Quaternion rotY;
-		if (abs(x) > 1)
-		{
-			rotX = Quaternion(m_Up, x * m_Sensitivity * DeltaTime);
-		}
-		if(abs(y) > 1)
-		{
-			rotY = Quaternion(ownerRot.GetForward().Cross(m_Up), y * m_Sensitivity * DeltaTime);
-		}
-		m_Owner->SetRotation(rotY * rotX * m_Owner->GetRotation());
 
 		Vector3D direction = {};
 		if (Input::GetInstance().GetKey('W'))
@@ -62,7 +51,20 @@ namespace SE3D
 		if (direction != Vector3D(0, 0, 0))
 			m_Owner->SetPosition(m_Owner->GetPosition() + direction.Normalize() * m_Speed * DeltaTime);
 
+		Quaternion rotX;
+		Quaternion rotY;
+		if (abs(x) > 1)
+		{
+			rotX = Quaternion(m_Up, x * m_Sensitivity * DeltaTime);
+		}
+		if(abs(y) > 1)
+		{
+			rotY = Quaternion(ownerRot.GetForward().Cross(m_Up), y * m_Sensitivity * DeltaTime);
+		}
+		m_Owner->SetRotation(rotX * rotY * m_Owner->GetRotation() );
+		
 	}
+
 	void MovementComponent::Update(float DeltaTime) {}
 	void MovementComponent::Render(DeferredRenderer *renderer) {}
 }

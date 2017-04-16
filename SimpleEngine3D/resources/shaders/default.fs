@@ -18,7 +18,8 @@ void main()
 {
 	gb_Position = fs_position;
 
-	vec3 normal = normalize( texture(u_normal,fs_texCoord).rgb * 2.0f - 1.0f );
+	vec3 normalTexel = texture(u_normal,fs_texCoord).rgb;
+	vec3 normal = normalize( vec3(normalTexel.x,1-normalTexel.y,normalTexel.z) * 2.0f - 1.0f );
 	gb_Normal = normalize( fs_tbn * normal );
 
 	gb_AlbedoSpec.rgb = texture(u_albedo,fs_texCoord).rgb;
