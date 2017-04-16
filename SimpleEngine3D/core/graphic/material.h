@@ -46,7 +46,7 @@ namespace SE3D
 		bool SetParamVector4D(uint32 nameID, const Vector4D& value);
 		bool SetParamMatrix3D(uint32 nameID, const Matrix3D& value);
 		bool SetParamMatrix4D(uint32 nameID, const Matrix4D& value);
-		bool SetParamTexture2D(uint32 nameID, const String& path);
+		bool SetParamTexture2D(uint32 nameID, const String& path, bool srgb = false);
 		bool SetParamTexture2D(uint32 nameID, const Texture2D& texture);
 
 		Material& operator=(const Material& right);

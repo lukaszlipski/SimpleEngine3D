@@ -50,8 +50,10 @@ int main()
 	child.SetScale(Vector3D(0.5f, 0.5f, 0.5f));
 	root.AddChild(child);
 
-	PointLightComponent pointLComp(Vector3D(0, 1, 3));
+	PointLightComponent pointLComp(Vector3D(-2, 2, 3));
 	root.AddComponent(pointLComp);
+	//DirectionalLightComponent dirLComp(Vector3D(0, 0, -1));
+	//root.AddComponent(dirLComp);
 	//SpotLightComponent spotLComp(Vector3D(-2, 0, 3), Vector3D(0, 0, -1),12.0f,17.0f);
 	//child.AddComponent(spotLComp);
 	

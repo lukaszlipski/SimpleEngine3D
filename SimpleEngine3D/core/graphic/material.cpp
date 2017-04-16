@@ -232,20 +232,20 @@ namespace SE3D
 		return false;
 	}
 
-	bool Material::SetParamTexture2D(uint32 nameID, const String& path)
+	bool Material::SetParamTexture2D(uint32 nameID, const String& path, bool srgb)
 	{
 		for (uint32 i = 0; i < m_Params.Size(); i++)
 		{
 			if (m_Params[i]->GetNameID() == nameID && m_Params[i]->GetParamType() == TEXTURE2D)
 			{
-				static_cast<ParamTexture2D*>(m_Params[i])->SetValue(TextureManager::GetInstance().Get(path)->GetTextureID());
+				static_cast<ParamTexture2D*>(m_Params[i])->SetValue(TextureManager::GetInstance().Get(path, srgb)->GetTextureID());
 				return true;
 			}
 		}
 		int32 location;
 		if ((location = m_Shader->CheckParam(nameID, TEXTURE2D)) >= 0)
 		{
-			ParamTexture2D* param = new ParamTexture2D(TextureManager::GetInstance().Get(path)->GetTextureID(), nameID, location, m_TexturesCounter++);
+			ParamTexture2D* param = new ParamTexture2D(TextureManager::GetInstance().Get(path,srgb)->GetTextureID(), nameID, location, m_TexturesCounter++);
 			m_Params.Push(param);
 			return true;
 		}
