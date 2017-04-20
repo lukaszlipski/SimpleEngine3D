@@ -19,7 +19,8 @@ namespace SE3D
 		m_CameraPositionNameID = String("u_cameraPosition").GetStringID();
 		m_PositionBufferNameID = String("u_positionTexture").GetStringID();
 		m_NormalBufferNameID = String("u_normalTexture").GetStringID();
-		m_AlbedoSpecularNameID = String("u_albedoSpecularTexture").GetStringID();
+		m_AlbedoNameID = String("u_albedoTexture").GetStringID();
+		u_MetallicRoughnessAONameID = String("u_metallicRoughnessAOTexture").GetStringID();
 
 		// --------------------- RAW OPENGL ---------------------
 		GLfloat quad[] = {
@@ -111,7 +112,8 @@ namespace SE3D
 
 			m_Lights[i]->GetMaterial().SetParamTexture2D(m_PositionBufferNameID, m_GBuffer->GetPositionBuffer());
 			m_Lights[i]->GetMaterial().SetParamTexture2D(m_NormalBufferNameID, m_GBuffer->GetNormalBuffer());
-			m_Lights[i]->GetMaterial().SetParamTexture2D(m_AlbedoSpecularNameID, m_GBuffer->GetAlbedoAndSpecularBuffer());
+			m_Lights[i]->GetMaterial().SetParamTexture2D(m_AlbedoNameID, m_GBuffer->GetAlbedoBuffer());
+			m_Lights[i]->GetMaterial().SetParamTexture2D(u_MetallicRoughnessAONameID, m_GBuffer->GetMetallicRoughnessAOBuffer());
 			m_Lights[i]->GetMaterial().Bind();
 
 			glBindVertexArray(m_ScreenVAO);

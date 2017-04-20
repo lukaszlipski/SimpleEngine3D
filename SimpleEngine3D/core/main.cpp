@@ -35,9 +35,16 @@ int main()
 	ShaderManager::GetInstance().Startup();
 	TextureManager::GetInstance().Startup();
 
-	Model model("resources/models/cube.obj");
-	model.GetMesh("Cube")->GetMaterial().SetParamTexture2D(String("u_normal").GetStringID(), "brickNormal.bmp");
+	Model model("resources/models/sphere.obj");
+	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_albedo").GetStringID(), "metal/albedo.bmp");
+	//model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_normal").GetStringID(), "rock/normals.bmp");
+	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_metallic").GetStringID(), "metal/metallic.bmp");
+	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_roughness").GetStringID(), "metal/roughness.bmp");
+	//model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_ambientOcclusion").GetStringID(), "rock/ao.bmp");
 	
+	//Window::GetInstance().SetFullScreen(true);
+	//Graphics::GetInstance().SetResolution(1920, 1080);
+
 	GameObject root;
 	ModelComponent modelComp(model);
 	root.AddComponent(modelComp);
@@ -50,12 +57,12 @@ int main()
 	child.SetScale(Vector3D(0.5f, 0.5f, 0.5f));
 	root.AddChild(child);
 
-	PointLightComponent pointLComp(Vector3D(-2, 2, 3));
+	PointLightComponent pointLComp(Vector3D(-1, 1, 2));
 	root.AddComponent(pointLComp);
-	//DirectionalLightComponent dirLComp(Vector3D(0, 0, -1));
+	//DirectionalLightComponent dirLComp(Vector3D(0, -0.5f, -1));
 	//root.AddComponent(dirLComp);
-	//SpotLightComponent spotLComp(Vector3D(-2, 0, 3), Vector3D(0, 0, -1),12.0f,17.0f);
-	//child.AddComponent(spotLComp);
+	//SpotLightComponent spotLComp(Vector3D(0, 0, 3), Vector3D(0, 0, -1),12.0f,17.0f);
+	//root.AddComponent(spotLComp);
 	
 	GameObject cameraChild;
 	CameraComponent cameraComp(Matrix4D::Perspective(45.0f, static_cast<float>(Graphics::GetInstance().GetResolutionX()) / static_cast<float>(Graphics::GetInstance().GetResolutionY()), 0.01f, 100.0f));

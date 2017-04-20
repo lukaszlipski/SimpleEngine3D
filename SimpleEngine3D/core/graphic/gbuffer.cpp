@@ -7,9 +7,10 @@ namespace SE3D
 		:	m_Width(Graphics::GetInstance().GetResolutionX()), m_Height(Graphics::GetInstance().GetResolutionY()), 
 			m_Position(Texture2D(m_Width, m_Height, TextureSettings{ ImageFormat::RGB,InternalFormat::RGB32F, ImageType::FLOAT, TextureFilter::NEAREST })), 
 			m_Normal(Texture2D(m_Width, m_Height, TextureSettings{ ImageFormat::RGB, InternalFormat::RGB32F, ImageType::FLOAT, TextureFilter::NEAREST })), 
-			m_AlbedoSpecular(Texture2D(m_Width, m_Height, TextureSettings{ ImageFormat::RGBA, InternalFormat::RGBA, ImageType::UBYTE, TextureFilter::NEAREST }))
+			m_Albedo(Texture2D(m_Width, m_Height, TextureSettings{ ImageFormat::RGB, InternalFormat::RGB, ImageType::UBYTE, TextureFilter::NEAREST })),
+			m_MetallicRoughnessAO(Texture2D(m_Width, m_Height, TextureSettings{ ImageFormat::RGB, InternalFormat::RGB32F, ImageType::FLOAT, TextureFilter::NEAREST }))
 	{
-
+		
 		glGenFramebuffers(1, &m_GBuffer);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_GBuffer);
 
@@ -21,9 +22,10 @@ namespace SE3D
 
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_Position.GetTextureID(), 0);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, m_Normal.GetTextureID(), 0);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, m_AlbedoSpecular.GetTextureID(), 0);
-		uint32 attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-		glDrawBuffers(3, attachments);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, m_Albedo.GetTextureID(), 0);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, m_MetallicRoughnessAO.GetTextureID(), 0);
+		uint32 attachments[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
+		glDrawBuffers(4, attachments);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	}

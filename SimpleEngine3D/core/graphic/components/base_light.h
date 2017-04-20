@@ -14,7 +14,7 @@ namespace SE3D
 		uint32 m_IntensityNameID;
 
 	public:
-		BaseLight(const Material& material) : m_Material(material), m_Color(Vector3D(1, 1, 1)), m_Intensity(0.5f)
+		BaseLight(const Material& material) : m_Material(material), m_Color(Vector3D(1, 1, 1)), m_Intensity(1.0f)
 		{
 			m_ColorNameID = String("u_color").GetStringID();
 			m_IntensityNameID = String("u_intensity").GetStringID();

@@ -9,6 +9,9 @@
 
 #define DEFAULT_ALBEDO_NAME "u_albedo"
 #define DEFAULT_NORMAL_NAME "u_normal"
+#define DEFAULT_METALLIC_NAME "u_metallic"
+#define DEFAULT_ROUGHNESS_NAME "u_roughness"
+#define DEFAULT_AMBIENT_OCCLUSION_NAME "u_ambientOcclusion"
 
 namespace SE3D
 {
@@ -27,6 +30,9 @@ namespace SE3D
 		DynamicArray<ShaderParameter*> m_Params;
 		uint32 m_AlbedoNameID;
 		uint32 m_NormalNameID;
+		uint32 m_MetallicNameID;
+		uint32 m_RoughnessNameID;
+		uint32 m_AmbientOcclusionNameID;
 
 	public:
 		Material();

@@ -21,7 +21,8 @@ namespace SE3D
 		uint32 m_CameraPositionNameID;
 		uint32 m_PositionBufferNameID;
 		uint32 m_NormalBufferNameID;
-		uint32 m_AlbedoSpecularNameID;
+		uint32 m_AlbedoNameID;
+		uint32 u_MetallicRoughnessAONameID;
 
 	public:
 		DeferredRenderer();
