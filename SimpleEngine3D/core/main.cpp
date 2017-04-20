@@ -35,12 +35,12 @@ int main()
 	ShaderManager::GetInstance().Startup();
 	TextureManager::GetInstance().Startup();
 
-	Model model("resources/models/sphere.obj");
-	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_albedo").GetStringID(), "metal/albedo.bmp");
-	//model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_normal").GetStringID(), "rock/normals.bmp");
-	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_metallic").GetStringID(), "metal/metallic.bmp");
-	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_roughness").GetStringID(), "metal/roughness.bmp");
-	//model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_ambientOcclusion").GetStringID(), "rock/ao.bmp");
+	Model model("resources/models/cube.obj");
+	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_albedo").GetStringID(), "rock/albedo.bmp");
+	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_normal").GetStringID(), "rock/normals.bmp");
+	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_metallic").GetStringID(), "rock/metallic.bmp");
+	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_roughness").GetStringID(), "rock/roughness.bmp");
+	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_ambientOcclusion").GetStringID(), "rock/ao.bmp");
 	
 	//Window::GetInstance().SetFullScreen(true);
 	//Graphics::GetInstance().SetResolution(1920, 1080);
@@ -57,11 +57,11 @@ int main()
 	child.SetScale(Vector3D(0.5f, 0.5f, 0.5f));
 	root.AddChild(child);
 
-	PointLightComponent pointLComp(Vector3D(-1, 1, 2));
+	PointLightComponent pointLComp(Vector3D(-2, 2, 2));
 	root.AddComponent(pointLComp);
 	//DirectionalLightComponent dirLComp(Vector3D(0, -0.5f, -1));
 	//root.AddComponent(dirLComp);
-	//SpotLightComponent spotLComp(Vector3D(0, 0, 3), Vector3D(0, 0, -1),12.0f,17.0f);
+	//SpotLightComponent spotLComp(Vector3D(0, 0, 3), Vector3D(0, 0, -1));
 	//root.AddComponent(spotLComp);
 	
 	GameObject cameraChild;

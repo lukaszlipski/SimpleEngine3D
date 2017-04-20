@@ -8,9 +8,7 @@ uniform sampler2D u_metallicRoughnessAOTexture;
 uniform vec3 u_position;
 uniform float u_intensity;
 uniform vec3 u_color;
-uniform float u_constant;
-uniform float u_linear;
-uniform float u_quadratic;
+uniform float u_radius;
 
 uniform vec3 u_cameraPosition;
 
@@ -63,8 +61,11 @@ void main()
     vec3 H = normalize(V + L);
     vec3 N = normal;
 
+    // inverse square fallof
     float distance = length(u_position - position);
-    float attenuation = 1.0f / (distance * distance);
+    float dtr = distance/u_radius;
+    float nom = clamp( 1- (dtr * dtr * dtr * dtr) ,0.0,1.0);
+    float attenuation = (nom * nom) / (distance * distance + 1);
     vec3 radiance = u_color * attenuation * u_intensity;
 
     // Cook-Torrance BRDF

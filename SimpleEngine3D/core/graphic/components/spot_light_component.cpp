@@ -4,16 +4,14 @@
 
 namespace SE3D
 {
-	SpotLightComponent::SpotLightComponent(const Vector3D & position, const Vector3D & direction, const float & cutOff, const float& cutOffOut)
-		: BaseLight(Material("spot.vs", "spot.fs")), m_Position(position), m_Direction(direction), m_CutOff(ToRadians(cutOff)),m_CutOffOut(ToRadians(cutOffOut)), m_Constant(1), m_Linear(0.09f), m_Quadratic(0.032f)
+	SpotLightComponent::SpotLightComponent(const Vector3D & position, const Vector3D & direction, float radius, float cutOff, float cutOffOut)
+		: BaseLight(Material("spot.vs", "spot.fs")), m_Position(position), m_Direction(direction), m_CutOff(ToRadians(cutOff)),m_CutOffOut(ToRadians(cutOffOut)), m_Radius(radius)
 	{
 		m_PositionNameID = String("u_position").GetStringID();
 		m_DirectionNameID = String("u_direction").GetStringID();
 		m_CutOffNameID = String("u_cutOff").GetStringID();
 		m_CutOffOutNameID = String("u_cutOffOut").GetStringID();
-		m_LinearID = String("u_linear").GetStringID();
-		m_ConstantID = String("u_constant").GetStringID();
-		m_QuadraticID = String("u_quadratic").GetStringID();
+		m_RadiusNameID = String("u_radius").GetStringID();
 		SetParams();
 	}
 
@@ -34,8 +32,6 @@ namespace SE3D
 	{
 		m_Material.SetParamVector3D(m_ColorNameID, m_Color);
 		m_Material.SetParamFloat(m_IntensityNameID, m_Intensity);
-		m_Material.SetParamFloat(m_ConstantID, m_Constant);
-		m_Material.SetParamFloat(m_LinearID, m_Linear);
-		m_Material.SetParamFloat(m_QuadraticID, m_Quadratic);
+		m_Material.SetParamFloat(m_RadiusNameID, m_Radius);
 	}
 }
