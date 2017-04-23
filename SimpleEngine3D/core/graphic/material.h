@@ -12,6 +12,7 @@
 #define DEFAULT_METALLIC_NAME "u_metallic"
 #define DEFAULT_ROUGHNESS_NAME "u_roughness"
 #define DEFAULT_AMBIENT_OCCLUSION_NAME "u_ambientOcclusion"
+#define DEFAULT_HEIGHT_NAME "u_height"
 
 namespace SE3D
 {
@@ -33,6 +34,7 @@ namespace SE3D
 		uint32 m_MetallicNameID;
 		uint32 m_RoughnessNameID;
 		uint32 m_AmbientOcclusionNameID;
+		uint32 m_HeightNameID;
 
 	public:
 		Material();

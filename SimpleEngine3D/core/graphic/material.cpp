@@ -310,6 +310,7 @@ namespace SE3D
 		m_MetallicNameID = String(DEFAULT_METALLIC_NAME).GetStringID();
 		m_RoughnessNameID = String(DEFAULT_ROUGHNESS_NAME).GetStringID();
 		m_AmbientOcclusionNameID = String(DEFAULT_AMBIENT_OCCLUSION_NAME).GetStringID();
+		m_HeightNameID = String(DEFAULT_HEIGHT_NAME).GetStringID();
 
 		m_TexturesCounter = 0;
 		for (uint32 i=0;i < m_Shader->GetNumberOfParams(); i++)
@@ -346,6 +347,8 @@ namespace SE3D
 					SetParamTexture2D(nameID, "default/roughness.bmp");
 				else if(nameID == m_AmbientOcclusionNameID)
 					SetParamTexture2D(nameID, "default/ao.bmp");
+				else if (nameID == m_HeightNameID)
+					SetParamTexture2D(nameID, "default/height.bmp");
 			}
 		}
 	}

@@ -8,7 +8,7 @@ namespace SE3D
 			m_Position(Texture2D(m_Width, m_Height, TextureSettings{ ImageFormat::RGB,InternalFormat::RGB32F, ImageType::FLOAT, TextureFilter::NEAREST })), 
 			m_Normal(Texture2D(m_Width, m_Height, TextureSettings{ ImageFormat::RGB, InternalFormat::RGB32F, ImageType::FLOAT, TextureFilter::NEAREST })), 
 			m_Albedo(Texture2D(m_Width, m_Height, TextureSettings{ ImageFormat::RGB, InternalFormat::RGB, ImageType::UBYTE, TextureFilter::NEAREST })),
-			m_MetallicRoughnessAO(Texture2D(m_Width, m_Height, TextureSettings{ ImageFormat::RGB, InternalFormat::RGB32F, ImageType::FLOAT, TextureFilter::NEAREST }))
+			m_MetallicRoughnessAO(Texture2D(m_Width, m_Height, TextureSettings{ ImageFormat::RGB, InternalFormat::RGB, ImageType::UBYTE, TextureFilter::NEAREST }))
 	{
 		
 		glGenFramebuffers(1, &m_GBuffer);

@@ -36,32 +36,42 @@ int main()
 	TextureManager::GetInstance().Startup();
 
 	Model model("resources/models/cube.obj");
-	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_albedo").GetStringID(), "rock/albedo.bmp",true);
-	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_normal").GetStringID(), "rock/normals.bmp");
-	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_metallic").GetStringID(), "rock/metallic.bmp");
-	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_roughness").GetStringID(), "rock/roughness.bmp");
-	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_ambientOcclusion").GetStringID(), "rock/ao.bmp");
+	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_albedo").GetStringID(), "brick1/albedo.bmp",true);
+	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_normal").GetStringID(), "brick1/normal.bmp");
+	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_roughness").GetStringID(), "brick1/roughness.bmp");
+	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_ambientOcclusion").GetStringID(), "brick1/ao.bmp");
+	model.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_height").GetStringID(), "brick1/height.bmp");
+	model.GetMesh(0)->GetMaterial().SetParamFloat(String("u_heightScale").GetStringID(), 0.06f);
 	
-	Window::GetInstance().SetFullScreen(true);
-	Graphics::GetInstance().SetResolution(1920, 1080);
+	Model model2("resources/models/cube.obj");
+	model2.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_albedo").GetStringID(), "aluminum/albedo.bmp", true);
+	model2.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_metallic").GetStringID(), "aluminum/metallic.bmp");
+	model2.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_roughness").GetStringID(), "aluminum/roughness.bmp");
+
+	//Window::GetInstance().SetFullScreen(true);
+	//Graphics::GetInstance().SetResolution(1920, 1080);
 
 	GameObject root;
-	ModelComponent modelComp(model);
-	root.AddComponent(modelComp);
 
 	GameObject child;
-	ModelComponent modelComp2(model);
-
+	ModelComponent modelComp2(model2);
 	child.AddComponent(modelComp2);
-	child.SetPosition(Vector3D(2, 2, 2));
+	child.SetPosition(Vector3D(1.5f, 0, 0));
 	child.SetScale(Vector3D(0.5f, 0.5f, 0.5f));
 	root.AddChild(child);
 
-	PointLightComponent pointLComp(Vector3D(-2.0f, 2.0f, 2.0f));
+	GameObject child2;
+	ModelComponent modelComp(model);
+	child2.SetScale(Vector3D(0.5f, 0.5f, 0.5f));
+	child2.AddComponent(modelComp);
+	root.AddChild(child2);
+
+	PointLightComponent pointLComp(Vector3D(2.0f, 2.0f, 2.0f));
 	root.AddComponent(pointLComp);
 	DirectionalLightComponent dirLComp(Vector3D(-1, -1, -1));
+	dirLComp.SetIntensity(0.8f);
 	root.AddComponent(dirLComp);
-	//SpotLightComponent spotLComp(Vector3D(0, 0, 3), Vector3D(0, 0, -1));
+	//SpotLightComponent spotLComp(Vector3D(1.5f, 0, 2), Vector3D(0, 0, -1));
 	//root.AddComponent(spotLComp);
 	
 	GameObject cameraChild;
@@ -69,8 +79,8 @@ int main()
 	MovementComponent movementComp(3.0f,5.0f);
 	cameraChild.AddComponent(cameraComp);
 	cameraChild.AddComponent(movementComp);
-	cameraChild.SetPosition(Vector3D(0, 0, 5));
-	cameraChild.SetRotation(Quaternion(Vector3D(0, 1, 0), 10));
+	cameraChild.SetPosition(Vector3D(0.7f, 0, 3));
+	cameraChild.SetRotation(Quaternion(Vector3D(0, 1, 0), 0));
 	root.AddChild(cameraChild);
 	
 	root.Init();
@@ -90,7 +100,8 @@ int main()
 
 		time += GlobalTimer::GetInstance().DeltaTime();
 
-		child.SetRotation(Quaternion(Vector3D(0, 0, 1), time * 5));
+		//child.SetRotation(Quaternion(Vector3D(0, 1, 0), time * 5));
+		//child2.SetRotation(Quaternion(Vector3D(0, 1, 0), time * 5));
 		
 		renderer.Render(root,cameraComp);
 

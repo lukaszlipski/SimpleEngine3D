@@ -19,6 +19,7 @@ namespace SE3D
 		{
 		m_Model->GetMesh(i)->GetMaterial().SetParamMatrix4D(String("u_view").GetStringID(), renderer->GetCamera()->GetView());
 		m_Model->GetMesh(i)->GetMaterial().SetParamMatrix4D(String("u_projection").GetStringID(), renderer->GetCamera()->GetProjection());
+		m_Model->GetMesh(i)->GetMaterial().SetParamVector3D(String("u_cameraPosition").GetStringID(), renderer->GetCamera()->GetPosition());
 		}
 		m_Model->SetTransformation(m_Owner->GetWorldTransformMatrix());
 		if(m_Model != nullptr)
