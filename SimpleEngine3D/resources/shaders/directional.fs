@@ -29,8 +29,9 @@ float NormalDistributionFunction(vec3 N, vec3 H, float a)
 }
 
 // Schlick-GGX
- float GeometryFunction(vec3 N, vec3 V, vec3 L, float k)
+ float GeometryFunction(vec3 N, vec3 V, vec3 L, float a)
  {
+    float k = ((a + 1) * (a + 1))/8.0f;
     float NDotV = max(dot(N, V), 0);
     float NDotL = max(dot(N, L), 0);
     float smith1 = NDotV / (NDotV * (1.0f - k) + k);
@@ -39,7 +40,7 @@ float NormalDistributionFunction(vec3 N, vec3 H, float a)
     return smith2 * smith1;
  }
 
- // Fresnel-Schlic
+ // Fresnel-Schlick
  vec3 FresnelEquation(vec3 N, vec3 V, vec3 F0)
  {
     return F0 + (1.0 - F0) * pow(1.0 - max(dot(N, V), 0.0), 5.0);
@@ -51,7 +52,7 @@ void main()
     vec3 normal = normalize(texture(u_normalTexture, fs_texCoord).rgb);
     vec3 albedo = texture(u_albedoTexture, fs_texCoord).rgb;
     float metallic = texture(u_metallicRoughnessAOTexture, fs_texCoord).r;
-    float roughness = texture(u_metallicRoughnessAOTexture, fs_texCoord).g;
+    float roughness = clamp(texture(u_metallicRoughnessAOTexture, fs_texCoord).g,0.025f,1.0f);
     float ao = texture(u_metallicRoughnessAOTexture, fs_texCoord).b;
 
     vec3 F0 = mix(vec3(0.04f), albedo, metallic);
@@ -64,8 +65,7 @@ void main()
 
     // Cook-Torrance BRDF
     float NDF = NormalDistributionFunction(N,H,roughness);
-    float k = ((roughness + 1) * (roughness + 1))/8.0f;
-    float G = GeometryFunction(N,V,L,k);
+    float G = GeometryFunction(N,V,L,roughness);
     vec3 F = FresnelEquation(H,V,F0);
 
     vec3 kS = F;

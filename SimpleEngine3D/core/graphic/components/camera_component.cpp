@@ -9,7 +9,7 @@ namespace SE3D
 
 	Matrix4D CameraComponent::GetView() const
 	{
-		return Matrix4D::TranslateMatrix(m_Owner->GetPosition() * -1) * m_Owner->GetRotation().Conjugate().ToRotationMatrix(); 
+		return Matrix4D::TranslateMatrix(m_Owner->GetPosition() * -1 - m_Owner->GetRotation().GetForward()) * m_Owner->GetRotation().Conjugate().ToRotationMatrix();
 	}
 
 	void CameraComponent::Init() {}

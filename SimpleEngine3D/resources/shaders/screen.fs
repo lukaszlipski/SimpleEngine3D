@@ -15,6 +15,6 @@ void main()
 
     texel = vec3(1.0) - exp(-texel * exposure);
 
-	vec3 pixelColor = pow(texel,vec3(1/gamma));
+	vec3 pixelColor = pow(texel,vec3(1.0f/gamma));
     color = vec4(pixelColor,1.0f);
 }
