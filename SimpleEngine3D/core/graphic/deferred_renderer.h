@@ -14,6 +14,17 @@ namespace SE3D
 		GBuffer *m_GBuffer;
 		uint32 m_ScreenVAO;
 		Framebuffer2D *m_ScreenBuffer;
+
+		// Bloom
+		Framebuffer2D *m_BloomBuffer;
+		Framebuffer2D *m_GaussianPass[2];
+		Material m_BloomMaterial;
+		Material m_Gaussian;
+		uint32 m_PassNameID;
+		uint32 m_BloomNameID;
+		uint32 m_GaussianPassesCount;
+
+		uint32 m_ScreenTexNameID;
 		Material m_ScreenMaterial;
 		CameraComponent *m_MainCamera;
 		GameObject *m_Scene;
@@ -34,5 +45,6 @@ namespace SE3D
 	private:
 		void GBufferPhase();
 		void LightPhase();
+		void BloomPhase();
 	};
 }

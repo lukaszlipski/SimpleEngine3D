@@ -36,6 +36,8 @@ namespace SE3D
 		glTexImage2D(GL_TEXTURE_2D, 0, static_cast<int32>(texSettings.m_InternalFormat) ,m_Width, m_Height, 0, static_cast<int32>(texSettings.m_Format), static_cast<int32>(texSettings.m_ImageType), 0);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, static_cast<int32>(texSettings.m_TextureFilter));
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<int32>(texSettings.m_TextureFilter));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, static_cast<int32>(texSettings.m_TextureWrap));
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, static_cast<int32>(texSettings.m_TextureWrap));
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 	}

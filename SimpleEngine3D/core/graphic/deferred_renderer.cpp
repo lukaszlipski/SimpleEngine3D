@@ -4,8 +4,9 @@
 
 namespace SE3D
 {
+
 	DeferredRenderer::DeferredRenderer()
-		: m_GBuffer(new GBuffer()), m_ScreenMaterial("screen.vs", "screen.fs"), m_MainCamera(nullptr), m_Scene(nullptr)
+		: m_GBuffer(new GBuffer()), m_ScreenMaterial("screen.vs", "screen.fs"),m_BloomMaterial("bloom.vs","bloom.fs"), m_Gaussian("gaussian.vs", "gaussian.fs"), m_MainCamera(nullptr), m_Scene(nullptr)
 	{
 
 		TextureSettings texSettings;
@@ -13,9 +14,19 @@ namespace SE3D
 		texSettings.m_InternalFormat = InternalFormat::RGBA32F;
 		texSettings.m_ImageType = ImageType::FLOAT;
 		texSettings.m_TextureFilter = TextureFilter::LINEAR;
+		texSettings.m_TextureWrap = TextureWrap::CLAMP_TO_EDGE;
 
 		m_ScreenBuffer = new Framebuffer2D(Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY(),texSettings);
 
+		// Bloom
+		m_BloomBuffer = new Framebuffer2D(Graphics::GetInstance().GetResolutionX()/2.0f, Graphics::GetInstance().GetResolutionY()/2.0f, texSettings);
+		m_GaussianPass[0] = new Framebuffer2D(Graphics::GetInstance().GetResolutionX()/3.0f, Graphics::GetInstance().GetResolutionY()/3.0f, texSettings);
+		m_GaussianPass[1] = new Framebuffer2D(Graphics::GetInstance().GetResolutionX()/3.0f, Graphics::GetInstance().GetResolutionY()/3.0f, texSettings);
+		m_PassNameID = String("u_pass").GetStringID();
+		m_BloomNameID = String("u_bloomTexture").GetStringID();
+		m_GaussianPassesCount = 6;
+
+		m_ScreenTexNameID = String("u_screenTexture").GetStringID();
 		m_CameraPositionNameID = String("u_cameraPosition").GetStringID();
 		m_PositionBufferNameID = String("u_positionTexture").GetStringID();
 		m_NormalBufferNameID = String("u_normalTexture").GetStringID();
@@ -57,18 +68,23 @@ namespace SE3D
 			
 		LightPhase();
 
+		BloomPhase();
+
 		Graphics::GetInstance().Clear();
 		Graphics::GetInstance().Resize(Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
 
+		
 		m_ScreenMaterial.Bind();
 		glBindVertexArray(m_ScreenVAO);
 		Graphics::GetInstance().SetDepthBuffer(false);
 
-		m_ScreenBuffer->GetTexture().Bind(0);
+		m_ScreenMaterial.SetParamTexture2D(m_ScreenTexNameID, m_ScreenBuffer->GetTexture());
+		m_ScreenMaterial.SetParamTexture2D(m_BloomNameID, m_GaussianPass[(m_GaussianPassesCount - 1) % 2]->GetTexture());
+		
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindVertexArray(0);
 		m_ScreenMaterial.Unbind();
-
+		
 	}
 
 	void DeferredRenderer::GBufferPhase()
@@ -133,5 +149,54 @@ namespace SE3D
 		glDisable(GL_BLEND);
 
 		m_Lights.Clear();
+	}
+
+	void DeferredRenderer::BloomPhase()
+	{
+		Graphics::GetInstance().Resize(Graphics::GetInstance().GetResolutionX()/2.0f, Graphics::GetInstance().GetResolutionY()/2.0f);
+
+		m_BloomBuffer->Clear();
+		Graphics::GetInstance().SetDepthBuffer(false);
+		m_BloomBuffer->Bind();
+
+		m_BloomMaterial.Bind();
+		m_ScreenBuffer->GetTexture().Bind(0);
+
+		glBindVertexArray(m_ScreenVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glBindVertexArray(0);
+
+		m_BloomMaterial.Unbind();
+		m_BloomBuffer->Unbind();
+
+		Graphics::GetInstance().Resize(Graphics::GetInstance().GetResolutionX() / 3.0f, Graphics::GetInstance().GetResolutionY() / 3.0f);
+		m_Gaussian.Bind();
+		for (uint32 i = 0; i < m_GaussianPassesCount; ++i)
+		{
+			bool pass = i % 2;
+			m_GaussianPass[pass]->Bind();
+
+			if (!i)
+			{
+				m_BloomBuffer->GetTexture().Bind(0);
+			}
+			else
+			{
+				m_GaussianPass[!pass]->GetTexture().Bind(0);
+			}
+
+			m_Gaussian.SetParamBool(m_PassNameID, pass);
+
+			glBindVertexArray(m_ScreenVAO);
+			glDrawArrays(GL_TRIANGLES, 0, 6);
+			glBindVertexArray(0);
+
+			m_GaussianPass[pass]->Unbind();
+		}
+		m_Gaussian.Unbind();
+
+		Graphics::GetInstance().SetDepthBuffer(true);
+
+		Graphics::GetInstance().Resize(Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY());
 	}
 }

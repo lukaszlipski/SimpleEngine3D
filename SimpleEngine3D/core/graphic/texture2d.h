@@ -10,14 +10,21 @@ namespace SE3D
 		NEAREST = GL_NEAREST
 	};
 
+	enum class TextureWrap : int32
+	{
+		REPEAT = GL_REPEAT,
+		CLAMP_TO_EDGE = GL_CLAMP_TO_EDGE
+	};
+
 	struct TextureSettings
 	{
 		ImageFormat m_Format = ImageFormat::RGB;;
 		InternalFormat m_InternalFormat = InternalFormat::RGB;
 		ImageType m_ImageType = ImageType::UBYTE;
 		TextureFilter m_TextureFilter = TextureFilter::LINEAR;
-		TextureSettings(ImageFormat format = ImageFormat::RGB, InternalFormat internalFormat = InternalFormat::RGB, ImageType imgType = ImageType::UBYTE, TextureFilter texFilter = TextureFilter::LINEAR)
-			: m_Format(format), m_InternalFormat(internalFormat), m_ImageType(imgType) ,m_TextureFilter(texFilter)
+		TextureWrap m_TextureWrap = TextureWrap::REPEAT;
+		TextureSettings(ImageFormat format = ImageFormat::RGB, InternalFormat internalFormat = InternalFormat::RGB, ImageType imgType = ImageType::UBYTE, TextureFilter texFilter = TextureFilter::LINEAR, TextureWrap texWrap = TextureWrap::REPEAT)
+			: m_Format(format), m_InternalFormat(internalFormat), m_ImageType(imgType), m_TextureFilter(texFilter), m_TextureWrap(texWrap)
 		{}
 	};
 
