@@ -11,6 +11,7 @@ namespace SE3D
 		DynamicArray<Mesh*> m_Meshes;
 		Matrix4D m_Transformation;
 		uint32 m_TransformationStringID;
+		Vector3D m_FurthestLocalPoint;
 
 	public:
 		Model(const String& path);
@@ -22,5 +23,6 @@ namespace SE3D
 		void SetTransformation(const Matrix4D& transformation) { m_Transformation = transformation; }
 
 		inline uint32 GetMeshesSize() const { return m_Meshes.Size(); }
+		inline Vector3D GetFurthestLocalPoint() const { return m_FurthestLocalPoint; }
 	};
 }

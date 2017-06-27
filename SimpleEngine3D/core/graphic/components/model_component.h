@@ -1,6 +1,7 @@
 #pragma once
 #include "component.h"
 #include "../model.h"
+#include "../math/sphere.h"
 
 namespace SE3D
 {
@@ -8,6 +9,7 @@ namespace SE3D
 	{
 	private:
 		Model *m_Model;
+		Sphere m_FrustumCollision;
 
 	public:
 		ModelComponent(Model& model);

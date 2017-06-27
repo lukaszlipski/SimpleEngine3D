@@ -86,7 +86,14 @@ namespace SE3D
 		}
 		float z = String::ToFloat(tmpFloat);
 
-		m_Vertices.Push(Vector3D(x, y, z));
+		Vector3D newVert = Vector3D(x, y, z);
+		m_Vertices.Push(newVert);
+
+		if (m_FurthestPoint.LengthSquared() < newVert.LengthSquared())
+		{
+			m_FurthestPoint = newVert;
+		}
+
 	}
 
 	void OBJLoader::AddTextCoord(const char* line)

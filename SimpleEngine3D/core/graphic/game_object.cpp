@@ -101,13 +101,18 @@ namespace SE3D
 		if(!m_Parent)
 		{
 			m_WorldTransformM = m_LocalTransform.GetMatrix();
+			m_WorldTransform = m_LocalTransform;
 			m_DirtyFlag = false;
 			return;
 		}
 
 		m_DirtyFlag = false;
 		m_WorldTransformM = m_LocalTransform.GetMatrix() * m_Parent->m_WorldTransformM;
-
+		m_WorldTransform.Position = m_LocalTransform.Position + m_Parent->GetWorldTransform().Position;
+		m_WorldTransform.Scale = Vector3D(	m_LocalTransform.Scale.x * m_Parent->GetWorldTransform().Scale.x,
+											m_LocalTransform.Scale.y * m_Parent->GetWorldTransform().Scale.y,
+											m_LocalTransform.Scale.z * m_Parent->GetWorldTransform().Scale.z);
+		m_WorldTransform.Rotation = m_Parent->GetWorldTransform().Rotation * m_LocalTransform.Rotation;
 	}
 
 }

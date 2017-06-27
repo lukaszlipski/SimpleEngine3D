@@ -25,10 +25,12 @@ namespace SE3D
 		uint32 m_NormalsOffset;
 		bool m_HasNormals;
 		bool m_HasTextureCoordinates;
+		Vector3D m_FurthestPoint;
 
 	public:
 		OBJLoader(const char* path);
 		~OBJLoader();
+		inline Vector3D GetFurthestPoint() const { return m_FurthestPoint; }
 
 	private:
 		void LoadMeshFromFile(const char* path);

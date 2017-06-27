@@ -14,6 +14,7 @@ namespace SE3D
 		DynamicArray<GameObject*> m_Children;
 		DynamicArray<Component*> m_Components;
 		Transform m_LocalTransform;
+		Transform m_WorldTransform;
 		Matrix4D m_WorldTransformM;
 		bool m_DirtyFlag;
 			
@@ -36,6 +37,7 @@ namespace SE3D
 		void SetScale(const Vector3D& scale);
 
 		inline Transform GetLocalTransform() const { return m_LocalTransform; }
+		inline Transform GetWorldTransform() const { return m_WorldTransform; }
 		inline Matrix4D GetWorldTransformMatrix() const { return m_WorldTransformM; }
 
 	private:

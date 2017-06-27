@@ -137,6 +137,7 @@
     <ClCompile Include="core\graphic\model.cpp" />
     <ClCompile Include="core\graphic\shader.cpp" />
     <ClCompile Include="core\graphic\texture2d.cpp" />
+    <ClCompile Include="core\math\frustum.cpp" />
     <ClCompile Include="core\math\matrix3d.cpp" />
     <ClCompile Include="core\math\matrix4d.cpp" />
     <ClCompile Include="core\math\quaternion.cpp" />
@@ -190,10 +191,13 @@
     <ClInclude Include="core\graphic\shader_params\param_vector4d.h" />
     <ClInclude Include="core\graphic\shader_params\shader_parameter.h" />
     <ClInclude Include="core\graphic\texture2d.h" />
+    <ClInclude Include="core\math\frustum.h" />
     <ClInclude Include="core\math\math.h" />
     <ClInclude Include="core\math\matrix3d.h" />
     <ClInclude Include="core\math\matrix4d.h" />
+    <ClInclude Include="core\math\plane.h" />
     <ClInclude Include="core\math\quaternion.h" />
+    <ClInclude Include="core\math\sphere.h" />
     <ClInclude Include="core\math\transform.h" />
     <ClInclude Include="core\math\vector2d.h" />
     <ClInclude Include="core\math\vector3d.h" />

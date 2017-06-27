@@ -22,6 +22,8 @@
 #include "graphic/components/directional_light_component.h"
 #include "graphic/components/point_light_component.h"
 #include "graphic/components/spot_light_component.h"
+#include "math/frustum.h"
+#include "math/sphere.h"
 
 using namespace SE3D;
 
@@ -49,8 +51,8 @@ int main()
 	model2.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_roughness").GetStringID(), "aluminum/roughness.bmp");
 
 	//Window::GetInstance().SetFullScreen(true);
-	Graphics::GetInstance().SetResolution(1366, 768);
-	Window::GetInstance().SetSize(1366, 768);
+	//Graphics::GetInstance().SetResolution(1366, 768);
+	//Window::GetInstance().SetSize(1366, 768);
 
 	GameObject root;
 
@@ -76,7 +78,7 @@ int main()
 	//root.AddComponent(spotLComp);
 	
 	GameObject cameraChild;
-	CameraComponent cameraComp(Matrix4D::Perspective(45.0f, static_cast<float>(Graphics::GetInstance().GetResolutionX()) / static_cast<float>(Graphics::GetInstance().GetResolutionY()), 0.01f, 100.0f));
+	CameraComponent cameraComp(Frustum(45.0f, static_cast<float>(Graphics::GetInstance().GetResolutionX()) / static_cast<float>(Graphics::GetInstance().GetResolutionY()), 0.01f, 100.0f));
 	MovementComponent movementComp(3.0f,5.0f);
 	cameraChild.AddComponent(cameraComp);
 	cameraChild.AddComponent(movementComp);
@@ -96,8 +98,10 @@ int main()
 		Input::GetInstance().Update();
 
 		root.Input(GlobalTimer::GetInstance().DeltaTime());
+		root.Update(GlobalTimer::GetInstance().DeltaTime());
 
-		DebugOutputMSG("TimeElapsed: %fs\n", static_cast<float>(GlobalTimer::GetInstance().DeltaTime()));
+		//DebugOutputMSG("TimeElapsed: %fs\n", static_cast<float>(GlobalTimer::GetInstance().DeltaTime()));
+
 
 		time += GlobalTimer::GetInstance().DeltaTime();
 
