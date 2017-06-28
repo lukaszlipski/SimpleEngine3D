@@ -12,6 +12,7 @@ namespace SE3D
 		Matrix4D m_Transformation;
 		uint32 m_TransformationStringID;
 		Vector3D m_FurthestLocalPoint;
+		Vector3D m_MassCenter;
 
 	public:
 		Model(const String& path);
@@ -24,5 +25,6 @@ namespace SE3D
 
 		inline uint32 GetMeshesSize() const { return m_Meshes.Size(); }
 		inline Vector3D GetFurthestLocalPoint() const { return m_FurthestLocalPoint; }
+		inline Vector3D GetMassCenter() const { return m_MassCenter; }
 	};
 }

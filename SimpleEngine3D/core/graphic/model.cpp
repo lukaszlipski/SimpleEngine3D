@@ -13,6 +13,7 @@ namespace SE3D
 		}
 		m_TransformationStringID = String("u_model").GetStringID();
 		m_FurthestLocalPoint = loader.GetFurthestPoint();
+		m_MassCenter = loader.GetMassCenter();
 	}
 
 	Model::~Model()

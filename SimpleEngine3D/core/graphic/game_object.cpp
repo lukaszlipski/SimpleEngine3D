@@ -13,40 +13,40 @@ namespace SE3D
 	void GameObject::Init()
 	{
 		UpdateWorldTransform();
-		for (int32 i = 0; i < m_Components.Size(); i++)
+		for (uint32 i = 0; i < m_Components.Size(); i++)
 			m_Components[i]->Init();
 
-		for (int32 i = 0; i < m_Children.Size(); i++)
+		for (uint32 i = 0; i < m_Children.Size(); i++)
 			m_Children[i]->Init();
 	}
 
 	void GameObject::Input(float DeltaTime)
 	{
 		UpdateWorldTransform();
-		for (int32 i = 0; i < m_Components.Size(); i++)
+		for (uint32 i = 0; i < m_Components.Size(); i++)
 			m_Components[i]->Input(DeltaTime);
 
-		for (int32 i = 0; i < m_Children.Size(); i++)
+		for (uint32 i = 0; i < m_Children.Size(); i++)
 			m_Children[i]->Input(DeltaTime);
 	}
 
 	void GameObject::Update(float DeltaTime)
 	{
 		UpdateWorldTransform();
-		for (int32 i = 0; i < m_Components.Size(); i++)
+		for (uint32 i = 0; i < m_Components.Size(); i++)
 			m_Components[i]->Update(DeltaTime);
 
-		for (int32 i = 0; i < m_Children.Size(); i++)
+		for (uint32 i = 0; i < m_Children.Size(); i++)
 			m_Children[i]->Update(DeltaTime);
 	}
 
 	void GameObject::Render(DeferredRenderer *renderer)
 	{
 		UpdateWorldTransform();
-		for (int32 i = 0; i < m_Components.Size(); i++)
+		for (uint32 i = 0; i < m_Components.Size(); i++)
 			m_Components[i]->Render(renderer);
 
-		for (int32 i = 0; i < m_Children.Size(); i++)
+		for (uint32 i = 0; i < m_Children.Size(); i++)
 			m_Children[i]->Render(renderer);
 	}
 
@@ -93,7 +93,7 @@ namespace SE3D
 			return;
 		}
 
-		for(int32 i =0;i<m_Children.Size();i++)
+		for(uint32 i =0;i<m_Children.Size();i++)
 		{
 			m_Children[i]->m_DirtyFlag = true;
 		}

@@ -8,6 +8,18 @@ namespace SE3D
 		: m_VerticesOffset(0), m_TextCoordsOffset(0), m_NormalsOffset(0)
 	{
 		LoadMeshFromFile(path);
+
+		for (uint32 i = 0; i < m_Vertices.Size(); ++i)
+		{
+			if (m_FurthestPoint.LengthSquared() < m_Vertices[i].LengthSquared())
+			{
+				m_FurthestPoint = m_Vertices[i];
+			}
+			m_Center += m_Vertices[i];
+		}
+
+		m_Center /= static_cast<float>(m_Vertices.Size());
+
 	}
 
 	OBJLoader::~OBJLoader()
@@ -89,11 +101,6 @@ namespace SE3D
 		Vector3D newVert = Vector3D(x, y, z);
 		m_Vertices.Push(newVert);
 
-		if (m_FurthestPoint.LengthSquared() < newVert.LengthSquared())
-		{
-			m_FurthestPoint = newVert;
-		}
-
 	}
 
 	void OBJLoader::AddTextCoord(const char* line)
@@ -162,7 +169,7 @@ namespace SE3D
 	{
 		// TODO : implement calculating tangets for mesh
 		INTERNAL_MESH_FORMAT& mesh = m_Meshes[m_Meshes.Size() - 1];
-		for(int32 i=0;i<mesh.m_Indices.Size();i+=3)
+		for(uint32 i=0;i<mesh.m_Indices.Size();i+=3)
 		{
 			uint32 index0 = mesh.m_Indices[i];
 			uint32 index1 = mesh.m_Indices[i+1];
@@ -194,7 +201,7 @@ namespace SE3D
 			mesh.m_Tangents[index2] += tangent;
 		}
 
-		for (int32 i = 0; i < mesh.m_Tangents.Size(); i++)
+		for (uint32 i = 0; i < mesh.m_Tangents.Size(); i++)
 		{
 			mesh.m_Tangents[i] = mesh.m_Tangents[i].Normalize();
 		}
@@ -205,7 +212,7 @@ namespace SE3D
 		INTERNAL_MESH_FORMAT& mesh = m_Meshes[m_Meshes.Size() - 1];
 
 		int32 currentIndex = 0;
-		for (int32 i = 0; i < m_Indices.Size(); i++)
+		for (uint32 i = 0; i < m_Indices.Size(); i++)
 		{
 			Vector3D vert = m_Vertices[m_Indices[i].VertexIndex - m_VerticesOffset];
 			Vector3D norm;
@@ -216,7 +223,7 @@ namespace SE3D
 				texCoord = m_TextCoords[m_Indices[i].TextCoordIndex - m_TextCoordsOffset];
 
 			bool isFaceAdded = false;
-			for (int32 j = 0; j < mesh.m_Vertices.Size(); j++)
+			for (uint32 j = 0; j < mesh.m_Vertices.Size(); j++)
 			{
 				if (mesh.m_Vertices[j] == vert && mesh.m_Normals[j] == norm && mesh.m_TextCoords[j] == texCoord)
 				{

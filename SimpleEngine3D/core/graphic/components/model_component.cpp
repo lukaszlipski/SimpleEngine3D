@@ -15,10 +15,11 @@ namespace SE3D
 
 	void ModelComponent::Render(DeferredRenderer *renderer)
 	{
+		Vector3D furthestPointFromMassCenter = m_Model->GetFurthestLocalPoint() - m_Model->GetMassCenter();
 		m_FrustumCollision = Sphere(m_Owner->GetWorldTransform().Position,
-									( Vector3D(m_Owner->GetWorldTransform().Scale.x * m_Model->GetFurthestLocalPoint().x,
-										m_Owner->GetWorldTransform().Scale.y * m_Model->GetFurthestLocalPoint().y,
-										m_Owner->GetWorldTransform().Scale.z * m_Model->GetFurthestLocalPoint().z) ).Length() );
+									( Vector3D( m_Owner->GetWorldTransform().Scale.x * furthestPointFromMassCenter.x,
+												m_Owner->GetWorldTransform().Scale.y * furthestPointFromMassCenter.y,
+												m_Owner->GetWorldTransform().Scale.z * furthestPointFromMassCenter.z) ).Length() );
 
 
 		if (renderer->GetCamera()->GetFrustum().IsSphereInFrustum(m_FrustumCollision))

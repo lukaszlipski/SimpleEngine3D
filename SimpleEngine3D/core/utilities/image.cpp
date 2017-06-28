@@ -54,7 +54,7 @@ namespace SE3D
 
 		if (File::GetInstance().IsLittleEndian())
 		{
-			for (uint32 i = 0; i < m_Width * m_Height * m_Bytes; i = i + m_Bytes)
+			for (int32 i = 0; i < m_Width * m_Height * m_Bytes; i = i + m_Bytes)
 			{
 				int8 tmp = static_cast<int8*>(m_Pixels)[i];
 				static_cast<int8*>(m_Pixels)[i] = static_cast<int8*>(m_Pixels)[i + 2];

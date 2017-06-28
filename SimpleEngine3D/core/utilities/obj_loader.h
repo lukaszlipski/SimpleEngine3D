@@ -26,11 +26,13 @@ namespace SE3D
 		bool m_HasNormals;
 		bool m_HasTextureCoordinates;
 		Vector3D m_FurthestPoint;
+		Vector3D m_Center;
 
 	public:
 		OBJLoader(const char* path);
 		~OBJLoader();
 		inline Vector3D GetFurthestPoint() const { return m_FurthestPoint; }
+		inline Vector3D GetMassCenter() const { return m_Center; }
 
 	private:
 		void LoadMeshFromFile(const char* path);

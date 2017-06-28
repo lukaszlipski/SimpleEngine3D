@@ -19,9 +19,9 @@ namespace SE3D
 		m_ScreenBuffer = new Framebuffer2D(Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY(),texSettings);
 
 		// Bloom
-		m_BloomBuffer = new Framebuffer2D(Graphics::GetInstance().GetResolutionX()/2.0f, Graphics::GetInstance().GetResolutionY()/2.0f, texSettings);
-		m_GaussianPass[0] = new Framebuffer2D(Graphics::GetInstance().GetResolutionX()/3.0f, Graphics::GetInstance().GetResolutionY()/3.0f, texSettings);
-		m_GaussianPass[1] = new Framebuffer2D(Graphics::GetInstance().GetResolutionX()/3.0f, Graphics::GetInstance().GetResolutionY()/3.0f, texSettings);
+		m_BloomBuffer = new Framebuffer2D(static_cast<int32>(Graphics::GetInstance().GetResolutionX()/2.0f), static_cast<int32>(Graphics::GetInstance().GetResolutionY()/2.0f), texSettings);
+		m_GaussianPass[0] = new Framebuffer2D(static_cast<int32>(Graphics::GetInstance().GetResolutionX()/3.0f), static_cast<int32>(Graphics::GetInstance().GetResolutionY()/3.0f), texSettings);
+		m_GaussianPass[1] = new Framebuffer2D(static_cast<int32>(Graphics::GetInstance().GetResolutionX()/3.0f), static_cast<int32>(Graphics::GetInstance().GetResolutionY()/3.0f), texSettings);
 		m_PassNameID = String("u_pass").GetStringID();
 		m_BloomNameID = String("u_bloomTexture").GetStringID();
 		m_GaussianPassesCount = 6;
@@ -123,7 +123,7 @@ namespace SE3D
 
 		Graphics::GetInstance().Resize(Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
 
-		for(int32 i=0;i<m_Lights.Size();i++)
+		for(uint32 i=0;i<m_Lights.Size();++i)
 		{
 
 			m_Lights[i]->GetMaterial().SetParamTexture2D(m_PositionBufferNameID, m_GBuffer->GetPositionBuffer());
@@ -153,7 +153,7 @@ namespace SE3D
 
 	void DeferredRenderer::BloomPhase()
 	{
-		Graphics::GetInstance().Resize(Graphics::GetInstance().GetResolutionX()/2.0f, Graphics::GetInstance().GetResolutionY()/2.0f);
+		Graphics::GetInstance().Resize(static_cast<int32>(Graphics::GetInstance().GetResolutionX()/2.0f), static_cast<int32>(Graphics::GetInstance().GetResolutionY()/2.0f));
 
 		m_BloomBuffer->Clear();
 		Graphics::GetInstance().SetDepthBuffer(false);
@@ -169,11 +169,11 @@ namespace SE3D
 		m_BloomMaterial.Unbind();
 		m_BloomBuffer->Unbind();
 
-		Graphics::GetInstance().Resize(Graphics::GetInstance().GetResolutionX() / 3.0f, Graphics::GetInstance().GetResolutionY() / 3.0f);
+		Graphics::GetInstance().Resize(static_cast<int32>(Graphics::GetInstance().GetResolutionX() / 3.0f), static_cast<int32>(Graphics::GetInstance().GetResolutionY() / 3.0f));
 		m_Gaussian.Bind();
 		for (uint32 i = 0; i < m_GaussianPassesCount; ++i)
 		{
-			bool pass = i % 2;
+			bool pass = (i % 2) != 0;
 			m_GaussianPass[pass]->Bind();
 
 			if (!i)

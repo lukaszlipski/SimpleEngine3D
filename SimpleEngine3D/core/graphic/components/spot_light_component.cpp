@@ -24,8 +24,8 @@ namespace SE3D
 		renderer->AddLight(*this);
 		m_Material.SetParamVector3D(m_PositionNameID, m_Position + m_Owner->GetPosition());
 		m_Material.SetParamVector3D(m_DirectionNameID, m_Direction);
-		m_Material.SetParamFloat(m_CutOffNameID, cos(m_CutOff));
-		m_Material.SetParamFloat(m_CutOffOutNameID, cos(m_CutOffOut));
+		m_Material.SetParamFloat(m_CutOffNameID, static_cast<float>(cos(m_CutOff)));
+		m_Material.SetParamFloat(m_CutOffOutNameID, static_cast<float>(cos(m_CutOffOut)));
 	}
 
 	void SpotLightComponent::SetParams()

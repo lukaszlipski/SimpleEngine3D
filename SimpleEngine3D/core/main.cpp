@@ -51,8 +51,8 @@ int main()
 	model2.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_roughness").GetStringID(), "aluminum/roughness.bmp");
 
 	//Window::GetInstance().SetFullScreen(true);
-	//Graphics::GetInstance().SetResolution(1366, 768);
-	//Window::GetInstance().SetSize(1366, 768);
+	Graphics::GetInstance().SetResolution(1366, 768);
+	Window::GetInstance().SetSize(1366, 768);
 
 	GameObject root;
 
