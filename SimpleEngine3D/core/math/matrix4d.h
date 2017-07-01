@@ -27,7 +27,7 @@ namespace SE3D
 
 		static Matrix4D Identity();
 		static Matrix4D Transpose(const Matrix4D& matrix);
-		//static Matrix4D Invert(const Matrix4D& matrix);
+		static Matrix4D Inverse(const Matrix4D& matrix);
 		static Matrix4D TranslateMatrix(const Vector3D& translation);
 		static Matrix4D RotateMatrix(const Vector3D& axis, float angle);
 		static Matrix4D ScaleMatrix(const Vector3D& scale);
@@ -55,7 +55,7 @@ namespace SE3D
 		const void* GetPtr() const { return this; }
 
 		Matrix4D& Transpose();
-		//Matrix4D& Invert();
+		Matrix4D& Inverse();
 		Matrix4D& Add(const Matrix4D& matrix);
 		Matrix4D& Subtract(const Matrix4D& matrix);
 		Matrix4D& Multiply(const Matrix4D& matrix);

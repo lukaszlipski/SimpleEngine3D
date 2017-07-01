@@ -79,6 +79,11 @@ namespace SE3D
 		return Vector3D(this->x * s, this->y * s, this->z * s);
 	}
 
+	Vector3D Vector3D::operator*(const Vector3D& right) const
+	{
+		return Vector3D(this->x * right.x, this->y * right.y, this->z * right.z);
+	}
+
 	Vector3D Vector3D::operator/(float s) const
 	{
 		return Vector3D(this->x / s, this->y / s, this->z / s);

@@ -31,6 +31,7 @@ namespace SE3D
 		Vector3D operator/(float s) const;
 
 		Vector3D operator*(const Matrix3D& right) const;
+		Vector3D operator*(const Vector3D& right) const;
 
 		Vector3D& operator+=(const Vector3D& right);
 		Vector3D& operator-=(const Vector3D& right);

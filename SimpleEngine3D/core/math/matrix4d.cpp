@@ -102,6 +102,62 @@ namespace SE3D
 		                Vector4D(matrix.columns[0].w, matrix.columns[1].w, matrix.columns[2].w, matrix.columns[3].w));
 	}
 
+	Matrix4D Matrix4D::Inverse(const Matrix4D& matrix)
+	{
+		Vector4D f0(matrix.GetColumn(2).z * matrix.GetColumn(3).w - matrix.GetColumn(3).z * matrix.GetColumn(2).w,
+			matrix.GetColumn(2).z * matrix.GetColumn(3).w - matrix.GetColumn(3).z * matrix.GetColumn(2).w,
+			matrix.GetColumn(1).z * matrix.GetColumn(3).w - matrix.GetColumn(3).z * matrix.GetColumn(1).w,
+			matrix.GetColumn(1).z * matrix.GetColumn(2).w - matrix.GetColumn(2).z * matrix.GetColumn(1).w);
+
+		Vector4D f1(matrix.GetColumn(2).y * matrix.GetColumn(3).w - matrix.GetColumn(3).y * matrix.GetColumn(2).w,
+			matrix.GetColumn(2).y * matrix.GetColumn(3).w - matrix.GetColumn(3).y * matrix.GetColumn(2).w,
+			matrix.GetColumn(1).y * matrix.GetColumn(3).w - matrix.GetColumn(3).y * matrix.GetColumn(1).w,
+			matrix.GetColumn(1).y * matrix.GetColumn(2).w - matrix.GetColumn(2).y * matrix.GetColumn(1).w);
+
+		Vector4D f2(matrix.GetColumn(2).y * matrix.GetColumn(3).z - matrix.GetColumn(3).y * matrix.GetColumn(2).z,
+			matrix.GetColumn(2).y * matrix.GetColumn(3).z - matrix.GetColumn(3).y * matrix.GetColumn(2).z,
+			matrix.GetColumn(1).y * matrix.GetColumn(3).z - matrix.GetColumn(3).y * matrix.GetColumn(1).z,
+			matrix.GetColumn(1).y * matrix.GetColumn(2).z - matrix.GetColumn(2).y * matrix.GetColumn(1).z);
+
+		Vector4D f3(matrix.GetColumn(2).x * matrix.GetColumn(3).w - matrix.GetColumn(3).x * matrix.GetColumn(2).w,
+			matrix.GetColumn(2).x * matrix.GetColumn(3).w - matrix.GetColumn(3).x * matrix.GetColumn(2).w,
+			matrix.GetColumn(1).x * matrix.GetColumn(3).w - matrix.GetColumn(3).x * matrix.GetColumn(1).w,
+			matrix.GetColumn(1).x * matrix.GetColumn(2).w - matrix.GetColumn(2).x * matrix.GetColumn(1).w);
+
+		Vector4D f4(matrix.GetColumn(2).x * matrix.GetColumn(3).z - matrix.GetColumn(3).x * matrix.GetColumn(2).z,
+			matrix.GetColumn(2).x * matrix.GetColumn(3).z - matrix.GetColumn(3).x * matrix.GetColumn(2).z,
+			matrix.GetColumn(1).x * matrix.GetColumn(3).z - matrix.GetColumn(3).x * matrix.GetColumn(1).z,
+			matrix.GetColumn(1).x * matrix.GetColumn(2).z - matrix.GetColumn(2).x * matrix.GetColumn(1).z);
+
+		Vector4D f5(matrix.GetColumn(2).x * matrix.GetColumn(3).y - matrix.GetColumn(3).x * matrix.GetColumn(2).y,
+			matrix.GetColumn(2).x * matrix.GetColumn(3).y - matrix.GetColumn(3).x * matrix.GetColumn(2).y,
+			matrix.GetColumn(1).x * matrix.GetColumn(3).y - matrix.GetColumn(3).x * matrix.GetColumn(1).y,
+			matrix.GetColumn(1).x * matrix.GetColumn(2).y - matrix.GetColumn(2).x * matrix.GetColumn(1).y);
+
+		Vector4D v0(matrix.GetColumn(1).x, matrix.GetColumn(0).x, matrix.GetColumn(0).x, matrix.GetColumn(0).x);
+		Vector4D v1(matrix.GetColumn(1).y, matrix.GetColumn(0).y, matrix.GetColumn(0).y, matrix.GetColumn(0).y);
+		Vector4D v2(matrix.GetColumn(1).z, matrix.GetColumn(0).z, matrix.GetColumn(0).z, matrix.GetColumn(0).z);
+		Vector4D v3(matrix.GetColumn(1).w, matrix.GetColumn(0).w, matrix.GetColumn(0).w, matrix.GetColumn(0).w);
+
+		Matrix4D inv((v1*f0 - v2 * f1 + v3*f2) * Vector4D(1, -1, 1, -1),
+			(v0*f0-v2*f3+v3*f4) * Vector4D(-1, 1, -1, 1),
+			(v0*f1-v1*f3+v3*f5) * Vector4D(1, -1, 1, -1),
+			(v0*f2-v1*f4+v2*f5) * Vector4D(-1, 1, -1, 1));
+
+		Vector4D tmp = matrix.GetColumn(0) * Vector4D(inv.GetColumn(0).x, inv.GetColumn(1).x, inv.GetColumn(2).x, inv.GetColumn(3).x);
+
+		float determinant = tmp.x + tmp.y + tmp.z + tmp.w;
+
+		return inv * (1 / determinant);
+
+	}
+
+	Matrix4D& Matrix4D::Inverse()
+	{
+		*this = Matrix4D::Inverse(*this);
+		return *this;
+	}
+
 	Matrix4D Matrix4D::TranslateMatrix(const Vector3D& translation)
 	{
 		Matrix4D translate = Matrix4D::Identity();

@@ -58,6 +58,11 @@ namespace SE3D
 		return Vector4D(this->x * s, this->y * s, this->z * s, this->w * s);
 	}
 
+	Vector4D Vector4D::operator*(const Vector4D& right) const
+	{
+		return Vector4D(this->x * right.x, this->y * right.y, this->z * right.z, this->w * right.w);
+	}
+
 	Vector4D Vector4D::operator/(float s) const
 	{
 		return Vector4D(this->x / s, this->y / s, this->z / s, this->w / s);
