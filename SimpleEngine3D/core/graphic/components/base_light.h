@@ -4,6 +4,8 @@
 
 namespace SE3D
 {
+	class DeferredRenderer;
+
 	class BaseLight
 	{
 	protected:
@@ -25,6 +27,8 @@ namespace SE3D
 		inline Vector3D GetColor() const { return m_Color; }
 		inline void SetIntensity(float intensity) { m_Intensity = intensity; }
 		inline float GetIntensity() const { return m_Intensity; }
+
+		virtual void RenderShadowMap(DeferredRenderer* renderer) = 0;
 
 	};
 }

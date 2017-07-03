@@ -21,12 +21,15 @@ namespace SE3D
 		m_Meshes.Clear(true);
 	}
 
-	void Model::Draw() const
+	void Model::Draw(Material *mat) const
 	{
 		for (uint32 i = 0; i < m_Meshes.Size(); i++)
 		{
-			m_Meshes[i]->GetMaterial().SetParamMatrix4D(m_TransformationStringID, m_Transformation);
-			m_Meshes[i]->Draw();
+			if (mat == 0)
+			{
+				m_Meshes[i]->GetMaterial().SetParamMatrix4D(m_TransformationStringID, m_Transformation);
+			}
+			m_Meshes[i]->Draw(mat);
 		}
 	}
 

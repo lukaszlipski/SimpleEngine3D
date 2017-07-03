@@ -13,4 +13,6 @@ namespace SE3D
 {
 	inline float ToRadians(float degree) { return (static_cast<float>(M_PI) / 180.0f) * degree; }
 	inline float ToDegrees(float radian) { return (180.0f / static_cast<float>(M_PI)) * radian; }
+	template<typename T> T Min(T a, T b) { return a < b ? a : b; }
+	template<typename T> T Max(T a, T b) { return a > b ? a : b; }
 }

@@ -14,10 +14,13 @@ namespace SE3D
 			m_Owner = &go;
 		}
 
+		inline virtual GameObject *GetOwner() { return m_Owner; }
+
 		virtual ~Component() = default;
 		virtual void Init() = 0;
 		virtual void Input(float DeltaTime) = 0;
 		virtual void Update(float DeltaTime) = 0;
 		virtual void Render(DeferredRenderer *renderer) = 0;
+
 	};
 }

@@ -29,7 +29,7 @@ namespace SE3D
 		Mesh();
 		~Mesh();
 
-		void Draw() const;
+		void Draw(Material *mat = 0) const;
 		inline void SetMaterial(const Material& material) { m_Material = material; }
 		inline Material& GetMaterial() { return m_Material; }
 		inline const String& GetName() const { return m_Name; }

@@ -18,7 +18,7 @@ namespace SE3D
 		Model(const String& path);
 		~Model();
 
-		void Draw() const;
+		void Draw(Material *mat = 0) const;
 		Mesh* GetMesh(const String& name) const;
 		Mesh* GetMesh(uint32 index) const;
 		void SetTransformation(const Matrix4D& transformation) { m_Transformation = transformation; }

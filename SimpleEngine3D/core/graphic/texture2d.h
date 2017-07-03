@@ -1,6 +1,7 @@
 #pragma once
 #include "../utilities/string.h"
 #include "../utilities/image.h"
+#include "../math/vector4d.h"
 
 namespace SE3D
 {
@@ -13,7 +14,8 @@ namespace SE3D
 	enum class TextureWrap : int32
 	{
 		REPEAT = GL_REPEAT,
-		CLAMP_TO_EDGE = GL_CLAMP_TO_EDGE
+		CLAMP_TO_EDGE = GL_CLAMP_TO_EDGE,
+		CLAMP_TO_BORDER = GL_CLAMP_TO_BORDER
 	};
 
 	struct TextureSettings
@@ -23,8 +25,9 @@ namespace SE3D
 		ImageType m_ImageType = ImageType::UBYTE;
 		TextureFilter m_TextureFilter = TextureFilter::LINEAR;
 		TextureWrap m_TextureWrap = TextureWrap::REPEAT;
-		TextureSettings(ImageFormat format = ImageFormat::RGB, InternalFormat internalFormat = InternalFormat::RGB, ImageType imgType = ImageType::UBYTE, TextureFilter texFilter = TextureFilter::LINEAR, TextureWrap texWrap = TextureWrap::REPEAT)
-			: m_Format(format), m_InternalFormat(internalFormat), m_ImageType(imgType), m_TextureFilter(texFilter), m_TextureWrap(texWrap)
+		Vector4D m_BorderColor = Vector4D(0, 0, 0, 1);
+		TextureSettings(ImageFormat format = ImageFormat::RGB, InternalFormat internalFormat = InternalFormat::RGB, ImageType imgType = ImageType::UBYTE, TextureFilter texFilter = TextureFilter::LINEAR, TextureWrap texWrap = TextureWrap::REPEAT, Vector4D borderColor = Vector4D(0, 0, 0, 1))
+			: m_Format(format), m_InternalFormat(internalFormat), m_ImageType(imgType), m_TextureFilter(texFilter), m_TextureWrap(texWrap), m_BorderColor(borderColor)
 		{}
 	};
 

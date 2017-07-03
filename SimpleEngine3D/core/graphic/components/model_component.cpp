@@ -17,12 +17,17 @@ namespace SE3D
 	{
 		Vector3D furthestPointFromMassCenter = m_Model->GetFurthestLocalPoint() - m_Model->GetMassCenter();
 		m_FrustumCollision = Sphere(m_Owner->GetWorldTransform().Position,
-									( Vector3D( m_Owner->GetWorldTransform().Scale.x * furthestPointFromMassCenter.x,
-												m_Owner->GetWorldTransform().Scale.y * furthestPointFromMassCenter.y,
-												m_Owner->GetWorldTransform().Scale.z * furthestPointFromMassCenter.z) ).Length() );
+			(Vector3D(m_Owner->GetWorldTransform().Scale.x * furthestPointFromMassCenter.x,
+				m_Owner->GetWorldTransform().Scale.y * furthestPointFromMassCenter.y,
+				m_Owner->GetWorldTransform().Scale.z * furthestPointFromMassCenter.z)).Length());
 
+		renderer->AddObjectToRender(*this);
 
-		if (renderer->GetCamera()->GetFrustum().IsSphereInFrustum(m_FrustumCollision))
+	}
+
+	void ModelComponent::PutOnScreen(DeferredRenderer *renderer,Material *mat)
+	{
+		if (mat == 0)
 		{
 			for (uint32 i = 0; i < m_Model->GetMeshesSize(); i++)
 			{
@@ -30,10 +35,15 @@ namespace SE3D
 				m_Model->GetMesh(i)->GetMaterial().SetParamMatrix4D(String("u_projection").GetStringID(), renderer->GetCamera()->GetProjection());
 				m_Model->GetMesh(i)->GetMaterial().SetParamVector3D(String("u_cameraPosition").GetStringID(), renderer->GetCamera()->GetPosition());
 			}
-			m_Model->SetTransformation(m_Owner->GetWorldTransformMatrix());
-			if (m_Model != nullptr)
-				m_Model->Draw();
+
 		}
 
+		m_Model->SetTransformation(m_Owner->GetWorldTransformMatrix());
+
+
+		if (m_Model != nullptr)
+			m_Model->Draw(mat);
+
 	}
+
 }

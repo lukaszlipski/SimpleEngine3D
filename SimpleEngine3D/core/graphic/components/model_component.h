@@ -17,6 +17,8 @@ namespace SE3D
 		void Input(float DeltaTime) override;
 		void Update(float DeltaTime) override;
 		void Render(DeferredRenderer *renderer) override;
+		void PutOnScreen(DeferredRenderer *renderer,Material *mat = 0);
 
+		inline Sphere GetFrustumCollision() const { return m_FrustumCollision; }
 	};
 }

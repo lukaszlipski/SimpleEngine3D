@@ -34,6 +34,7 @@ namespace SE3D
 		void Input(float DeltaTime) override;
 		void Update(float DeltaTime) override;
 		void Render(DeferredRenderer* renderer) override;
+		void RenderShadowMap(DeferredRenderer* renderer) override;
 
 	private:
 		void SetParams();

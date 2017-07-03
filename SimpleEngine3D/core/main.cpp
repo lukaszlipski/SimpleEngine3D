@@ -59,17 +59,25 @@ int main()
 	GameObject child;
 	ModelComponent modelComp2(model2);
 	child.AddComponent(modelComp2);
-	child.SetPosition(Vector3D(1.5f, 0, 0));
+	child.SetPosition(Vector3D(0, 0, 0));
 	child.SetScale(Vector3D(0.5f, 0.5f, 0.5f));
 	root.AddChild(child);
 
 	GameObject child2;
 	ModelComponent modelComp(model);
+	child2.SetPosition(Vector3D(1.5f, 0, 0));
 	child2.SetScale(Vector3D(0.5f, 0.5f, 0.5f));
 	child2.AddComponent(modelComp);
 	root.AddChild(child2);
 
-	PointLightComponent pointLComp(Vector3D(2.0f, 2.0f, 2.0f));
+	GameObject child3;
+	ModelComponent modelComp3(model2);
+	child3.AddComponent(modelComp3);
+	child3.SetPosition(Vector3D(0, -1, 0));
+	child3.SetScale(Vector3D(5, 0.5f, 5));
+	root.AddChild(child3);
+
+	PointLightComponent pointLComp(Vector3D(0.0f, 2.0f, 0.0f));
 	root.AddComponent(pointLComp);
 	DirectionalLightComponent dirLComp(Vector3D(-1, -1, -1));
 	dirLComp.SetIntensity(0.8f);
@@ -82,7 +90,7 @@ int main()
 	MovementComponent movementComp(3.0f,5.0f);
 	cameraChild.AddComponent(cameraComp);
 	cameraChild.AddComponent(movementComp);
-	cameraChild.SetPosition(Vector3D(0.7f, 0, 3));
+	cameraChild.SetPosition(Vector3D(0, 0, 3));
 	cameraChild.SetRotation(Quaternion(Vector3D(0, 1, 0), 0));
 	root.AddChild(cameraChild);
 	

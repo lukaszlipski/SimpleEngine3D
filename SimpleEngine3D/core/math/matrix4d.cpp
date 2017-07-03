@@ -38,9 +38,9 @@ namespace SE3D
 
 		ortho.elements[0] = 2.0f / (right - left);
 		ortho.elements[5] = 2.0f / (top - bottom);
+		ortho.elements[10] = -2.0f / (farPlane - nearPlane);
 		ortho.elements[12] = -(right + left) / (right - left);
 		ortho.elements[13] = -(top + bottom) / (top - bottom);
-		ortho.elements[10] = 2.0f / (farPlane - nearPlane);
 		ortho.elements[14] = -(farPlane + nearPlane) / (farPlane - nearPlane);
 
 		return ortho;
@@ -300,10 +300,10 @@ namespace SE3D
 
 	Vector4D Matrix4D::operator*(const Vector4D& right) const
 	{
-		return Vector4D(this->GetColumn(0).x * right.x + this->GetColumn(0).y * right.y + this->GetColumn(0).z * right.z + this->GetColumn(0).w * right.w,
-		                this->GetColumn(1).x * right.x + this->GetColumn(1).y * right.y + this->GetColumn(1).z * right.z + this->GetColumn(1).w * right.w,
-		                this->GetColumn(2).x * right.x + this->GetColumn(2).y * right.y + this->GetColumn(2).z * right.z + this->GetColumn(2).w * right.w,
-		                this->GetColumn(3).x * right.x + this->GetColumn(3).y * right.y + this->GetColumn(3).z * right.z + this->GetColumn(3).w * right.w);
+		return Vector4D(this->GetRow(0).x * right.x + this->GetRow(0).y * right.y + this->GetRow(0).z * right.z + this->GetRow(0).w * right.w,
+		                this->GetRow(1).x * right.x + this->GetRow(1).y * right.y + this->GetRow(1).z * right.z + this->GetRow(1).w * right.w,
+		                this->GetRow(2).x * right.x + this->GetRow(2).y * right.y + this->GetRow(2).z * right.z + this->GetRow(2).w * right.w,
+		                this->GetRow(3).x * right.x + this->GetRow(3).y * right.y + this->GetRow(3).z * right.z + this->GetRow(3).w * right.w);
 	}
 
 	Matrix4D Matrix4D::operator+(const Matrix4D& right) const

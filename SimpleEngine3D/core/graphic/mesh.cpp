@@ -53,12 +53,23 @@ namespace SE3D
 		glDeleteVertexArrays(1, &m_VAO);
 	}
 
-	void Mesh::Draw() const
+	void Mesh::Draw(Material *mat) const
 	{
-		m_Material.Bind();
-		glBindVertexArray(m_VAO);
-		glDrawElements(GL_TRIANGLES, m_Size, GL_UNSIGNED_INT, 0);
-		glBindVertexArray(0);
-		m_Material.Unbind();
+		if (mat == 0)
+		{
+			m_Material.Bind();
+			glBindVertexArray(m_VAO);
+			glDrawElements(GL_TRIANGLES, m_Size, GL_UNSIGNED_INT, 0);
+			glBindVertexArray(0);
+			m_Material.Unbind();
+		}
+		else
+		{
+			mat->Bind();
+			glBindVertexArray(m_VAO);
+			glDrawElements(GL_TRIANGLES, m_Size, GL_UNSIGNED_INT, 0);
+			glBindVertexArray(0);
+			mat->Unbind();
+		}
 	}
 }

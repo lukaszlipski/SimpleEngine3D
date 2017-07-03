@@ -136,6 +136,7 @@
     <ClCompile Include="core\graphic\mesh.cpp" />
     <ClCompile Include="core\graphic\model.cpp" />
     <ClCompile Include="core\graphic\shader.cpp" />
+    <ClCompile Include="core\graphic\shadow_buffer.cpp" />
     <ClCompile Include="core\graphic\texture2d.cpp" />
     <ClCompile Include="core\math\frustum.cpp" />
     <ClCompile Include="core\math\matrix3d.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="core\graphic\shader_params\param_vector3d.h" />
     <ClInclude Include="core\graphic\shader_params\param_vector4d.h" />
     <ClInclude Include="core\graphic\shader_params\shader_parameter.h" />
+    <ClInclude Include="core\graphic\shadow_buffer.h" />
     <ClInclude Include="core\graphic\texture2d.h" />
     <ClInclude Include="core\math\frustum.h" />
     <ClInclude Include="core\math\math.h" />

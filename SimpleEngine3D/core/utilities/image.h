@@ -8,7 +8,8 @@ namespace SE3D
 	enum class ImageFormat : int32
 	{
 		RGB = GL_RGB,
-		RGBA = GL_RGBA
+		RGBA = GL_RGBA,
+		DEPTH_COMPONENT = GL_DEPTH_COMPONENT
 	};
 
 	enum class InternalFormat : int32
@@ -18,7 +19,8 @@ namespace SE3D
 		sRGB = GL_SRGB,
 		sRGBA = GL_SRGB_ALPHA,
 		RGB32F = GL_RGB32F,
-		RGBA32F = GL_RGBA32F
+		RGBA32F = GL_RGBA32F,
+		DEPTH_COMPONENT = GL_DEPTH_COMPONENT
 	};
 
 	enum class ImageType : int32

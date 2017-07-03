@@ -38,6 +38,9 @@ namespace SE3D
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, static_cast<int32>(texSettings.m_TextureFilter));
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, static_cast<int32>(texSettings.m_TextureWrap));
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, static_cast<int32>(texSettings.m_TextureWrap));
+		//float borderCol[] = { texSettings.m_BorderColor.x,texSettings.m_BorderColor.y,texSettings.m_BorderColor.z,texSettings.m_BorderColor.w };
+		float borderCol[] = { 1,1,1,1 };
+		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderCol);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 	}

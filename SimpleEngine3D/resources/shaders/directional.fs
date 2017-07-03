@@ -11,6 +11,11 @@ uniform vec3 u_color;
 
 uniform vec3 u_cameraPosition;
 
+uniform mat4 u_view;
+uniform mat4 u_projection;
+
+uniform sampler2D u_shadow_map;
+
 in vec2 fs_texCoord;
 
 out vec4 color;
@@ -46,6 +51,16 @@ float NormalDistributionFunction(vec3 N, vec3 H, float a)
     return F0 + (1.0 - F0) * pow(1.0 - max(dot(N, V), 0.0), 5.0);
  }
 
+ // Shadow
+ float CalcShadow(vec3 P,vec3 N)
+ {
+    vec4 lightSpaceCoord = u_projection * u_view * vec4(P,1.0f);
+    lightSpaceCoord = lightSpaceCoord * 0.5f + 0.5f;
+    //if(lightSpaceCoord.z > 1.0f) return 1.0f;
+    float bias = 0.001f;//max(0.05f * (1.0f - dot(N,normalize(u_direction))), 0.005f);
+    return lightSpaceCoord.z - bias > texture(u_shadow_map,lightSpaceCoord.xy).r ? 0.0f : 1.0f;
+ }
+
 void main()
 { 
     vec3 position = texture(u_positionTexture, fs_texCoord).rgb;
@@ -74,5 +89,7 @@ void main()
 
     vec3 specular = (NDF * G * F) / (4 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.001);
 
-    color = vec4( (kD * albedo / PI + specular) * radiance * max(dot(N, L), 0.0),1);
+    float shadow = CalcShadow(position,normal);
+
+    color = vec4( shadow * (kD * albedo / PI + specular) * radiance * max(dot(N, L), 0.0),1);
 }

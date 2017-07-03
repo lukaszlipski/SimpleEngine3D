@@ -21,6 +21,8 @@ namespace SE3D
 		m_Material.SetParamVector3D(m_PositionNameID, m_Position + m_Owner->GetPosition());
 	}
 
+	void PointLightComponent::RenderShadowMap(DeferredRenderer* renderer) {}
+
 	void PointLightComponent::SetParams()
 	{
 		m_Material.SetParamVector3D(m_ColorNameID, m_Color);

@@ -5,6 +5,7 @@
 #include "material.h"
 #include "components/camera_component.h"
 #include "components/base_light.h"
+#include "components/model_component.h"
 
 namespace SE3D
 {
@@ -34,15 +35,19 @@ namespace SE3D
 		uint32 m_NormalBufferNameID;
 		uint32 m_AlbedoNameID;
 		uint32 u_MetallicRoughnessAONameID;
+		DynamicArray<ModelComponent*> m_ObjectsToRender;
 
 	public:
 		DeferredRenderer();
 		void Render(GameObject &scene, CameraComponent &mainCamera);
 
 		inline void AddLight(BaseLight &light) { m_Lights.Push(&light); }
+		inline void AddObjectToRender(ModelComponent &obj) { m_ObjectsToRender.Push(&obj); }
 		inline CameraComponent *GetCamera() const { return m_MainCamera; }
+		inline DynamicArray<ModelComponent*> *GetObjectToRender() { return &m_ObjectsToRender; }
 
 	private:
+		void ShadowPhase();
 		void GBufferPhase();
 		void LightPhase();
 		void BloomPhase();

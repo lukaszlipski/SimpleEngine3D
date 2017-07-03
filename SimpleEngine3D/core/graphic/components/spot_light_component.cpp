@@ -28,6 +28,8 @@ namespace SE3D
 		m_Material.SetParamFloat(m_CutOffOutNameID, static_cast<float>(cos(m_CutOffOut)));
 	}
 
+	void SpotLightComponent::RenderShadowMap(DeferredRenderer* renderer) {}
+
 	void SpotLightComponent::SetParams()
 	{
 		m_Material.SetParamVector3D(m_ColorNameID, m_Color);
