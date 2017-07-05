@@ -56,8 +56,8 @@ float NormalDistributionFunction(vec3 N, vec3 H, float a)
  {
     vec4 lightSpaceCoord = u_projection * u_view * vec4(P,1.0f);
     lightSpaceCoord = lightSpaceCoord * 0.5f + 0.5f;
-    //if(lightSpaceCoord.z > 1.0f) return 1.0f;
-    float bias = 0.001f;//max(0.05f * (1.0f - dot(N,normalize(u_direction))), 0.005f);
+    if(lightSpaceCoord.z > 1.0f) return 1.0f;
+    float bias = 0.001f;
     return lightSpaceCoord.z - bias > texture(u_shadow_map,lightSpaceCoord.xy).r ? 0.0f : 1.0f;
  }
 
