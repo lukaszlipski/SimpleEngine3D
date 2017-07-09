@@ -6,7 +6,7 @@ namespace SE3D
 	Frustum::Frustum(float angle, float ratio, float np, float fp)
 		: m_Angle(angle), m_Ratio(ratio), m_NearPlane(np), m_FarPlane(fp)
 	{
-		m_Tangens = static_cast<float>(tan(ToRadians(angle) * 0.5));
+		m_Tangens = static_cast<float>(Tan(ToRadians(angle) * 0.5f));
 	}
 
 	void Frustum::UpdateCameraFrustum(const Vector3D& pos, const Vector3D& forward, const Vector3D& right)

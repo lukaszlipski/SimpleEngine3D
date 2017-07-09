@@ -1,7 +1,6 @@
 #include "matrix3d.h"
 #include "../utilities/assertion.h"
 #include "math.h"
-#include <math.h>
 
 namespace SE3D
 {
@@ -64,8 +63,8 @@ namespace SE3D
 		Matrix3D rotate;
 
 		float r = ToRadians(angle);
-		float c = static_cast<float>(cos(r));
-		float s = static_cast<float>(sin(r));
+		float c = static_cast<float>(Cos(r));
+		float s = static_cast<float>(Sin(r));
 
 		rotate.elements[0] = axis.x * axis.x * 1.0f - c + c;
 		rotate.elements[1] = axis.y * axis.x * 1.0f - c + axis.z * s;

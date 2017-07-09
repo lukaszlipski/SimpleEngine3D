@@ -1,6 +1,6 @@
 #include "vector3d.h"
 #include "matrix3d.h"
-#include <math.h>
+#include "math.h"
 
 namespace SE3D
 {
@@ -21,7 +21,7 @@ namespace SE3D
 
 	float Vector3D::Length() const
 	{
-		return sqrtf(x * x + y * y + z * z);
+		return Sqrt(x * x + y * y + z * z);
 	}
 
 	float Vector3D::LengthSquared() const

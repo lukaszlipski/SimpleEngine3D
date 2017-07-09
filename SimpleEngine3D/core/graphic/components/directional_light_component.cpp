@@ -1,7 +1,6 @@
 #include "directional_light_component.h"
 #include "../deferred_renderer.h"
 #include "../system/graphics.h"
-#include <math.h>
 #include "../math/math.h"
 
 namespace SE3D

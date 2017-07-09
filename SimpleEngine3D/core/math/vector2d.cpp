@@ -1,5 +1,5 @@
 #include "vector2d.h"
-#include <math.h>
+#include "math.h"
 
 namespace SE3D
 {
@@ -15,7 +15,7 @@ namespace SE3D
 
 	float Vector2D::Length() const
 	{
-		return sqrtf(x * x + y * y);
+		return Sqrt(x * x + y * y);
 	}
 
 	float Vector2D::LengthSquared() const

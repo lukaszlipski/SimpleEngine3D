@@ -1,6 +1,5 @@
 #include "matrix4d.h"
 #include "math.h"
-#include <math.h>
 
 namespace SE3D
 {
@@ -50,7 +49,7 @@ namespace SE3D
 	{
 		Matrix4D persp = {};
 
-		float thv = static_cast<float>( tan(ToRadians(fov) / 2.0f) );
+		float thv = static_cast<float>( Tan(ToRadians(fov) / 2.0f) );
 
 		persp.elements[0] = 1.0f / (aspectRatio * thv);
 		persp.elements[5] = 1.0f / thv;
@@ -174,8 +173,8 @@ namespace SE3D
 		Matrix4D rotate = Matrix4D::Identity();
 
 		float r = ToRadians(angle);
-		float c = static_cast<float>(cos(r));
-		float s = static_cast<float>(sin(r));
+		float c = static_cast<float>(Cos(r));
+		float s = static_cast<float>(Sin(r));
 
 		rotate.elements[0] = axis.x * axis.x * 1.0f - c + c;
 		rotate.elements[1] = axis.y * axis.x * 1.0f - c + axis.z * s;

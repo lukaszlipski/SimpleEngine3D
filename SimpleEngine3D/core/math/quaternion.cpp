@@ -1,5 +1,4 @@
 #include "quaternion.h"
-#include <math.h>
 #include "math.h"
 
 namespace SE3D
@@ -21,12 +20,12 @@ namespace SE3D
 	Quaternion::Quaternion(Vector3D axis, float angle)
 	{
 		angle = ToRadians(angle);
-		float sha = static_cast<float>(sin(angle / 2));
+		float sha = static_cast<float>(Sin(angle / 2));
 
 		x = axis.x * sha;
 		y = axis.y * sha;
 		z = axis.z * sha;
-		w = static_cast<float>(cos(angle / 2));
+		w = static_cast<float>(Cos(angle / 2));
 	}
 
 	Quaternion::Quaternion(const Quaternion& quaternion)
@@ -134,7 +133,7 @@ namespace SE3D
 
 	float Quaternion::Length() const
 	{
-		return static_cast<float>(sqrt(x*x + y*y + z*z + w*w));
+		return static_cast<float>(Sqrt(x*x + y*y + z*z + w*w));
 	}
 
 	Quaternion Quaternion::Normalize() const
