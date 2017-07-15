@@ -25,6 +25,7 @@ namespace SE3D
 		void Unbind() const;
 		void Clear();
 
+		inline uint32 GetID() const { return m_GBuffer; }
 		inline void SetClearColor(Vector4D color) { m_ClearColor = color; }
 		inline Texture2D& GetPositionBuffer() { return m_Position; }
 		inline Texture2D& GetNormalBuffer() { return m_Normal; }

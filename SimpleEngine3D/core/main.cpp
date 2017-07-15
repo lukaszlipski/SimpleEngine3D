@@ -50,6 +50,8 @@ int main()
 	model2.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_metallic").GetStringID(), "aluminum/metallic.bmp");
 	model2.GetMesh(0)->GetMaterial().SetParamTexture2D(String("u_roughness").GetStringID(), "aluminum/roughness.bmp");
 
+	Skysphere skysphere("skysphere.bmp",true);
+
 	//Window::GetInstance().SetFullScreen(true);
 	Graphics::GetInstance().SetResolution(1366, 768);
 	Window::GetInstance().SetSize(1366, 768);
@@ -97,6 +99,7 @@ int main()
 	root.Init();
 
 	DeferredRenderer renderer;
+	renderer.SetSkysphere(&skysphere);
 
 	float time = 0.0f;
 

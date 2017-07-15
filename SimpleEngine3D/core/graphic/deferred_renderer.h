@@ -6,6 +6,7 @@
 #include "components/camera_component.h"
 #include "components/base_light.h"
 #include "components/model_component.h"
+#include "skysphere.h"
 
 namespace SE3D
 {
@@ -15,6 +16,7 @@ namespace SE3D
 		GBuffer *m_GBuffer;
 		uint32 m_ScreenVAO;
 		Framebuffer2D *m_ScreenBuffer;
+		Skysphere *m_Skysphere;
 
 		// Bloom
 		Framebuffer2D *m_BloomBuffer;
@@ -45,11 +47,13 @@ namespace SE3D
 		inline void AddObjectToRender(ModelComponent &obj) { m_ObjectsToRender.Push(&obj); }
 		inline CameraComponent *GetCamera() const { return m_MainCamera; }
 		inline DynamicArray<ModelComponent*> *GetObjectToRender() { return &m_ObjectsToRender; }
+		inline void SetSkysphere(Skysphere *skysphere) { m_Skysphere = skysphere; }
 
 	private:
 		void ShadowPhase();
 		void GBufferPhase();
 		void LightPhase();
 		void BloomPhase();
+		void SkyspherePhase();
 	};
 }

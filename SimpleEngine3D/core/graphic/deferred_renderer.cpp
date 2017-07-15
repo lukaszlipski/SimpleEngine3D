@@ -72,6 +72,8 @@ namespace SE3D
 			
 		LightPhase();
 
+		SkyspherePhase();
+
 		BloomPhase();
 
 		Graphics::GetInstance().Clear();
@@ -126,6 +128,7 @@ namespace SE3D
 			}
 		}
 
+
 		m_GBuffer->Unbind();
 	}
 
@@ -137,13 +140,14 @@ namespace SE3D
 			m_ScreenBuffer = new Framebuffer2D(Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
 		}
 
+		m_ScreenBuffer->Bind();
+		m_ScreenBuffer->Clear();
+
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_ONE, GL_ONE);
 		glDepthMask(false);
 		glDepthFunc(GL_EQUAL);
 
-		m_ScreenBuffer->Bind();
-		m_ScreenBuffer->Clear();
 
 		Graphics::GetInstance().Resize(Window::GetInstance().GetSizeX(), Window::GetInstance().GetSizeY());
 
@@ -166,11 +170,11 @@ namespace SE3D
 			m_Lights[i]->GetMaterial().Unbind();
 		}
 
-		m_ScreenBuffer->Unbind();
-
 		glDepthFunc(GL_LESS);
 		glDepthMask(true);
 		glDisable(GL_BLEND);
+
+		m_ScreenBuffer->Unbind();
 	}
 
 	void DeferredRenderer::BloomPhase()
@@ -221,4 +225,23 @@ namespace SE3D
 
 		Graphics::GetInstance().Resize(Graphics::GetInstance().GetResolutionX(), Graphics::GetInstance().GetResolutionY());
 	}
+
+	void DeferredRenderer::SkyspherePhase()
+	{
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, m_GBuffer->GetID());
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_ScreenBuffer->GetID());
+		glBlitFramebuffer(0, 0, m_GBuffer->GetWidth(), m_GBuffer->GetHeight(), 0, 0, m_ScreenBuffer->GetWidth(), m_ScreenBuffer->GetHeight(), GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+
+		Graphics::GetInstance().SetDepthBuffer(true);
+		m_ScreenBuffer->Bind();
+		glDepthFunc(GL_LEQUAL);
+		if (m_Skysphere)
+		{
+			m_Skysphere->Draw(this);
+		}
+		glDepthFunc(GL_LESS);
+		m_ScreenBuffer->Unbind();
+		
+	}
+
 }

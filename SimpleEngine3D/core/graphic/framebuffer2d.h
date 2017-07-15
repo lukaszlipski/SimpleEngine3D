@@ -22,6 +22,7 @@ namespace SE3D
 		void Bind() const;
 		void Unbind() const;
 		void Clear() const;
+		inline uint32 GetID() const { return m_FramebufferID; }
 		inline void SetClearColor(Vector4D color) { m_ClearColor = color; }
 		inline Texture2D& GetTexture() { return m_Texture; }
 		inline uint32 GetWidth() const { return m_Width; }

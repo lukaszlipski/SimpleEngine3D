@@ -137,6 +137,7 @@
     <ClCompile Include="core\graphic\model.cpp" />
     <ClCompile Include="core\graphic\shader.cpp" />
     <ClCompile Include="core\graphic\shadow_buffer.cpp" />
+    <ClCompile Include="core\graphic\skysphere.cpp" />
     <ClCompile Include="core\graphic\texture2d.cpp" />
     <ClCompile Include="core\math\frustum.cpp" />
     <ClCompile Include="core\math\matrix3d.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="core\graphic\components\movement_component.h" />
     <ClInclude Include="core\graphic\components\point_light_component.h" />
     <ClInclude Include="core\graphic\components\spot_light_component.h" />
+    <ClInclude Include="core\graphic\skysphere.h" />
     <ClInclude Include="core\graphic\deferred_renderer.h" />
     <ClInclude Include="core\graphic\framebuffer2d.h" />
     <ClInclude Include="core\graphic\game_object.h" />
