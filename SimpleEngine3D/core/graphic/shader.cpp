@@ -1,7 +1,7 @@
 #include "shader.h"
 #include "../system/file.h"
 #include "../utilities/string.h"
-
+#include "../system/graphics.h"
 
 namespace SE3D
 {

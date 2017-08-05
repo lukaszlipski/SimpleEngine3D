@@ -1,7 +1,6 @@
 #include "camera_component.h"
 #include "../system/graphics.h"
 
-
 namespace SE3D
 {
 	CameraComponent::CameraComponent(Frustum frustum)

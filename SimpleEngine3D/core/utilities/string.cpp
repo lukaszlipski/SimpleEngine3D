@@ -15,7 +15,7 @@ namespace SE3D
 		m_Length = string.Length();
 		char* newString = new char[m_Length + 1];
 
-		CopyMemory(newString, string.CString(), m_Length);
+		CopyMem(newString, string.CString(), m_Length);
 
 		m_String = newString;
 	}
@@ -32,7 +32,7 @@ namespace SE3D
 
 		char* newString = new char[m_Length + 1];
 
-		CopyMemory(newString, string, m_Length);
+		CopyMem(newString, string, m_Length);
 
 		m_String = newString;
 	}
@@ -49,8 +49,8 @@ namespace SE3D
 		uint32 newLength = left.Length() + right.Length();
 		char* newStringPtr = new char[newLength + 1];
 
-		CopyMemory(newStringPtr, left.CString(), left.Length());
-		CopyMemory(newStringPtr + left.Length(), right.CString(), right.Length());
+		CopyMem(newStringPtr, left.CString(), left.Length());
+		CopyMem(newStringPtr + left.Length(), right.CString(), right.Length());
 
 		return String(newStringPtr);
 	}
@@ -60,8 +60,8 @@ namespace SE3D
 		uint32 newLength = Length() + right.Length();
 		char* newStringPtr = new char[newLength + 1];
 
-		CopyMemory(newStringPtr, this, Length());
-		CopyMemory(newStringPtr + Length(), right.CString(), right.Length());
+		CopyMem(newStringPtr, this, Length());
+		CopyMem(newStringPtr + Length(), right.CString(), right.Length());
 
 		delete[] m_String;
 		m_String = newStringPtr;
@@ -78,7 +78,7 @@ namespace SE3D
 		m_Length = right.m_Length;
 		char* newString = new char[m_Length + 1];
 
-		CopyMemory(newString, right.CString(), m_Length);
+		CopyMem(newString, right.CString(), m_Length);
 
 		m_String = newString;
 

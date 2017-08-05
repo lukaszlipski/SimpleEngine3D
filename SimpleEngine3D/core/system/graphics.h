@@ -1,17 +1,17 @@
 #pragma once
 #include <Windows.h>
-#include <Gl/glew.h>
-#include <GL/wglew.h>
 #include "../utilities/types.h"
+#include "../platform/opengl/win32_opengl_definitions.h"
 
 namespace SE3D
 {
+
 	class Graphics
 	{
 	private:
 		HGLRC m_OpenGLRC;
-		GLubyte m_MajorVersion;
-		GLubyte m_MinorVersion;
+		uint8 m_MajorVersion;
+		uint8 m_MinorVersion;
 		int32 m_ResolutionX;
 		int32 m_ResolutionY;
 
@@ -27,8 +27,9 @@ namespace SE3D
 		bool Startup();
 		void Shutdown() const;
 		void Update();
+		void InitAPI();
 
-		void SetOpenGLVersion(GLubyte major, GLubyte minor);
+		void SetOpenGLVersion(byte major, byte minor);
 		void SetDepthBuffer(bool db);
 		void SetClearColor(float r, float g, float b, float a) const;
 		void SetVSync(short vsync) const;

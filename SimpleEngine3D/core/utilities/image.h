@@ -1,7 +1,7 @@
 #pragma once
 #include "../system/file.h"
 #include "types.h"
-#include <GL/glew.h>
+#include "../system/graphics.h"
 
 namespace SE3D
 {

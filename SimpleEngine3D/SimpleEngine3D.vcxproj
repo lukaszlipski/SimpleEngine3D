@@ -82,11 +82,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>core\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>core\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -206,6 +206,7 @@
     <ClInclude Include="core\math\vector2d.h" />
     <ClInclude Include="core\math\vector3d.h" />
     <ClInclude Include="core\math\vector4d.h" />
+    <ClInclude Include="core\platform\opengl\win32_opengl_definitions.h" />
     <ClInclude Include="core\platform\windows\win32_keys_defines.h" />
     <ClInclude Include="core\system\file.h" />
     <ClInclude Include="core\system\graphics.h" />

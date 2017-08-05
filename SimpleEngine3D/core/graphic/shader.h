@@ -1,5 +1,5 @@
 #pragma once
-#include <GL/glew.h>
+#include "../system/graphics.h"
 #include "../utilities/types.h"
 #include "../containers/dynamic_array.h"
 

@@ -1,5 +1,5 @@
 #include "framebuffer2d.h"
-#include <GL/glew.h>
+#include "../system/graphics.h"
 
 namespace SE3D
 {

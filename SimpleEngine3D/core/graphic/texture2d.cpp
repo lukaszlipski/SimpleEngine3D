@@ -1,6 +1,6 @@
 #include "texture2d.h"
-#include <GL/glew.h>
 #include "../utilities/image.h"
+#include "../system/graphics.h"
 
 namespace SE3D
 {

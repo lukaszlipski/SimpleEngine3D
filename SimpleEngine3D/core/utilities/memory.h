@@ -6,7 +6,7 @@
 namespace SE3D
 {
 
-	inline void CopyMemory(void* dest, const void* src, uint32 size)
+	inline void CopyMem(void* dest, const void* src, uint32 size)
 	{
 		uint32 loops = static_cast<uint32>(size / sizeof(uint32));
 		for (uint32 i = 0; i < loops; i++)

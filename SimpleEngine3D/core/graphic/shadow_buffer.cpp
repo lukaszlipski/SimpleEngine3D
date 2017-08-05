@@ -1,5 +1,5 @@
 #include "shadow_buffer.h"
-#include <GL/glew.h>
+#include "../system/graphics.h"
 
 namespace SE3D
 {
