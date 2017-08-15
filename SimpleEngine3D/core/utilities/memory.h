@@ -1,7 +1,7 @@
 #pragma once
 #include "types.h"
 
-#define OffsetOf(structure, member) (reinterpret_cast<int32>(&static_cast<structure*>(nullptr)->member))
+#define OffsetOf(structure, member) (reinterpret_cast<int64>(&static_cast<structure*>(nullptr)->member))
 
 namespace SE3D
 {
